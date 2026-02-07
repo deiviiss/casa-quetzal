@@ -6,7 +6,7 @@ import { FaInstagram, FaTiktok, FaFacebookF } from "react-icons/fa"
 export default function DigitalStrategy() {
   return (
     <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-6xl">
         <motion.h2
           className="text-3xl md:text-4xl font-bold mb-8 text-center"
           initial={{ opacity: 0, y: -20 }}

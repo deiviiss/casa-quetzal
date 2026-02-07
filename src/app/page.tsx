@@ -12,22 +12,22 @@ export default async function Home() {
   return (
     <main className="min-h-screen">
       <HeroSection
-        title="Innovación en genética y sustentabilidad del cáñamo"
-        subtitle="Semillas certificadas, productos derivados y un dispensario digital exclusivo"
+        title="Banco de semillas de cáñamo y cannabis integrado a la Milpa"
+        subtitle="Producción agrícola sustentable, conservación genética y trazabilidad jurídica desde el campo mexicano"
         ctaLink="https://www.facebook.com/QuetzalSeeds420"
         ctaText="Únete a nuestra comunidad"
         desktopImage="/imgs/hero-background.png"
         mobileImage="/imgs/hero-background-mobile.jpg"
         imageAlt="Cultivos regenerativos de cáñamo"
       />
-      <div className="max-w-7xl mx-auto">
+      <>
         <AboutUs />
         <SeedBank />
         <DigitalDispensary />
         <FeaturedProducts products={products} />
         <DigitalStrategy />
         <CallToAction />
-      </div>
+      </>
     </main>
   )
 }
