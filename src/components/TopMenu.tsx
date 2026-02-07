@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaShopLock } from 'react-icons/fa6'
 import { IoHomeOutline, IoPeopleOutline } from 'react-icons/io5'
+import { SiHomeassistantcommunitystore } from 'react-icons/si'
 
 export const TopMenu = () => {
   const logo = '/imgs/logoWeb.png'
@@ -53,6 +54,14 @@ export const TopMenu = () => {
                 <IoPeopleOutline size={20} />
                 <span className='hidden sm:inline'>
                   Membresías
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
+                <SiHomeassistantcommunitystore size={17} />
+                <span className='hidden sm:inline'>
+                  Catalogo
                 </span>
               </Link>
             </li>
