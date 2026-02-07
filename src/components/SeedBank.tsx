@@ -8,7 +8,7 @@ export default function SeedBank() {
       {/* Faded background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 pointer-events-none"
-        style={{ backgroundImage: "url('/imgs/background5.png')" }}
+        style={{ backgroundImage: "url('/imgs/background.png')" }}
       />
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.h2
