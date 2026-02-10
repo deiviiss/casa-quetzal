@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaShopLock } from 'react-icons/fa6'
-import { IoHomeOutline, IoPeopleOutline } from 'react-icons/io5'
+import { GiBurningForest } from 'react-icons/gi'
 import { SiHomeassistantcommunitystore } from 'react-icons/si'
 
 export const TopMenu = () => {
@@ -42,26 +42,18 @@ export const TopMenu = () => {
         <nav>
           <ul className="space-x-4 flex">
             <li>
-              <Link href="/" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <IoHomeOutline size={18} />
+              <Link href="/products" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
+                <SiHomeassistantcommunitystore size={17} />
                 <span className='hidden sm:inline'>
-                  Inicio
+                  Catálogo
                 </span>
               </Link>
             </li>
             <li>
               <Link href="/memberships" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <IoPeopleOutline size={20} />
+                <GiBurningForest size={20} />
                 <span className='hidden sm:inline'>
                   Membresías
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/products" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <SiHomeassistantcommunitystore size={17} />
-                <span className='hidden sm:inline'>
-                  Catalogo
                 </span>
               </Link>
             </li>
