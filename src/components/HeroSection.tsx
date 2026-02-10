@@ -35,7 +35,7 @@ export default function HeroSection({ title, subtitle, desktopImage, mobileImage
         quality={100}
         priority
       />
-      <div className="absolute inset-0 bg-black bg-opacity-50" />
+      <div className="absolute inset-0 bg-black bg-opacity-60" />
       <div className="relative z-10 text-center text-white max-w-4xl">
         <motion.h1
           className="text-4xl md:text-6xl font-bold mb-4 max-w-4xl mx-auto"

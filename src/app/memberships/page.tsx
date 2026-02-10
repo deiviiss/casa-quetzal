@@ -13,10 +13,10 @@ export default function MembershipPage() {
   return (
     <main className="min-h-screen">
       <HeroSection
-        title="Tu plan, tu elección: encuentra la membresía perfecta"
-        subtitle="Accede a productos exclusivos, descuentos y contenido premium"
-        desktopImage="/imgs/hero-background.png"
-        mobileImage="/imgs/hero-background-mobile.jpg"
+        title="Sistema RTQ"
+        subtitle="Agricultura tradicional aplicada con lógica de conservación y producción sustentable"
+        desktopImage="/imgs/hero-memberships.png"
+        mobileImage="/imgs/hero-memberships-mobile.png"
         imageAlt="Comunidad CQCS y beneficios de membresía"
       />
       <MembershipCards />
