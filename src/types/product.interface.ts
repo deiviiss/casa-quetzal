@@ -9,4 +9,6 @@ export interface Product {
   usage: string[];
   ingredients: string[];
   origin: string;
+  isAvailable: boolean;
+  isExclusive: boolean;
 }

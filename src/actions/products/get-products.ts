@@ -24,6 +24,8 @@ const products: Product[] = [
     ingredients: ["Flores de cáñamo curadas (100% orgánicas)."],
     origin: "Cultivado en milpas regenerativas sin químicos sintéticos en México.",
     price: 299,
+    isAvailable: true,
+    isExclusive: false
   },
   {
     id: '2',
@@ -47,6 +49,8 @@ const products: Product[] = [
     ],
     origin: "Producido con cáñamo cultivado en espacios regenerativos en México.",
     price: 499,
+    isAvailable: false,
+    isExclusive: false
   },
   {
     id: '3',
@@ -70,6 +74,8 @@ const products: Product[] = [
     ],
     origin: "Elaborado con fibra de cáñamo reciclada en talleres sustentables en México.",
     price: 199,
+    isAvailable: false,
+    isExclusive: false
   },
   {
     id: '4',
@@ -93,6 +99,8 @@ const products: Product[] = [
     ],
     origin: "Producido con residuos de cáñamo y procesos anaeróbicos en México.",
     price: 399,
+    isAvailable: false,
+    isExclusive: false
   }
 ];
 

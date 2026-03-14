@@ -3,6 +3,7 @@ import { Oswald } from "next/font/google";
 import "./globals.css";
 import { TopMenu } from "@/components/TopMenu";
 import { Footer } from "@/components/Footer";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -29,6 +30,7 @@ export default function RootLayout({
         <TopMenu />
         {children}
         <Footer />
+        <FloatingWhatsAppButton />
       </body>
     </html>
   );

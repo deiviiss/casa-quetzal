@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Product } from "@/types/product.interface"
@@ -18,17 +20,50 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-6"
+      >
+        <Button
+          variant="ghost"
+          asChild
+          className="group text-slate-600 hover:text-slate-900 transition-colors p-0 hover:bg-transparent"
+        >
+          <Link href="/products" className="flex items-center gap-2">
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <span className="font-medium text-lg">Regresar</span>
+          </Link>
+        </Button>
+      </motion.div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Product Image */}
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative rounded-lg shadow-lg overflow-hidden group"
+        >
           <Image
             src={product.image || "/placeholder.svg"}
             alt={product.name}
             width={600}
             height={400}
-            className="rounded-lg shadow-lg w-full h-auto object-cover"
+            className="w-full h-auto object-cover"
             priority
           />
+          {!product.isAvailable && (
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div
+                className="bg-slate-900/90 text-white text-sm font-bold py-2 px-12 transform rotate-[-42deg] shadow-2xl border-y border-white/20 whitespace-nowrap text-center"
+                style={{ width: '150%' }}
+              >
+                NO DISPONIBLE
+              </div>
+            </div>
+          )}
         </motion.div>
 
         {/* Product information */}
@@ -42,8 +77,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           <p className="text-xl text-gray-600">{product.shortDescription}</p>
           <p className="text-3xl font-bold text-slate-600">${product.price} MXN</p>
 
-          <Button className="w-full md:w-auto" onClick={() => window.open(whatsappLink, "_blank")}>
-            Comprar en WhatsApp
+          <Button
+            className="w-full md:w-auto"
+            onClick={() => window.open(whatsappLink, "_blank")}
+            disabled={!product.isAvailable}
+          >
+            {product.isAvailable ? "Comprar en WhatsApp" : "No Disponible"}
           </Button>
         </motion.div>
       </div>

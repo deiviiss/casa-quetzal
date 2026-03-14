@@ -4,6 +4,7 @@ import { Product } from "@/types/product.interface"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 interface ProductCardsProps {
   products: Product[]
@@ -38,34 +39,45 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between"
+      className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between relative"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: index * 0.1 }}
       whileHover={{ scale: 1.05 }}
     >
-      <Image
-        src={product.image || "/placeholder.svg"}
-        alt={product.name}
-        width={400}
-        height={300}
-        className="w-full h-48 object-cover hover:cursor-pointer"
-        onClick={() => {
-          router.push(`/products/${product.id}`)
-        }}
-      />
+      <div className="relative h-48 w-full overflow-hidden">
+        <Image
+          src={product.image || "/placeholder.svg"}
+          alt={product.name}
+          width={400}
+          height={300}
+          className="w-full h-full object-cover hover:cursor-pointer"
+          onClick={() => {
+            router.push(`/products/${product.id}`)
+          }}
+        />
+        {!product.isAvailable && (
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+            <div
+              className="bg-slate-900/90 text-white text-xs font-bold py-1 px-12 transform rotate-[-42deg] shadow-xl border-y border-white/20 whitespace-nowrap text-center"
+              style={{ width: '150%' }}
+            >
+              NO DISPONIBLE
+            </div>
+          </div>
+        )}
+      </div>
       <div className="p-6">
         <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
         <p className="text-gray-600 mb-4">{product.shortDescription}</p>
         <p className="text-2xl font-bold text-slate-600 mb-4">${product.price} MXN</p>
-        <a
-          href={whatsappLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
+        <Button
+          onClick={() => window.open(whatsappLink, "_blank")}
+          disabled={!product.isAvailable}
+          className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
         >
-          Comprar en WhatsApp
-        </a>
+          {product.isAvailable ? "Comprar en WhatsApp" : "No Disponible"}
+        </Button>
       </div>
     </motion.div>
   )
