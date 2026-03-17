@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Oswald } from "next/font/google";
+import { Oswald, Geist } from "next/font/google";
 import "./globals.css";
-import { TopMenu } from "@/components/TopMenu";
-import { Footer } from "@/components/Footer";
-import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
+import { TopMenu } from "@/components/landing/TopMenu";
+import { Footer } from "@/components/landing/Footer";
+import FloatingWhatsAppButton from "@/components/landing/FloatingWhatsAppButton";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -23,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body
         className={`${oswald.variable} antialiased`}
       >
