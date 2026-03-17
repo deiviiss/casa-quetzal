@@ -165,8 +165,7 @@
     --sidebar-ring: oklch(0.556 0 0)}
   .theme {
 
-    --font-sans: var(--font-sans)
-  }
+    --font-sans: var(--font-sans)}
   * {
     @apply border-border outline-ring/50;
   }
