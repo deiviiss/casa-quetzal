@@ -1,5 +1,5 @@
 {
-  "name": "landing-page",
+  "name": "cqcs-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,12 +16,10 @@
     "@getbrevo/brevo": "2.2.0",
     "@hookform/resolvers": "3.10.0",
     "@prisma/client": "6.2.0",
-    "@radix-ui/react-label": "2.1.3",
-    "@radix-ui/react-slot": "1.1.2",
     "bcryptjs": "2.4.3",
-    "class-variance-authority": "0.7.1",
+    "class-variance-authority": "^0.7.1",
     "cloudinary": "2.6.0",
-    "clsx": "2.1.1",
+    "clsx": "^2.1.1",
     "framer-motion": "12.4.7",
     "lucide-react": "0.476.0",
     "next": "15.1.11",
