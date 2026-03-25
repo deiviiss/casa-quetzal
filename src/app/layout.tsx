@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Oswald } from "next/font/google";
 import "./globals.css";
-import { TopMenu } from "@/components/landing/TopMenu";
-import { Footer } from "@/components/landing/Footer";
-import FloatingWhatsAppButton from "@/components/landing/FloatingWhatsAppButton";
 
 const oswald = Oswald({
   variable: "--font-oswald",
