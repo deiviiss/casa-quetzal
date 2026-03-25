@@ -1,6 +1,6 @@
 'use server'
 
-import { getUserPurchases } from '@/lib/access'
+import { getUserPurchases } from '@/actions/auth/access'
 
 export const getUserPurchasesAction = async (userId: string) => {
   try {

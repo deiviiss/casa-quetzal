@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
+import { User } from '@/interfaces/user.interface'
 
 export const getAllUsers = async () => {
   try {
@@ -9,11 +10,7 @@ export const getAllUsers = async () => {
         role: 'user' // We only want to manage parents/users, not other admins (though could be changed)
       },
       include: {
-        children: {
-          include: {
-            child: true
-          }
-        }
+        purchase: true
       },
       orderBy: {
         name: 'asc'
@@ -23,9 +20,8 @@ export const getAllUsers = async () => {
     return {
       ok: true,
       users: users.map(user => ({
-        ...user,
-        childrenCount: user.children.length
-      }))
+        ...user
+      })) as unknown as User[]
     }
   } catch (error) {
     console.error('Error fetching all users:', error)

@@ -15,7 +15,6 @@ interface User {
   email: string
   phoneNumber: string
   isActive: boolean
-  childrenCount: number
 }
 
 interface UserListProps {
@@ -60,7 +59,7 @@ export default function UserList({ users }: UserListProps) {
                 </div>
                 <div>
                   <span className="font-semibold block">Children</span>
-                  {user.childrenCount}
+
                 </div>
               </div>
               <div className="flex gap-2 pt-2">
@@ -115,7 +114,7 @@ export default function UserList({ users }: UserListProps) {
                   <td className="px-6 py-4 text-muted-foreground">{user.phoneNumber}</td>
                   <td className="px-6 py-4 text-center">
                     <Badge variant="secondary" className="font-medium">
-                      {user.childrenCount} {user.childrenCount === 1 ? 'child' : 'children'}
+
                     </Badge>
                   </td>
                   <td className="px-6 py-4 text-center">

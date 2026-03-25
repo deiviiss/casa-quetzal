@@ -22,68 +22,53 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { addChild, updateChild } from '@/actions/users/manage-children'
+import { updateUser } from '@/actions/users/update-user'
 import { noticeSuccess, noticeFailure } from '@/components/toast-notifications/ToastNotifications'
 import { Loader2 } from 'lucide-react'
 
-const childSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  levelId: z.string().min(1, 'Please select a level'),
+const userMemberSchema = z.object({
+  name: z.string().min(3, 'Name must be at least 3 characters'),
+  email: z.string().email('Invalid email address'),
+  phoneNumber: z.string().length(10, 'Phone number must be 10 digits'),
 })
 
-type ChildFormValues = z.infer<typeof childSchema>
+type UserMemberFormValues = z.infer<typeof userMemberSchema>
 
-interface Level {
-  id: string
-  name: string
-}
-
-interface ChildFormProps {
+interface UserMemberFormProps {
   isOpen: boolean
   onClose: () => void
-  userId: string
-  levels: Level[]
-  child?: {
+  user: {
     id: string
     name: string
-    levelId: string
+    email: string
+    phoneNumber: string
   }
 }
 
-export default function ChildForm({ isOpen, onClose, userId, levels, child }: ChildFormProps) {
+export default function UserMemberForm({ isOpen, onClose, user }: UserMemberFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const form = useForm<ChildFormValues>({
-    resolver: zodResolver(childSchema),
+  const form = useForm<UserMemberFormValues>({
+    resolver: zodResolver(userMemberSchema),
     defaultValues: {
-      name: child?.name || '',
-      levelId: child?.levelId || '',
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
     },
   })
 
-  const onSubmit = async (values: ChildFormValues) => {
+  const onSubmit = async (values: UserMemberFormValues) => {
     setIsSubmitting(true)
-    let result
-
-    if (child) {
-      result = await updateChild(child.id, values.name, values.levelId, userId)
-    } else {
-      result = await addChild(userId, values.name, values.levelId)
-    }
+    const result = await updateUser({
+      id: user.id,
+      ...values,
+    })
 
     if (result.ok) {
-      noticeSuccess(child ? 'Child updated' : 'Child added')
+      noticeSuccess('User information updated successfully')
       onClose()
-      form.reset()
     } else {
-      noticeFailure(result.message || 'Error saving child')
+      noticeFailure(result.message || 'Error updating user information')
     }
     setIsSubmitting(false)
   }
@@ -92,9 +77,9 @@ export default function ChildForm({ isOpen, onClose, userId, levels, child }: Ch
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{child ? 'Edit Child' : 'Add Child'}</DialogTitle>
+          <DialogTitle>Edit User Information</DialogTitle>
           <DialogDescription>
-            {child ? 'Update the child information below.' : 'Add a new child to this parent account.'}
+            Update the contact details for this user account.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -104,9 +89,9 @@ export default function ChildForm({ isOpen, onClose, userId, levels, child }: Ch
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Child Name</FormLabel>
+                  <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter child's name" {...field} />
+                    <Input placeholder="Enter user's name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,24 +99,26 @@ export default function ChildForm({ isOpen, onClose, userId, levels, child }: Ch
             />
             <FormField
               control={form.control}
-              name="levelId"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Level</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select an academic level" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {levels.map((level) => (
-                        <SelectItem key={level.id} value={level.id}>
-                          {level.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="Enter email address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter 10-digit phone number" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -142,7 +129,7 @@ export default function ChildForm({ isOpen, onClose, userId, levels, child }: Ch
               </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {child ? 'Save Changes' : 'Add Child'}
+                Save Changes
               </Button>
             </DialogFooter>
           </form>

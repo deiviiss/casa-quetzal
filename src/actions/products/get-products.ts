@@ -1,6 +1,6 @@
 'use server'
 
-import { Product } from "@/types/product.interface"
+import { Product } from "@/interfaces/product.interface"
 
 // import prisma from '@/lib/prisma'
 

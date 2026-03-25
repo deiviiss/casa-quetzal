@@ -4,20 +4,20 @@ import prisma from '@/lib/prisma'
 import { validateUserAdmin } from '../auth/validate-user-admin'
 import { revalidatePath } from 'next/cache'
 
-export async function grantAcademyAccess(userId: string) {
+export async function grantMembershipAccess(userId: string) {
   try {
     const isAdmin = await validateUserAdmin()
     if (!isAdmin) {
       return { ok: false, message: 'Unauthorized' }
     }
 
-    // 1. Find the Academy product
-    const academyProduct = await prisma.product.findFirst({
-      where: { type: 'academy' }
+    // 1. Find the Membership product
+    const membershipProduct = await prisma.product.findFirst({
+      where: { type: 'membership' }
     })
 
-    if (!academyProduct) {
-      return { ok: false, message: 'Academy product not found in database. Please contact support.' }
+    if (!membershipProduct) {
+      return { ok: false, message: 'Membership product not found in database. Please contact support.' }
     }
 
     // 2. Check if user already has it
@@ -25,68 +25,68 @@ export async function grantAcademyAccess(userId: string) {
       where: {
         userId_productId: {
           userId,
-          productId: academyProduct.id
+          productId: membershipProduct.id
         }
       }
     })
 
     if (existingPurchase) {
-      return { ok: false, message: 'User already has Academy access' }
+      return { ok: false, message: 'User already has Membership access' }
     }
 
     // 3. Create purchase
     await prisma.purchase.create({
       data: {
         userId,
-        productId: academyProduct.id
+        productId: membershipProduct.id
       }
     })
 
     revalidatePath(`/platform/admin/users/${userId}`)
-    return { ok: true, message: 'Academy access granted' }
+    return { ok: true, message: 'Membership access granted' }
   } catch (error) {
     console.error('Error granting access:', error)
     return { ok: false, message: 'Error granting access' }
   }
 }
 
-export async function revokeAcademyAccess(userId: string) {
+export async function revokeMembershipAccess(userId: string) {
   try {
     const isAdmin = await validateUserAdmin()
     if (!isAdmin) {
       return { ok: false, message: 'Unauthorized' }
     }
 
-    const academyProduct = await prisma.product.findFirst({
-      where: { type: 'academy' }
+    const membershipProduct = await prisma.product.findFirst({
+      where: { type: 'membership' }
     })
 
-    if (!academyProduct) {
-      return { ok: false, message: 'Academy product not found' }
+    if (!membershipProduct) {
+      return { ok: false, message: 'Membership product not found' }
     }
 
     await prisma.purchase.deleteMany({
       where: {
         userId,
-        productId: academyProduct.id
+        productId: membershipProduct.id
       }
     })
 
     revalidatePath(`/platform/admin/users/${userId}`)
-    return { ok: true, message: 'Academy access removed' }
+    return { ok: true, message: 'Membership access removed' }
   } catch (error) {
     console.error('Error revoking access:', error)
     return { ok: false, message: 'Error removing access' }
   }
 }
 
-export async function checkUserAcademyAccess(userId: string) {
+export async function checkUserMembershipAccess(userId: string) {
   try {
     const purchase = await prisma.purchase.findFirst({
       where: {
         userId,
         product: {
-          type: 'academy'
+          type: 'membership'
         }
       }
     })

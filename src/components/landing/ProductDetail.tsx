@@ -6,7 +6,7 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Product } from "@/types/product.interface"
+import { Product } from "@/interfaces/product.interface"
 
 interface ProductDetailProps {
   product: Product

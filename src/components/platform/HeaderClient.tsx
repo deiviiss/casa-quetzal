@@ -10,11 +10,11 @@ import { cn } from "@/lib/utils"
 import { Shield } from "lucide-react"
 
 interface HeaderClientProps {
-  hasCourse: boolean
+  hasMembership: boolean
   isAdmin: boolean
 }
 
-export default function HeaderClient({ hasCourse, isAdmin }: HeaderClientProps) {
+export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientProps) {
   const path = usePathname()
   const isProfilePage = path.includes('/platform/profile')
   const isAdminPage = path.includes('/platform/admin')
@@ -38,14 +38,14 @@ export default function HeaderClient({ hasCourse, isAdmin }: HeaderClientProps) 
           </Link>
 
           <nav className="hidden md:flex gap-6">
-            {hasCourse && (
+            {hasMembership && (
               <Link href="/platform/course">
                 <motion.span
                   className="text-sm font-medium text-muted-foreground hover:text-primary"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  My Courses
+                  My Membership
                 </motion.span>
               </Link>
             )}
@@ -86,14 +86,14 @@ export default function HeaderClient({ hasCourse, isAdmin }: HeaderClientProps) 
           </div>
         </div>
         <nav className="flex md:hidden gap-6">
-          {hasCourse && (
+          {hasMembership && (
             <Link href="/platform/course">
               <motion.span
                 className="text-sm font-medium text-muted-foreground hover:text-primary"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                My Courses
+                My Membership
               </motion.span>
             </Link>
           )}

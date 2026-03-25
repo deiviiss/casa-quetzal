@@ -1,7 +1,7 @@
 'use server'
 
 import { validateUserAdmin } from '@/actions/auth/validate-user-admin'
-import { assignProductToUser } from '@/lib/access'
+import { assignProductToUser } from '@/actions/auth/access'
 
 interface AssignProductData {
   userId: string

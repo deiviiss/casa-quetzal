@@ -16,7 +16,7 @@ export default function MembershipPage() {
         title="Sistema RTQ"
         subtitle="Agricultura tradicional aplicada con lógica de conservación y producción sustentable"
         desktopImage="/imgs/hero-memberships.webp"
-        mobileImage="/imgs/hero-memberships-mobile.webp"
+        mobileImage="/imgs/hero-memberships-mobile.png"
         imageAlt="Comunidad CQCS y beneficios de membresía"
       />
       <MembershipCards />

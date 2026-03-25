@@ -12,10 +12,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { titleFont } from '@/config/fonts'
+import { titleFont, textFont } from '@/config/fonts'
 import { noticeFailure, noticeSuccess } from '@/components/toast-notifications/ToastNotifications'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { BackButton } from '@/components/ui/back-button'
 
 const loginSchema = z.object({
   email: z.string({
@@ -35,7 +36,7 @@ const loginSchema = z.object({
 export const LoginForm = () => {
   const searchParams = useSearchParams()
 
-  const redirectTo = searchParams.get('redirectTo') || '/platform/academy/newsletters'
+  const redirectTo = searchParams.get('redirectTo') || '/platform/profile'
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
 
@@ -76,35 +77,56 @@ export const LoginForm = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-md mx-auto"
+          className="w-full max-w-md mx-auto space-y-4"
         >
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-center mb-2">
-                <Image
-                  src="/logo.webp"
-                  alt="Miss Kelly ESL Academy"
-                  width={100}
-                  height={0}
-                />
+          <div className="flex justify-start">
+            <BackButton href="/" label="Inicio" variant="ghost" />
+          </div>
+          <Card className="bg-slate-900/40 backdrop-blur-xl border-white/10 shadow-2xl overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent pointer-events-none" />
+
+            <CardHeader className="relative z-10 pt-8">
+              <div className="flex items-center justify-center mb-6">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <Image
+                    src="/imgs/quetzal.png"
+                    alt="Casa Quetzal"
+                    width={140}
+                    height={140}
+                    className="drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                    priority
+                  />
+                </motion.div>
               </div>
-              <CardTitle className={`${titleFont.className} text-2xl text-center`}>Welcome back</CardTitle>
-              <CardDescription className="text-center">
-                Enter your email and password to access your account
+              <CardTitle className={`${titleFont.className} text-3xl text-center text-white tracking-tight`}>
+                Bienvenido
+              </CardTitle>
+              <CardDescription className="text-center text-slate-400 mt-2">
+                Ingresa tus credenciales para acceder a la plataforma
               </CardDescription>
             </CardHeader>
 
-            <CardContent className='grid gap-4'>
+            <CardContent className='grid gap-6 relative z-10'>
               <FormField
                 control={form.control}
                 name='email'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="text-slate-300">Correo electrónico</FormLabel>
                     <FormControl>
-                      <Input placeholder='m.kelly@example.com' {...field} value={field.value} />
+                      <Input
+                        placeholder='ejemplo@casaquetzal.com'
+                        {...field}
+                        value={field.value}
+                        className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/50 focus-visible:border-emerald-500/50 transition-all"
+                        autoComplete="email"
+                        spellCheck={false}
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-emerald-400/80" />
                   </FormItem>
                 )}
               />
@@ -114,54 +136,70 @@ export const LoginForm = () => {
                 name='password'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-slate-300">Contraseña</FormLabel>
                     <FormControl>
-                      <Input type='password' placeholder='Contraseña' {...field} value={field.value} />
+                      <Input
+                        type='password'
+                        placeholder='••••••••'
+                        {...field}
+                        value={field.value}
+                        className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/50 focus-visible:border-emerald-500/50 transition-all"
+                        autoComplete="current-password"
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-emerald-400/80" />
                   </FormItem>
                 )}
               />
 
               <div
-                className=''
+                className='min-h-[20px]'
                 aria-live='polite'
                 aria-atomic='true'
               >
                 {
                   error && (
-                    <div className='flex mb-2 text-red-600 text-sm'>
-                      <IoInformationOutline className='h-5 w-5' />
-                      <p className=''>Invalid credentials</p>
-                    </div>
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className='flex items-center gap-2 text-red-400 text-sm bg-red-400/10 p-2 rounded-md border border-red-400/20'
+                    >
+                      <IoInformationOutline className='h-4 w-4' />
+                      <p>Credenciales inválidas</p>
+                    </motion.div>
                   )
                 }
               </div>
             </CardContent>
-            <CardFooter className='space-y-3 flex-col'>
+
+            <CardFooter className='flex flex-col gap-4 relative z-10 pb-8'>
               <Button
                 type='submit'
                 disabled={isSubmitting}
-                className='w-full'
+                className='w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-6 rounded-lg transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-[0.98]'
               >
-                {isSubmitting ? 'Signing in...' : 'Sign in'}
+                {isSubmitting ? 'Iniciando sesión…' : 'Iniciar sesión'}
               </Button>
 
-              {/* divisor l ine */}
-              <div className="flex w-full items-center my-5">
-                <div className="flex-1 border-t border-gray-500"></div>
-                <span className="px-2 text-gray-600">0</span>
-                <div className="flex-1 border-t border-gray-500"></div>
+              <div className="relative w-full py-2">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-white/10" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-transparent px-2 text-slate-500">O</span>
+                </div>
               </div>
 
               <Button
                 asChild
-                variant={'secondary'}
-                className='w-full'>
+                variant='ghost'
+                className='w-full text-slate-300 hover:text-white hover:bg-white/5 py-6'
+              >
                 <Link
                   href={`/auth/new-account?redirectTo=${redirectTo}`}
+                  className={textFont.className}
                 >
-                  Create an new account
+                  Crear una cuenta nueva
                 </Link>
               </Button>
             </CardFooter>

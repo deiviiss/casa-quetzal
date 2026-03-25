@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import { auth } from '@/auth'
 
-export const Footer = () => {
+export const Footer = async () => {
+  const session = await auth()
   return (
     <footer className="w-full bg-slate-900 text-gray-300 pt-12 pb-5 print:hidden">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
@@ -25,6 +27,15 @@ export const Footer = () => {
               </li>
               <li>
                 <Link href="/products" className="text-gray-400 hover:text-white">Dispensario digital</Link></li>
+              <li>
+                {
+                  session?.user ? (
+                    <Link href="/platform/profile" className="text-gray-400 hover:text-white">Mi Perfil</Link>
+                  ) : (
+                    <Link href="/auth/login" className="text-gray-400 hover:text-white">Iniciar sesión</Link>
+                  )
+                }
+              </li>
             </ul>
           </div>
 

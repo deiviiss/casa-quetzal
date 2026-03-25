@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { CldImage } from "next-cloudinary"
-import { isFullUrl } from "@/utils/cloudinary.utils"
+import { isFullUrl } from "@/lib/utils"
 
 interface CloudinaryImageProps {
   src: string

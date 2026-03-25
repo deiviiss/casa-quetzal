@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import prisma from '@/lib/prisma'
-import { Role } from '@prisma/client'
+import { Role, ROLE_VALUES } from '@/interfaces/user.interface'
 
 const userSchema = z.object({
   id: z
@@ -28,7 +28,7 @@ const userSchema = z.object({
       message: 'The password must be between 6 and 10 characters if provided'
     }),
   role: z
-    .nativeEnum(Role)
+    .enum(ROLE_VALUES)
     .optional(),
   isActive: z
     .boolean()

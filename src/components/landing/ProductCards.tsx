@@ -1,6 +1,6 @@
 "use client"
 
-import { Product } from "@/types/product.interface"
+import { Product } from "@/interfaces/product.interface"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useRouter } from "next/navigation"

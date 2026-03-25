@@ -13,17 +13,12 @@ export const getUserById = async (id: string): Promise<Response> => {
   try {
     const user = await prisma.user.findFirst({
       where: { id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        phoneNumber: true,
-        password: true,
-        emailVerified: true,
-        phoneNumberVerified: true,
-        image: true,
-        role: true,
-        isActive: true
+      include: {
+        purchase: {
+          include: {
+            product: true
+          }
+        }
       }
     })
 
@@ -37,7 +32,7 @@ export const getUserById = async (id: string): Promise<Response> => {
     return {
       ok: true,
       message: 'User found',
-      user
+      user: user as unknown as User
     }
   } catch (error) {
     console.error('Error fetching user', error)
