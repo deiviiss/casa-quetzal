@@ -9,33 +9,29 @@ import {
   Layers,
   Users,
   Package,
-  ChevronRight
+  ChevronRight,
+  Leaf
 } from "lucide-react"
 
 const sidebarItems = [
   {
-    title: "Dashboard",
+    title: "Panel de Control",
     href: "/platform/admin",
     icon: LayoutDashboard,
   },
   {
-    title: "Newsletters",
-    href: "/platform/admin/newsletters",
-    icon: Newspaper,
+    title: "Dispensario",
+    href: "/platform/admin/dispensary",
+    icon: Leaf,
   },
   {
-    title: "Levels",
-    href: "/platform/admin/levels",
-    icon: Layers,
-  },
-  {
-    title: "Users",
+    title: "Usuarios",
     href: "/platform/admin/users",
     icon: Users,
   },
 
   {
-    title: "Products",
+    title: "Productos",
     href: "/platform/admin/products", // Placeholder
     icon: Package,
     isPlaceholder: true,
@@ -48,8 +44,8 @@ export default function AdminSidebar() {
   return (
     <aside className="w-64 border-r bg-muted/30 hidden md:flex flex-col sticky top-16 h-[calc(100vh-4rem)]">
       <div className="p-6">
-        <h2 className="text-lg font-semibold tracking-tight">Admin Console</h2>
-        <p className="text-xs text-muted-foreground">Manage your academy</p>
+        <h2 className="text-lg font-semibold tracking-tight">Consola de Admin</h2>
+        <p className="text-xs text-muted-foreground">Gestiona tu dispensario</p>
       </div>
       <nav className="flex-1 px-4 space-y-1">
         {sidebarItems.map((item) => {
@@ -80,8 +76,8 @@ export default function AdminSidebar() {
       </nav>
       <div className="p-4 border-t">
         <div className="bg-primary/5 rounded-lg p-3">
-          <p className="text-[10px] uppercase font-bold text-primary tracking-wider">Miss Kelly ESL</p>
-          <p className="text-[10px] text-muted-foreground">Version 1.0.0-admin</p>
+          <p className="text-[10px] uppercase font-bold text-primary tracking-wider">Casa Quetzal Cannabis Seeds</p>
+          <p className="text-[10px] text-muted-foreground">Versión 1.0.0-admin</p>
         </div>
       </div>
     </aside>

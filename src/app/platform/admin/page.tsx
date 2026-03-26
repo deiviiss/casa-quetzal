@@ -2,34 +2,27 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Newspaper, Layers, Users, Package, ArrowRight } from "lucide-react"
+import { Leaf, Users, Package, ArrowRight } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const quickStats = [
   {
-    title: "Newsletters",
-    description: "Manage monthly newsletters and content",
-    icon: Newspaper,
-    href: "/platform/admin/newsletters",
+    title: "Dispensario",
+    description: "Gestiona tu dispensario",
+    icon: Leaf,
+    href: "/platform/admin/dispensary",
     color: "bg-blue-500",
   },
   {
-    title: "Levels",
-    description: "Configure academic levels",
-    icon: Layers,
-    href: "/platform/admin/levels",
-    color: "bg-purple-500",
-  },
-  {
-    title: "Users",
-    description: "Manage students and administrators",
+    title: "Usuarios",
+    description: "Gestiona los usuarios",
     icon: Users,
     href: "/platform/admin/users",
     color: "bg-orange-500",
   },
   {
-    title: "Products",
-    description: "Store management and subscriptions",
+    title: "Productos",
+    description: "Gestión de inventario y suscripciones",
     icon: Package,
     href: "#",
     color: "bg-green-500",
@@ -60,9 +53,9 @@ export default function AdminDashboard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary">Admin Panel</h1>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary">Panel de Administración</h1>
         <p className="text-muted-foreground mt-2">
-          Welcome to the academy management dashboard. Use the cards below or the sidebar to navigate.
+          Bienvenido al panel de gestión del dispensario. Usa las tarjetas de abajo o la barra lateral para navegar.
         </p>
       </motion.div>
 
@@ -90,7 +83,7 @@ export default function AdminDashboard() {
                   className={`inline-flex items-center text-xs font-semibold ${stat.isPlaceholder ? 'text-muted-foreground cursor-not-allowed' : 'text-primary hover:underline'}`}
                   onClick={(e) => stat.isPlaceholder && e.preventDefault()}
                 >
-                  Go to management <ArrowRight className="ml-1 h-3 w-3" />
+                  Ir a gestión <ArrowRight className="ml-1 h-3 w-3" />
                 </Link>
               </CardContent>
             </Card>
@@ -106,18 +99,18 @@ export default function AdminDashboard() {
       >
         <Card className="border-dashed">
           <CardHeader>
-            <CardTitle className="text-lg">Recent Activities</CardTitle>
+            <CardTitle className="text-lg">Actividades Recientes</CardTitle>
           </CardHeader>
           <CardContent className="h-48 flex items-center justify-center text-muted-foreground border-2 border-dashed rounded-lg m-4 mt-0">
-            Activity logs will appear here
+            Los registros de actividad aparecerán aquí
           </CardContent>
         </Card>
         <Card className="border-dashed">
           <CardHeader>
-            <CardTitle className="text-lg">System Status</CardTitle>
+            <CardTitle className="text-lg">Estado del Sistema</CardTitle>
           </CardHeader>
           <CardContent className="h-48 flex items-center justify-center text-muted-foreground border-2 border-dashed rounded-lg m-4 mt-0">
-            System metrics will appear here
+            Las métricas del sistema aparecerán aquí
           </CardContent>
         </Card>
       </motion.div>

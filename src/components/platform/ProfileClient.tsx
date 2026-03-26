@@ -23,32 +23,32 @@ import { updateUserImage } from "@/actions/users/update-user-image"
 import { deleteUserImage } from "@/actions/users/delete-user-image"
 
 const userSchema = z.object({
-  name: z.string().min(3, { message: 'Name is required' }).max(255, { message: 'Name must be less than 255 characters' }),
+  name: z.string().min(3, { message: 'El nombre es obligatorio' }).max(255, { message: 'El nombre debe tener menos de 255 caracteres' }),
   email: z.string().email({
-    message: 'The email address is not valid'
+    message: 'La dirección de correo electrónico no es válida'
   }),
   phoneNumber: z
     .string()
     .min(10, {
-      message: 'The phone number must be 10 characters without the country code'
+      message: 'El número de teléfono debe tener 10 caracteres sin el código de país'
     })
     .max(10, {
-      message: 'The phone number must be 10 characters without the country code'
+      message: 'El número de teléfono debe tener 10 caracteres sin el código de país'
     })
 })
 
 const passwordSchema = z.object({
   currentPassword: z
     .string()
-    .min(6, { message: 'Current password is required' }),
+    .min(6, { message: 'La contraseña actual es obligatoria' }),
   newPassword: z
     .string()
-    .min(6, { message: 'The new password must have at least 6 characters' })
-    .max(10, { message: 'The new password must be less than 10 characters' }),
+    .min(6, { message: 'La nueva contraseña debe tener al menos 6 caracteres' })
+    .max(10, { message: 'La nueva contraseña debe tener menos de 10 caracteres' }),
   confirmPassword: z
     .string()
-    .min(6, { message: 'The confirm password must have at least 6 characters' })
-    .max(10, { message: 'Confirm password must be less than 10 characters' }),
+    .min(6, { message: 'La confirmación de la contraseña debe tener al menos 6 caracteres' })
+    .max(10, { message: 'La confirmación de la contraseña debe tener menos de 10 caracteres' }),
 })
 
 interface profileProps {
@@ -113,7 +113,7 @@ export const ProfileClient = ({ user }: profileProps) => {
     setIsSubmitting(true)
 
     if (values.newPassword !== values.confirmPassword) {
-      noticeFailure("New password and confirm password do not match")
+      noticeFailure("La nueva contraseña y su confirmación no coinciden")
       setIsSubmitting(false);
       return
     }
@@ -134,7 +134,7 @@ export const ProfileClient = ({ user }: profileProps) => {
 
     setIsSubmitting(false)
     setError('')
-    noticeSuccess("Password updated successfully")
+    noticeSuccess("Contraseña actualizada con éxito")
     formPassword.reset()
   }
 
@@ -155,7 +155,7 @@ export const ProfileClient = ({ user }: profileProps) => {
     const image = fileInputRef.current?.files?.[0];
 
     if (!image) {
-      noticeFailure("No file selected");
+      noticeFailure("No se ha seleccionado ningún archivo");
       setIsSubmitting(false);
       return;
     }
@@ -180,7 +180,7 @@ export const ProfileClient = ({ user }: profileProps) => {
       const data = await res.json();
 
       if (!data.ok) {
-        noticeFailure(data.message || "Upload failed");
+        noticeFailure(data.message || "Error al subir");
         return;
       }
 
@@ -191,7 +191,7 @@ export const ProfileClient = ({ user }: profileProps) => {
         return
       }
 
-      noticeSuccess("Profile picture updated successfully");
+      noticeSuccess("Imagen de perfil actualizada con éxito");
     } catch (error) {
       console.error("Error uploading image:", error);
       noticeFailure("An error occurred while uploading the image");
@@ -215,8 +215,8 @@ export const ProfileClient = ({ user }: profileProps) => {
   }
 
   const navItems = [
-    { icon: <UserIcon className="h-4 w-4" />, label: "Personal Info", value: "personal" },
-    { icon: <Settings className="h-4 w-4" />, label: "Settings", value: "settings" },
+    { icon: <UserIcon className="h-4 w-4" />, label: "Información Personal", value: "personal" },
+    { icon: <Settings className="h-4 w-4" />, label: "Ajustes", value: "settings" },
   ]
 
   return (
@@ -229,8 +229,8 @@ export const ProfileClient = ({ user }: profileProps) => {
     >
       <motion.div variants={fadeInUp} className="flex items-center gap-4 justify-between mb-8 pt-8">
         <div>
-          <h1 className="text-3xl font-bold text-primary">My Profile</h1>
-          <p className="text-muted-foreground">Manage your account settings and subscription</p>
+          <h1 className="text-3xl font-bold text-primary">Mi Perfil</h1>
+          <p className="text-muted-foreground">Gestiona los ajustes de tu cuenta y suscripción</p>
         </div>
         <ButtonLogout />
       </motion.div>
@@ -258,7 +258,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                 className="mt-4 w-full"
                 onClick={() => setAvatarModalOpen(true)}
               >
-                Change Avatar
+                Cambiar Avatar
               </Button>
             </CardContent>
           </Card>
@@ -299,8 +299,8 @@ export const ProfileClient = ({ user }: profileProps) => {
             <TabsContent value="personal">
               <Card>
                 <CardHeader>
-                  <CardTitle>Personal Information</CardTitle>
-                  <CardDescription>Update your personal details and contact information</CardDescription>
+                  <CardTitle>Información Personal</CardTitle>
+                  <CardDescription>Actualiza tus datos personales e información de contacto</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Form {...formUserInfo}>
@@ -311,7 +311,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                           name="name"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel htmlFor="name">Full Name</FormLabel>
+                              <FormLabel htmlFor="name">Nombre Completo</FormLabel>
                               <FormControl>
                                 <Input
                                   disabled={true}
@@ -343,7 +343,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                           name="phoneNumber"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
+                              <FormLabel htmlFor="phoneNumber">Número de Teléfono</FormLabel>
                               <FormControl>
                                 <Input
                                   disabled={isSubmitting}
@@ -364,7 +364,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                         )}
                       </div>
                       <Button className="mt-4" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? "Saving..." : "Save changes"}
+                        {isSubmitting ? "Guardando..." : "Guardar cambios"}
                       </Button>
                     </form>
                   </Form>
@@ -375,13 +375,13 @@ export const ProfileClient = ({ user }: profileProps) => {
             <TabsContent value="settings">
               <Card>
                 <CardHeader>
-                  <CardTitle>Account Settings</CardTitle>
-                  <CardDescription>Manage your account preferences and security</CardDescription>
+                  <CardTitle>Ajustes de Cuenta</CardTitle>
+                  <CardDescription>Gestiona las preferencias y seguridad de tu cuenta</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Password</h3>
+                      <h3 className="font-semibold mb-2">Contraseña</h3>
                       <Form {...formPassword}>
                         <form onSubmit={formPassword.handleSubmit(onSubmitPassword)} className="space-y-4">
                           <div className="grid gap-2">
@@ -390,7 +390,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                               name="currentPassword"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel htmlFor="currentPassword">Current Password</FormLabel>
+                                  <FormLabel htmlFor="currentPassword">Contraseña Actual</FormLabel>
                                   <FormControl>
                                     <Input
                                       disabled={isSubmitting}
@@ -408,7 +408,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                               name="newPassword"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel htmlFor="newPassword">New Password</FormLabel>
+                                  <FormLabel htmlFor="newPassword">Nueva Contraseña</FormLabel>
                                   <FormControl>
                                     <Input
                                       disabled={isSubmitting}
@@ -425,7 +425,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                               name="confirmPassword"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel htmlFor="confirmPassword">Confirm New Password</FormLabel>
+                                  <FormLabel htmlFor="confirmPassword">Confirmar Nueva Contraseña</FormLabel>
                                   <FormControl>
                                     <Input
                                       disabled={isSubmitting}
@@ -448,7 +448,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                           </div>
 
                           <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Updating..." : "Update Password"}
+                            {isSubmitting ? "Actualizando..." : "Actualizar Contraseña"}
                           </Button>
                         </form>
                       </Form>
@@ -460,14 +460,14 @@ export const ProfileClient = ({ user }: profileProps) => {
                   <Button
                     variant="outline"
                     className="text-destructive hover:bg-destructive/10"
-                    onClick={() => noticeFailure("Deleting is not allowed")}
+                    onClick={() => noticeFailure("Eliminar no está permitido")}
                   >
-                    Delete Account
+                    Eliminar Cuenta
                   </Button>
                   <Button
-                    onClick={() => noticeSuccess("Settings saved successfully")}
+                    onClick={() => noticeSuccess("Ajustes guardados con éxito")}
                   >
-                    Save Settings</Button>
+                    Guardar Ajustes</Button>
                 </CardFooter>
               </Card>
             </TabsContent>
@@ -480,9 +480,9 @@ export const ProfileClient = ({ user }: profileProps) => {
       <Dialog open={avatarModalOpen} onOpenChange={setAvatarModalOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Change Profile Picture</DialogTitle>
+            <DialogTitle>Cambiar Imagen de Perfil</DialogTitle>
             <DialogDescription>
-              Upload a new profile picture. The image should be square and at least 200x200 pixels.
+              Sube una nueva foto de perfil. La imagen debe ser cuadrada y de al menos 200x200 píxeles.
             </DialogDescription>
           </DialogHeader>
 
@@ -505,7 +505,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                     disabled={isSubmitting}
                   >
                     <X className="h-4 w-4 mr-2" />
-                    Clear
+                    Limpiar
                   </Button>
                   <Button
                     size="sm"
@@ -513,7 +513,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                     disabled={isSubmitting}
                   >
                     <Upload className="h-4 w-4 mr-2" />
-                    Change
+                    Cambiar
                   </Button>
                 </div>
               ) : (
@@ -522,7 +522,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload className="h-4 w-4 mr-2" />
-                  Upload Image
+                  Subir Imagen
                 </Button>
               )}
 
@@ -535,16 +535,16 @@ export const ProfileClient = ({ user }: profileProps) => {
               variant="outline"
               disabled={isSubmitting}
               onClick={() => setAvatarModalOpen(false)}>
-              Cancel
+              Cancelar
             </Button>
             <Button
               onClick={handleAvatarUpload}
               disabled={!avatarPreview || isSubmitting}
             >
               {isSubmitting ? <>
-                Saving
+                Guardando
                 <Loader className="animate-spin h-4 w-4 mr-2" />
-              </> : "Save Changes"}
+              </> : "Guardar Cambios"}
             </Button>
           </DialogFooter>
         </DialogContent>

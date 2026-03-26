@@ -80,7 +80,7 @@ export default function UserDetail({ user }: UserDetailProps) {
       <div className="flex items-center gap-4">
         <Button asChild variant="ghost" size="sm">
           <Link href="/platform/admin/users">
-            <ArrowLeft className="h-4 w-4 mr-2" /> Back to users
+            <ArrowLeft className="h-4 w-4 mr-2" /> Volver a usuarios
           </Link>
         </Button>
       </div>
@@ -92,14 +92,14 @@ export default function UserDetail({ user }: UserDetailProps) {
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="flex items-center gap-2">
                 <UserIcon className="h-5 w-5 text-primary" />
-                User Profile
+                Perfil de Usuario
               </CardTitle>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsUserMemberFormOpen(true)}
                 className="h-8 w-8 p-0"
-                title="Edit user information"
+                title="Editar información de usuario"
               >
                 <Pencil className="h-4 w-4" />
               </Button>
@@ -111,7 +111,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                 </div>
                 <h2 className="text-xl font-bold">{user.name}</h2>
                 <Badge variant={user.isActive ? "default" : "destructive"} className="mt-2">
-                  {user.isActive ? 'Active Member' : 'Inactive Member'}
+                  {user.isActive ? 'Miembro Activo' : 'Miembro Inactivo'}
                 </Badge>
               </div>
 
@@ -119,21 +119,21 @@ export default function UserDetail({ user }: UserDetailProps) {
                 <div className="flex items-start gap-3">
                   <Mail className="h-4 w-4 text-muted-foreground mt-1" />
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Email</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">Correo</p>
                     <p className="text-sm">{user.email}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone className="h-4 w-4 text-muted-foreground mt-1" />
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Phone</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">Teléfono</p>
                     <p className="text-sm">{user.phoneNumber}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="h-4 w-4 text-muted-foreground mt-1" />
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Role</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">Rol</p>
                     <p className="text-sm capitalize">{user.role}</p>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ export default function UserDetail({ user }: UserDetailProps) {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-primary" />
-                Subscription
+                Suscripción
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -159,9 +159,9 @@ export default function UserDetail({ user }: UserDetailProps) {
                       <CheckCircle2 className="h-8 w-8 text-green-600 dark:text-green-400" />
                     </div>
                     <div className="text-center">
-                      <p className="font-bold text-lg">Active – Membership</p>
+                      <p className="font-bold text-lg">Membresía Activa</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        User has access to newsletters and resources.
+                        El usuario tiene acceso al dispensario.
                       </p>
                     </div>
                     <Button
@@ -170,7 +170,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                       onClick={handleRevokeAccess}
                       disabled={isSubmittingAccess}
                     >
-                      Revoke Membership Access
+                      Revocar Acceso a Membresía
                     </Button>
                   </>
                 ) : (
@@ -179,9 +179,9 @@ export default function UserDetail({ user }: UserDetailProps) {
                       <XCircle className="h-8 w-8 text-slate-400" />
                     </div>
                     <div className="text-center">
-                      <p className="font-bold text-lg text-muted-foreground">No active product</p>
+                      <p className="font-bold text-lg text-muted-foreground">Sin producto activo</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Grant access to allow the user to view the academy.
+                        Asigna acceso para permitir al usuario ver el dispensario.
                       </p>
                     </div>
                     <Button
@@ -189,7 +189,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                       onClick={handleGrantAccess}
                       disabled={isSubmittingAccess}
                     >
-                      Assign Membership Access
+                      Asignar Acceso a Membresía
                     </Button>
                   </>
                 )}

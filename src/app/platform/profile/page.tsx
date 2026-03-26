@@ -5,8 +5,8 @@ import { getUserById } from '@/actions/users/get-user-by-id'
 import { ProfileClient } from '@/components/platform/ProfileClient'
 
 export const metadata: Metadata = {
-  title: "Profile - Miss Kelly ESL Academy",
-  description: "Manage your profile and subscription settings for Miss Kelly ESL Academy.",
+  title: "Perfil - Casa Quetzal",
+  description: "Gestiona tu perfil y suscripción en Casa Quetzal.",
 }
 
 const ProfilePage = async () => {

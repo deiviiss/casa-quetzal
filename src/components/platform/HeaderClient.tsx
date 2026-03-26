@@ -28,24 +28,24 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
     >
       <div className="container flex flex-col md:h-16 items-center justify-between p-3 gap-2">
         <div className="flex items-center justify-between w-full max-w-5xl">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 h-0 object-contain overflow-hidden">
             <Image
               src="/logo.webp"
-              alt="Miss Kelly ESL Academy"
+              alt="Casa Quetzal"
               width={100}
-              height={0}
+              height={50}
             />
           </Link>
 
           <nav className="hidden md:flex gap-6">
             {hasMembership && (
-              <Link href="/platform/course">
+              <Link href="/platform/dispensary">
                 <motion.span
                   className="text-sm font-medium text-muted-foreground hover:text-primary"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  My Membership
+                  Mi Membresía
                 </motion.span>
               </Link>
             )}
@@ -62,7 +62,7 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Admin Panel
+                    Panel Admin
                   </motion.span>
                 </Link>
               </Button>
@@ -79,7 +79,7 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {isProfilePage ? "Newsletters" : "Profile"}
+                  {isProfilePage ? "Dispensario" : "Perfil"}
                 </motion.span>
               </Link>
             </Button>
@@ -87,13 +87,13 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
         </div>
         <nav className="flex md:hidden gap-6">
           {hasMembership && (
-            <Link href="/platform/course">
+            <Link href="/platform/dispensary">
               <motion.span
                 className="text-sm font-medium text-muted-foreground hover:text-primary"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                My Membership
+                Mi Membresía
               </motion.span>
             </Link>
           )}
