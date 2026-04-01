@@ -16,8 +16,8 @@ export default async function Home() {
         subtitle="Producción agrícola sustentable, conservación genética y trazabilidad jurídica desde el campo mexicano"
         ctaLink="https://www.facebook.com/QuetzalSeeds420"
         ctaText="Únete a nuestra comunidad"
-        desktopImage="/imgs/hero-background.webp"
-        mobileImage="/imgs/hero-background-mobile.webp"
+        desktopImage="/imgs/desktop.png"
+        mobileImage="/imgs/mobile3.png"
         imageAlt="Cultivos regenerativos de cáñamo"
       />
       <>

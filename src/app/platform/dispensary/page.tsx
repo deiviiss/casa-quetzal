@@ -1,5 +1,5 @@
-import { ProductList } from './components/ProductList';
-import { DispensaryProduct } from './components/types';
+import { ProductList } from "@/components/platform/dispensary/ProductList";
+import { DispensaryProduct } from "@/interfaces/product.interface";
 
 const MOCK_PRODUCTS: DispensaryProduct[] = [
   {

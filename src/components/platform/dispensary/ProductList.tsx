@@ -1,5 +1,5 @@
-import { ProductCard } from './ProductCard';
-import { DispensaryProduct } from './types';
+import { DispensaryProduct } from "@/interfaces/product.interface";
+import { ProductCard } from "@/components/platform/dispensary/ProductCard";
 
 interface Props {
   products: DispensaryProduct[];

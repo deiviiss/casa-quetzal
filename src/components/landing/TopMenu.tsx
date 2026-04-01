@@ -9,7 +9,7 @@ import { GiBurningForest } from 'react-icons/gi'
 import { SiHomeassistantcommunitystore } from 'react-icons/si'
 
 export const TopMenu = () => {
-  const logo = '/imgs/logoWeb.png'
+  const logo = '/logo.webp'
   const pathName = usePathname()
 
   const [bgColor, setBgColor] = useState('bg-none')
@@ -20,7 +20,7 @@ export const TopMenu = () => {
   const handleScroll = () => {
     // calculate the vertical scroll percentage
     const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
-    setBgColor(scrolled > fixedScrollThreshold ? 'bg-slate-800' : 'bg-none') // change the background color if the percentage is greater than the fixed value
+    setBgColor(scrolled > fixedScrollThreshold ? 'bg-slate-800/95' : 'bg-none') // change the background color if the percentage is greater than the fixed value
   }
 
   useEffect(() => {
@@ -58,10 +58,10 @@ export const TopMenu = () => {
               </Link>
             </li>
             <li>
-              <Link href="/products" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
+              <Link href="/lobby" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
                 <FaShopLock size={17} />
                 <span className='hidden sm:inline'>
-                  Dispensario digital
+                  Dispensario
                 </span>
               </Link>
             </li>

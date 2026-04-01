@@ -74,7 +74,7 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
               asChild
               variant={isAdminPage ? "outline" : "default"}
             >
-              <Link href={isProfilePage ? "/platform" : "/platform/profile"} >
+              <Link href={isProfilePage ? "/platform/dispensary" : "/platform/profile"} >
                 <motion.span
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

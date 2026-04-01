@@ -27,8 +27,8 @@ export default function AboutUs() {
             <div className="relative">
               <div className="absolute -inset-4 bg-emerald-900/10 rounded-xl transform rotate-2" />
               <Image
-                src="/imgs/petpach_base.png"
-                alt="Milpas regenerativas"
+                src="/imgs/productores.png"
+                alt="Productor local en la comunidad"
                 width={600}
                 height={400}
                 className="relative rounded-xl shadow-xl h-80 w-full object-cover"
@@ -109,7 +109,7 @@ export default function AboutUs() {
             <div className="relative">
               <div className="absolute -inset-4 bg-teal-900/10 rounded-xl transform rotate-1" />
               <Image
-                src="/imgs/led.png"
+                src="/imgs/productores.jpg"
                 alt="Junta Ejidal de Tinun"
                 width={600}
                 height={400}

@@ -26,7 +26,7 @@ export const Footer = async () => {
               >Membresías</Link>
               </li>
               <li>
-                <Link href="/products" className="text-gray-400 hover:text-white">Dispensario digital</Link></li>
+                <Link href="/products" className="text-gray-400 hover:text-white">Catálogo de productos</Link></li>
               <li>
                 {
                   session?.user ? (

@@ -12,3 +12,11 @@ export interface Product {
   isAvailable: boolean;
   isExclusive: boolean;
 }
+
+export interface DispensaryProduct {
+  id: string;
+  name: string;
+  thc: string;
+  type: 'Indica' | 'Sativa' | 'Hybrid';
+  description: string;
+}

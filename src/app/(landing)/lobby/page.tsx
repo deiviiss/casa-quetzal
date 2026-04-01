@@ -1,31 +1,25 @@
-import { getProducts } from "@/actions/products/get-products"
 import CallToAction from "@/components/landing/CallToActionMemberships"
 import HeroSection from "@/components/landing/HeroSection"
-import ProductCards from "@/components/landing/ProductCards"
-import ProductStructuredData from "@/components/landing/ProductStructuredData"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Productos - Casa Quetzal Cannabis Seeds",
+  title: "Lobby - Casa Quetzal Cannabis Seeds",
   description:
     "Descubre nuestros productos premium de cáñamo: semillas certificadas, pre-rolados, cremas CBD y más. Calidad y trazabilidad garantizadas.",
 }
 
-export default async function Products() {
-  const { products } = await getProducts()
-
+export default async function LobbyPage() {
   return (
     <main className="min-h-screen">
-      {/* SEO */}
-      <ProductStructuredData products={products} />
       <HeroSection
-        title="Descubre nuestros productos"
-        subtitle="Semillas certificadas, productos derivados y más, con trazabilidad garantizada"
-        desktopImage="/imgs/desktop2.png"
-        mobileImage="/imgs/mobile2.png"
+        title="Acceso exclusivo a flores"
+        subtitle="De interior y exterior"
+        desktopImage="/imgs/desktop4.png"
+        mobileImage="/imgs/mobile4.png"
         imageAlt="Variedad de productos de cáñamo de CQCS"
+        ctaLink="/auth/login"
+        ctaText="Iniciar sesión"
       />
-      <ProductCards products={products} />
       <CallToAction
         title="¿Tienes dudas? Escríbenos y te asesoramos en tu compra"
         buttonText="Chatear con un Asesor"
