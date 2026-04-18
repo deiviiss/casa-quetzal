@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 
 interface Membership {
+  id: string
   title: string
   icon: string
   price?: string
@@ -24,6 +25,7 @@ interface MembershipCardProps {
 
 const memberships: Membership[] = [
   {
+    id: "consumer",
     title: "Consumer",
     icon: "/imgs/icon-consumers.png",
     price: "$8,500 MXN",
@@ -40,6 +42,7 @@ const memberships: Membership[] = [
     buttonText: "Únete al Protocolo",
   },
   {
+    id: "productores",
     title: "Productores",
     icon: "/imgs/icon-productores.png",
     description: "Acceso a semillas certificadas y acompañamiento técnico",
@@ -54,6 +57,7 @@ const memberships: Membership[] = [
     buttonText: "Ser Productor",
   },
   {
+    id: "distribuidores",
     title: "Distribuidores",
     icon: "/imgs/icon-distribuidor.svg",
     description: "Acceso preferencial a productos y lotes específicos",
@@ -68,6 +72,7 @@ const memberships: Membership[] = [
     buttonText: "Ser Distribuidor",
   },
   {
+    id: "socios",
     title: "Socios",
     icon: "/imgs/icon-socios.png",
     description: "Participación estratégica dentro del ecosistema CQCS",
@@ -140,7 +145,7 @@ export default function MembershipCards() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12 max-w-6xl mx-auto">
           {memberships.map((membership, index) => (
             <MembershipCard
-              key={membership.title}
+              key={membership.id}
               membership={membership}
               index={index}
               onOpenRTQ={membership.title === "Productores" ? () => setIsRTQModalOpen(true) : undefined}
@@ -154,27 +159,45 @@ export default function MembershipCards() {
   )
 }
 
-
 function MembershipCard({ membership, index, onOpenRTQ }: MembershipCardProps) {
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("annual")
+
+  const isConsumer = membership.id === "consumer"
+
+  const currentMembership = (isConsumer && billingCycle === "monthly") ? {
+    ...membership,
+    price: "$99 MXN",
+    period: "mensual",
+    description: "Ecosistema flexible con beneficios comerciales",
+    benefits: [
+      "Acceso al Entorno Digital CQCS",
+      "Tarifas y Descuentos Preferenciales",
+      "Servicio de Envío a Domicilio Directo",
+      "Logística Simplificada y Eficiente",
+      "Cobertura en zonas con operación activa",
+    ],
+  } : membership
+
   return (
     <motion.div
       className="group relative h-full"
+      layout
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -8 }}
     >
       {/* Card */}
       <div className="relative h-full bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200/50 overflow-hidden flex flex-col">
         {/* Gradient accent bar */}
-        <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${membership.gradient}`} />
+        <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${currentMembership.gradient}`} />
 
         {/* Icon */}
         <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 flex justify-center">
           <div className="relative w-20 h-20">
             <Image
-              src={membership.icon}
-              alt={`${membership.title} icon`}
+              src={currentMembership.icon}
+              alt={`${currentMembership.title} icon`}
               fill
               className="object-contain"
             />
@@ -183,47 +206,89 @@ function MembershipCard({ membership, index, onOpenRTQ }: MembershipCardProps) {
 
         {/* Title */}
         <h3 className="text-2xl font-bold mb-2 text-slate-800">
-          {membership.title}
+          {currentMembership.title}
         </h3>
 
-        {/* Description */}
-        <p className="text-sm text-slate-500 mb-4 italic">
-          {membership.description}
-        </p>
-
-        {/* Price (if available) */}
-        {membership.price && (
+        {/* Billing Toggle (Only for Consumer) */}
+        {isConsumer && (
           <div className="mb-6">
-            <div className="flex items-baseline gap-1 text-end">
-              <span className={`text-3xl font-bold bg-gradient-to-r ${membership.gradient} bg-clip-text text-transparent`}>
-                {membership.price}
-              </span>
-              {membership.period && (
-                <span className="text-slate-500 text-sm">/{membership.period}</span>
-              )}
+            <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100 w-fit">
+              <button
+                onClick={() => setBillingCycle("monthly")}
+                className={`text-[10px] px-2.5 py-1 rounded-md font-bold transition-all ${billingCycle === "monthly" ? "bg-emerald-500 text-white shadow-sm" : "text-slate-400 hover:text-slate-600"}`}
+              >
+                MENSUAL
+              </button>
+              <button
+                onClick={() => setBillingCycle("annual")}
+                className={`text-[10px] px-2.5 py-1 rounded-md font-bold transition-all ${billingCycle === "annual" ? "bg-emerald-500 text-white shadow-sm" : "text-slate-400 hover:text-slate-600"}`}
+              >
+                ANUAL
+              </button>
             </div>
           </div>
         )}
 
-        {/* Benefits */}
-        <ul className="mb-6 space-y-3 flex-grow">
-          {membership.benefits.map((benefit, idx) => (
-            <li key={idx} className="flex items-start text-sm text-slate-600">
-              <svg
-                className="w-5 h-5 mr-2 text-emerald-500 flex-shrink-0 mt-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="leading-snug">{benefit}</span>
-            </li>
-          ))}
-        </ul>
+        {/* Description & Price AnimatePresence */}
+        <div className="min-h-[120px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${currentMembership.id}-${billingCycle}`}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-sm text-slate-500 mb-4 italic">
+                {currentMembership.description}
+              </p>
+
+              {currentMembership.price && (
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-1">
+                    <span className={`text-3xl font-bold bg-gradient-to-r ${currentMembership.gradient} bg-clip-text text-transparent`}>
+                      {currentMembership.price}
+                    </span>
+                    {currentMembership.period && (
+                      <span className="text-slate-500 text-sm">/{currentMembership.period}</span>
+                    )}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Benefits AnimatePresence */}
+        <div className="flex-grow">
+          <AnimatePresence mode="wait">
+            <motion.ul
+              key={`${currentMembership.id}-${billingCycle}`}
+              className="space-y-3"
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              {currentMembership.benefits.map((benefit, idx) => (
+                <li key={idx} className="flex items-start text-sm text-slate-600">
+                  <svg
+                    className="w-5 h-5 mr-2 text-emerald-500 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="leading-snug">{benefit}</span>
+                </li>
+              ))}
+            </motion.ul>
+          </AnimatePresence>
+        </div>
 
         {/* Buttons */}
-        <div className="space-y-3 mt-auto">
+        <div className="space-y-3 mt-8">
           {onOpenRTQ && (
             <button
               onClick={onOpenRTQ}
@@ -242,11 +307,11 @@ function MembershipCard({ membership, index, onOpenRTQ }: MembershipCardProps) {
           )}
 
           <Link
-            href={`https://wa.me/529999688834?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20membres%C3%ADa%20${membership.title}`}
+            href={`https://wa.me/529999688834?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20membres%C3%ADa%20${currentMembership.title}%20(${currentMembership.period || 'anual'})`}
             target="_blank"
-            className={`group/btn w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r ${membership.gradient} hover:opacity-90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl`}
+            className={`group/btn w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r ${currentMembership.gradient} hover:opacity-90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl`}
           >
-            <span>{membership.buttonText}</span>
+            <span>{currentMembership.buttonText}</span>
             <svg
               className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300"
               fill="none"
@@ -259,7 +324,7 @@ function MembershipCard({ membership, index, onOpenRTQ }: MembershipCardProps) {
         </div>
 
         {/* Hover effect gradient */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${membership.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl pointer-events-none`} />
+        <div className={`absolute inset-0 bg-gradient-to-br ${currentMembership.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl pointer-events-none`} />
       </div>
     </motion.div>
   )

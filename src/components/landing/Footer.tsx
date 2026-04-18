@@ -4,7 +4,7 @@ import { auth } from '@/auth'
 export const Footer = async () => {
   const session = await auth()
   return (
-    <footer className="w-full bg-slate-900 text-gray-300 pt-12 pb-5 print:hidden">
+    <footer className="w-full bg-slate-900 text-gray-300 pb-5  print:hidden">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* About Us Section */}
@@ -49,11 +49,18 @@ export const Footer = async () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-400 tracking-wider">
-          <span>© {new Date().getFullYear()} </span>
-          <span>
-            Casa Quetzal Cannabis Seeds. Todos los derechos reservados.
-          </span>
+        <div className="mt-8 pt-8 border-t border-gray-800 text-center text-xs text-gray-400 tracking-wider">
+          <p className='font-light text-gray-400'>
+            Casa Quetzal Cannabis Seeds® es una marca registrada conforme a las disposiciones aplicables en materia de propiedad industrial.
+          </p>
+
+          <p className='font-light text-gray-400'>
+            El uso, reproducción o distribución no autorizada constituye una infracción susceptible de acciones legales.
+            Proyecto piloto autorizado en el marco de Producción Primaria con Cannabis psicoactivo y no psicoactivo, en cumplimiento del Protocolo de Investigación registrado bajo el expediente EXP. 354/2022-VI-B.
+          </p>
+          <p className='font-light text-gray-400'>
+            Las flores exhibidas provienen exclusivamente de productores formalmente vinculados al citado protocolo, en observancia de la normatividad vigente.
+          </p>
         </div>
       </div>
     </footer>

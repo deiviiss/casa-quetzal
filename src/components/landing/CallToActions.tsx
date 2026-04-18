@@ -38,16 +38,25 @@ export default function CallToAction() {
   }
 
   return (
-    <section className="py-16 bg-slate-800 text-white">
+    <section className="py-20 bg-slate-800 text-white">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.h2
-          className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-white"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
           Únete a la Revolución del Cáñamo
         </motion.h2>
+        <motion.p
+          className="text-center text-lg mb-8 text-gray-300 max-w-2xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          Suscríbete a nuestro boletín para recibir las últimas noticias sobre conservación genética, 
+          sustentabilidad y el desarrollo de la industria del cáñamo.
+        </motion.p>
         <motion.form
           onSubmit={handleSubmit}
           className="max-w-md mx-auto"

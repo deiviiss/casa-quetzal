@@ -13,8 +13,8 @@ export default function MembershipPage() {
   return (
     <main className="min-h-screen">
       <HeroSection
-        title="Sistema RTQ"
-        subtitle="Agricultura tradicional aplicada con lógica de conservación y producción sustentable"
+        title="Elige tu mejor esquema"
+        subtitle="Accede a beneficios exclusivos y forma parte de nuestra comunidad"
         desktopImage="/imgs/desktop3.png"
         mobileImage="/imgs/mobile.png"
         imageAlt="Comunidad CQCS y beneficios de membresía"

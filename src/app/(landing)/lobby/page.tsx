@@ -1,3 +1,4 @@
+import { auth } from "@/auth"
 import CallToAction from "@/components/landing/CallToActionMemberships"
 import HeroSection from "@/components/landing/HeroSection"
 import type { Metadata } from "next"
@@ -9,6 +10,8 @@ export const metadata: Metadata = {
 }
 
 export default async function LobbyPage() {
+  const session = await auth()
+
   return (
     <main className="min-h-screen">
       <HeroSection
@@ -17,8 +20,8 @@ export default async function LobbyPage() {
         desktopImage="/imgs/desktop4.png"
         mobileImage="/imgs/mobile4.png"
         imageAlt="Variedad de productos de cáñamo de CQCS"
-        ctaLink="/auth/login"
-        ctaText="Iniciar sesión"
+        ctaLink={session?.user ? "/platform/profile" : "/auth/login"}
+        ctaText={session?.user ? "Mi Perfil" : "Iniciar sesión"}
       />
       <CallToAction
         title="¿Tienes dudas? Escríbenos y te asesoramos en tu compra"
