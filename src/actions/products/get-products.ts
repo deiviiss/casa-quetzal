@@ -1,6 +1,6 @@
 'use server'
 
-import { Product } from "@/types/product.interface"
+import { Product } from "@/interfaces/product.interface"
 
 // import prisma from '@/lib/prisma'
 
@@ -9,7 +9,7 @@ const products: Product[] = [
     id: '1',
     name: "Pre-Rolados K’aax Ik’",
     image: "/imgs/pre-rolados.png",
-    shortDescription: "Disfruta de la experiencia pura del cáñamo con nuestros pre-rolados premium. De flores curadas de 2 años sin fertilizantes sintéticos.",
+    shortDescription: "Disfruta la experiencia pura del cáñamo con nuestros pre-rolados premium. Flores curadas 2 años sin fertilizantes sintéticos.",
     longDescription: "Nuestros pre-rolados K’aax Ik’ están elaborados con flores de cáñamo curadas por más de 2 años, garantizando una experiencia suave, aromática y de la más alta calidad. Sin fertilizantes sintéticos, preservamos la pureza del producto y promovemos la regeneración del suelo en su cultivo.",
     benefits: [
       "Relajación profunda y natural.",

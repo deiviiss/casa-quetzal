@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Oswald } from "next/font/google";
 import "./globals.css";
-import { TopMenu } from "@/components/TopMenu";
-import { Footer } from "@/components/Footer";
-import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
+import { Providers } from "@/components/providers/Provider";
+import { Toaster } from "sonner";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -23,14 +22,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${oswald.variable} antialiased`}
       >
-        <TopMenu />
-        {children}
-        <Footer />
-        <FloatingWhatsAppButton />
+        <Providers>
+          {children}
+          <Toaster
+            position="top-right"
+            expand={false}
+            richColors
+            toastOptions={{
+              style: {
+                borderRadius: '1rem',
+              },
+              className: 'font-sans',
+            }}
+          />
+        </Providers>
       </body>
     </html>
   );
