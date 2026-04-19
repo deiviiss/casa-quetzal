@@ -17,10 +17,10 @@ export default function RelatedProducts({ relatedProducts }: RelatedProductsProp
   }
 
   return (
-    <section className="bg-gray-50 py-16">
-      <div className="container mx-auto px-4">
+    <section className="bg-gray-50 py-20">
+      <div className="container mx-auto px-4 max-w-6xl">
         <motion.h2
-          className="text-3xl font-bold mb-8 text-center"
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-gray-900"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -37,7 +37,7 @@ export default function RelatedProducts({ relatedProducts }: RelatedProductsProp
               transition={{ duration: 0.8, delay: index * 0.1 }}
             >
               <Link href={`/products/${product.id}`}>
-                <Card className="h-full hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+                <Card className="h-full rounded-xl shadow-xl border border-gray-200 hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between overflow-hidden">
 
                   <>
                     <Image
@@ -45,20 +45,20 @@ export default function RelatedProducts({ relatedProducts }: RelatedProductsProp
                       alt={product.name}
                       width={400}
                       height={300}
-                      className="w-full h-48 object-cover rounded-t-lg"
+                      className="w-full h-48 object-cover rounded-t-xl"
                     />
 
                     <CardHeader>
-                      <CardTitle>{product.name}</CardTitle>
+                      <CardTitle className="text-xl font-semibold text-emerald-900">{product.name}</CardTitle>
                     </CardHeader>
                   </>
 
                   <CardContent className="pb-0 flex-1 ">
-                    <p className="text-gray-600 mb-4">{product.shortDescription}</p>
+                    <p className="text-gray-700 leading-relaxed mb-4">{product.shortDescription}</p>
                   </CardContent>
 
                   <CardContent>
-                    <p className="text-xl font-bold text-slate-600 text-end">${product.price} MXN</p>
+                    <p className="text-xl font-bold text-emerald-900 text-end">${product.price} MXN</p>
                   </CardContent>
                 </Card>
               </Link>

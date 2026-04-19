@@ -61,7 +61,6 @@ export default async function ProductPage({ params }: { params: Params }) {
 
   return (
     <div className="min-h-screen pt-20">
-
       <ProductDetail product={product} />
       <RelatedProducts relatedProducts={relatedProducts} />
     </div >
