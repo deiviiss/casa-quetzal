@@ -6,17 +6,24 @@ description: >
   Trigger when user says: "commit", "mensaje de commit", "generate commit", "commit message".
 ---
 
-Generate a commit message in markdown using this structure:
+Generate a commit message.
+
+## CRITICAL OUTPUT RULE
+
+- ALWAYS return the response inside a markdown code block
+- Use triple backticks with `markdown`
+- Do NOT return plain text
+- Do NOT add explanations outside the block
 
 ## Rules
 
-- Always in English
+- English only
 - Use Conventional Commit types (feat, fix, refactor, etc.)
 - Include a gitmoji
-- Keep summary ≤ 50 characters
+- Summary ≤ 50 characters
 - Be concise and clear
 
-## Output format
+## Output format (inside markdown block)
 
 <type>: <gitmoji> <summary>
 
@@ -26,17 +33,15 @@ Generate a commit message in markdown using this structure:
 
 ### Description of Changes
 - <Detailed explanation of what, why, impact>
+Behavior
+If diff present → infer changes
+If no diff → summarize from prompt
+Avoid fluff
+Prioritize clarity
+Trigger phrases
+"dame un commit"
+"generate commit message"
+"mensaje de commit"
+"commit for this diff"
 
-## Behavior
-
-- Infer changes from diff if provided
-- If no diff, summarize based on user description
-- Prioritize clarity + real engineering intent
-- Avoid fluff or generic wording
-
-## Example trigger phrases
-
-- "dame un commit"
-- "generate commit message"
-- "mensaje de commit"
-- "commit for this diff"
+---
