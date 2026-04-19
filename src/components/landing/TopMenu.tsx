@@ -34,11 +34,11 @@ export const TopMenu = () => {
   return (
     <div className={`w-full fixed top-0 z-20 text-white ${isProductDetail ? 'bg-slate-800' : bgColor} transition-colors duration-300 py-1`}>
       <header className="container mx-auto lg:px-20 px-4 py-1 flex justify-between items-center">
-        <Link href={'/'}>
-          <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2">
+          <Link href={'/'}>
             <Image src={logo} alt="logo" width={291} height={366} className='w-14 ' />
-          </div>
-        </Link>
+          </Link>
+        </div>
         <nav>
           <ul className="space-x-4 flex">
             <li>
