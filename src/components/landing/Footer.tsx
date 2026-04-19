@@ -4,7 +4,7 @@ import { auth } from '@/auth'
 export const Footer = async () => {
   const session = await auth()
   return (
-    <footer className="w-full bg-slate-900 text-gray-300 pb-5  print:hidden">
+    <footer className="w-full bg-slate-900 text-gray-300 p-5  print:hidden">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* About Us Section */}
