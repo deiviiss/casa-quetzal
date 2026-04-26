@@ -1,6 +1,7 @@
 import { TopMenu } from "@/components/landing/TopMenu"
 import { Footer } from "@/components/landing/Footer"
 import FloatingWhatsAppButton from "@/components/landing/FloatingWhatsAppButton"
+import AgeVerificationModal from "@/components/landing/AgeVerificationModal"
 
 export default async function LandingLayout({
   children,
@@ -15,6 +16,7 @@ export default async function LandingLayout({
         {children}
         <Footer />
         <FloatingWhatsAppButton />
+        <AgeVerificationModal />
       </main>
     </>
   )
