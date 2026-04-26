@@ -1,6 +1,8 @@
 import { auth } from "@/auth"
 import CallToAction from "@/components/landing/CallToActionMemberships"
 import HeroSection from "@/components/landing/HeroSection"
+import LobbyDispensario from "@/components/landing/LobbyDispensario"
+import LoginCTA from "@/components/landing/LoginCTA"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -23,6 +25,8 @@ export default async function LobbyPage() {
         ctaLink={session?.user ? "/platform/profile" : "/auth/login"}
         ctaText={session?.user ? "Mi Perfil" : "Iniciar sesión"}
       />
+      <LobbyDispensario />
+      <LoginCTA isLoggedIn={!!session?.user} />
       <CallToAction
         title="¿Tienes dudas? Escríbenos y te asesoramos en tu compra"
         buttonText="Chatear con un Asesor"

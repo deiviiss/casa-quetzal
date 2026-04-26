@@ -42,9 +42,9 @@ export const Footer = async () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Ayuda</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/" className="text-gray-400 hover:text-white">Términos y condiciones</Link></li>
-              <li><Link href="/" className="text-gray-400 hover:text-white">Políticas de privacidad</Link></li>
-              <li><Link href="/" className="text-gray-400 hover:text-white">FAQs</Link></li>
+              <li><Link href="/terms" className="text-gray-400 hover:text-white">Términos y condiciones</Link></li>
+              <li><Link href="/privacy" className="text-gray-400 hover:text-white">Políticas de privacidad</Link></li>
+              <li><Link href="/faqs" className="text-gray-400 hover:text-white">FAQs</Link></li>
             </ul>
           </div>
         </div>
