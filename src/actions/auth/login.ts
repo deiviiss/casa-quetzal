@@ -23,9 +23,9 @@ export const login = async (email: string, password: string) => {
   try {
     await signIn('credentials', { email, password, redirect: false })
 
-    return { ok: true, message: 'Session started successfully' }
+    return { ok: true, message: 'Inicio de sesión exitoso' }
   } catch (error) {
     console.error('Error during sign-in:', error)
-    return { ok: false, message: 'Failed to start session' }
+    return { ok: false, message: 'No se pudo iniciar sesión' }
   }
 }

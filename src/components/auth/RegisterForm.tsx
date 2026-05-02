@@ -11,30 +11,30 @@ import { login } from '@/actions/auth/login'
 import { registerUser } from '@/actions/auth/register'
 import { noticeFailure, noticeSuccess } from '@/components/toast-notifications/ToastNotifications'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { titleFont } from '@/config/fonts'
+import { titleFont, textFont } from '@/config/fonts'
 import { motion } from 'framer-motion'
-import { BookOpen } from 'lucide-react'
+import Image from 'next/image'
+import { BackButton } from '@/components/ui/back-button'
 
 const registerSchema = z.object({
-  name: z.string().min(3, { message: 'Name is required' }).max(255, { message: 'Name must be less than 255 characters' }),
+  name: z.string().min(3, { message: 'El nombre es requerido' }).max(255, { message: 'El nombre debe tener menos de 255 caracteres' }),
   email: z.string().email({
-    message: 'The email address is not valid'
+    message: 'El correo electrónico es inválido'
   }),
   phoneNumber: z
     .string()
     .min(10, {
-      message: 'The phone number must be 10 characters without the country code'
+      message: 'El número de teléfono debe tener 10 caracteres sin el código de país'
     })
     .max(10, {
-      message: 'The phone number must be 10 characters without the country code'
+      message: 'El número de teléfono debe tener 10 caracteres sin el código de país'
     }),
   password: z
     .string()
     .min(6, {
-      message: 'The password must be at least 6 characters long'
+      message: 'La contraseña debe tener al menos 6 caracteres'
     })
 })
 
@@ -86,33 +86,55 @@ export const RegisterForm = () => {
 
   return (
     <Form {...form} >
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full mb-10'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-md mx-auto mt-20 mb-5"
+          className="w-full max-w-xl mx-auto"
         >
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-center mb-2">
-                <BookOpen className="h-10 w-10 text-primary" />
-              </div>
-              <CardTitle className={`${titleFont.className} text-2xl text-center`}>Create an account</CardTitle>
-              <CardDescription className='text-center' >Enter your details to create your account</CardDescription>
-            </CardHeader>
+          <div className="flex justify-start mb-6">
+            <BackButton href="/" label="Inicio" variant="ghost" className='mt-5' />
+          </div>
+          <div className="space-y-8">
+            <div className="flex flex-col items-center space-y-4">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Image
+                  src="/imgs/quetzal.png"
+                  alt="Casa Quetzal"
+                  width={140}
+                  height={140}
+                  className="drop-shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                  priority
+                />
+              </motion.div>
+              <h1 className={`${titleFont.className} text-4xl text-center text-white text-pretty tracking-tight`}>
+                Crear una cuenta
+              </h1>
+              <p className="text-center text-slate-500 text-sm">
+                Ingresa tus datos para registrarte en la plataforma
+              </p>
+            </div>
 
-            <CardContent className='space-y-3'>
+            <div className='grid gap-6'>
               <FormField
                 control={form.control}
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor='name'>Full Name</FormLabel>
+                    <FormLabel className="text-slate-300">Nombre completo</FormLabel>
                     <FormControl>
-                      <Input placeholder='Full Name' {...field} />
+                      <Input
+                        placeholder='Tu nombre completo'
+                        {...field}
+                        style={{ colorScheme: 'dark' }}
+                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-400/80" />
                   </FormItem>
                 )}
               />
@@ -122,11 +144,16 @@ export const RegisterForm = () => {
                 name='phoneNumber'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor='phoneNumber'>Phone Number</FormLabel>
+                    <FormLabel className="text-slate-300">Número de teléfono</FormLabel>
                     <FormControl>
-                      <Input placeholder='Phone Number' {...field} />
+                      <Input
+                        placeholder='10 dígitos'
+                        {...field}
+                        style={{ colorScheme: 'dark' }}
+                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-400/80" />
                   </FormItem>
                 )}
               />
@@ -136,11 +163,17 @@ export const RegisterForm = () => {
                 name='email'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor='email'>Email</FormLabel>
+                    <FormLabel className="text-slate-300">Correo electrónico</FormLabel>
                     <FormControl>
-                      <Input placeholder='Email' {...field} />
+                      <Input
+                        placeholder='ejemplo@casaquetzal.com'
+                        {...field}
+                        style={{ colorScheme: 'dark' }}
+                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
+                        autoComplete="email"
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-400/80" />
                   </FormItem>
                 )}
               />
@@ -150,58 +183,73 @@ export const RegisterForm = () => {
                 name='password'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor='password'>Password</FormLabel>
+                    <FormLabel className="text-slate-300">Contraseña</FormLabel>
                     <FormControl>
-                      <Input type='password' placeholder='Password' {...field} />
+                      <Input
+                        type='password'
+                        placeholder='••••••••'
+                        {...field}
+                        style={{ colorScheme: 'dark' }}
+                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
+                        autoComplete="new-password"
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-400/80" />
                   </FormItem>
                 )}
               />
               <div
-                className=''
+                className='min-h-[20px]'
                 aria-live='polite'
                 aria-atomic='true'
               >
                 {
                   error && (
-                    <div className='flex mb-2 text-red-600 text-sm'>
-                      <IoInformationOutline className='h-5 w-5' />
-                      <p className=''>Invalid credentials</p>
-                    </div>
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className='flex items-center gap-2 text-red-400 text-sm bg-red-400/10 p-2 rounded-md border border-red-400/20'
+                    >
+                      <IoInformationOutline className='h-4 w-4' />
+                      <p>Credenciales inválidas</p>
+                    </motion.div>
                   )
                 }
               </div>
-            </CardContent>
+            </div>
 
-            <CardFooter className='space-y-3 flex-col'>
+            <div className='flex flex-col gap-4'>
               <Button
                 type='submit'
                 disabled={isSubmitting}
-                className='w-full'
+                className='w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold h-12 rounded-lg transition-colors active:scale-[0.98]'
               >
-                Create Account
+                {isSubmitting ? 'Creando cuenta…' : 'Crear cuenta'}
               </Button>
 
-              {/* divider line */}
-              <div className="flex w-full items-center my-5">
-                <div className="flex-1 border-t border-gray-500"></div>
-                <span className="px-2 text-gray-600">or</span>
-                <div className="flex-1 border-t border-gray-500"></div>
+              <div className="relative w-full py-2">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-white/5" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-transparent px-2 text-slate-600">O</span>
+                </div>
               </div>
 
               <Button
                 asChild
-                variant={'secondary'}
-                className='w-full'>
+                variant='destructive'
+                className='w-full text-slate-400 hover:text-white hover:bg-red-50/5 h-12 transition-colors'
+              >
                 <Link
                   href="/auth/login"
+                  className={textFont.className}
                 >
-                  Login
+                  Iniciar sesión
                 </Link>
               </Button>
-            </CardFooter>
-          </Card>
+            </div>
+          </div>
         </motion.div>
       </form>
     </Form >

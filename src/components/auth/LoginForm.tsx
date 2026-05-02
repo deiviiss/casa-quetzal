@@ -9,7 +9,6 @@ import { IoInformationOutline } from 'react-icons/io5'
 import { z } from 'zod'
 import { login } from '@/actions/auth/login'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { titleFont, textFont } from '@/config/fonts'
@@ -20,16 +19,16 @@ import { BackButton } from '@/components/ui/back-button'
 
 const loginSchema = z.object({
   email: z.string({
-    required_error: 'Email is required',
-    message: 'Invalid email address'
+    required_error: 'El correo electrónico es requerido',
+    message: 'Correo electrónico inválido'
   }).email({
-    message: 'Invalid email address'
+    message: 'Correo electrónico inválido'
   }),
   password: z.string({
-    required_error: 'Password is required',
-    message: 'Invalid password'
+    required_error: 'La contraseña es requerida',
+    message: 'Contraseña inválida'
   }).min(6, {
-    message: 'Password must be at least 6 characters long'
+    message: 'La contraseña debe tener al menos 6 caracteres'
   })
 })
 
@@ -72,44 +71,41 @@ export const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full mb-10'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-md mx-auto space-y-4"
+          className="w-full max-w-xl mx-auto"
         >
-          <div className="flex justify-start">
-            <BackButton href="/" label="Inicio" variant="ghost" />
+          <div className="flex justify-start mb-6">
+            <BackButton href="/" label="Inicio" variant="ghost" className='mt-5' />
           </div>
-          <Card className="bg-slate-900/40 backdrop-blur-xl border-white/10 shadow-2xl overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent pointer-events-none" />
 
-            <CardHeader className="relative z-10 pt-8">
-              <div className="flex items-center justify-center mb-6">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <Image
-                    src="/imgs/quetzal.png"
-                    alt="Casa Quetzal"
-                    width={140}
-                    height={140}
-                    className="drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                    priority
-                  />
-                </motion.div>
-              </div>
-              <CardTitle className={`${titleFont.className} text-3xl text-center text-white tracking-tight`}>
+          <div className="space-y-8">
+            <div className="flex flex-col items-center space-y-4">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Image
+                  src="/imgs/quetzal.png"
+                  alt="Casa Quetzal"
+                  width={140}
+                  height={140}
+                  className="drop-shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                  priority
+                />
+              </motion.div>
+              <h1 className={`${titleFont.className} text-4xl text-center text-white text-pretty tracking-tight`}>
                 Bienvenido
-              </CardTitle>
-              <CardDescription className="text-center text-slate-400 mt-2">
+              </h1>
+              <p className="text-center text-slate-500 text-sm">
                 Ingresa tus credenciales para acceder a la plataforma
-              </CardDescription>
-            </CardHeader>
+              </p>
+            </div>
 
-            <CardContent className='grid gap-6 relative z-10'>
+            <div className='grid gap-6'>
               <FormField
                 control={form.control}
                 name='email'
@@ -121,12 +117,13 @@ export const LoginForm = () => {
                         placeholder='ejemplo@casaquetzal.com'
                         {...field}
                         value={field.value}
-                        className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/50 focus-visible:border-emerald-500/50 transition-all"
+                        style={{ colorScheme: 'dark' }}
+                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
                         autoComplete="email"
                         spellCheck={false}
                       />
                     </FormControl>
-                    <FormMessage className="text-emerald-400/80" />
+                    <FormMessage className="text-red-400/80" />
                   </FormItem>
                 )}
               />
@@ -143,11 +140,12 @@ export const LoginForm = () => {
                         placeholder='••••••••'
                         {...field}
                         value={field.value}
-                        className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/50 focus-visible:border-emerald-500/50 transition-all"
+                        style={{ colorScheme: 'dark' }}
+                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
                         autoComplete="current-password"
                       />
                     </FormControl>
-                    <FormMessage className="text-emerald-400/80" />
+                    <FormMessage className="text-red-400/80" />
                   </FormItem>
                 )}
               />
@@ -170,30 +168,30 @@ export const LoginForm = () => {
                   )
                 }
               </div>
-            </CardContent>
+            </div>
 
-            <CardFooter className='flex flex-col gap-4 relative z-10 pb-8'>
+            <div className='flex flex-col gap-4'>
               <Button
                 type='submit'
                 disabled={isSubmitting}
-                className='w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-6 rounded-lg transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-[0.98]'
+                className='w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold h-12 rounded-lg transition-colors active:scale-[0.98]'
               >
                 {isSubmitting ? 'Iniciando sesión…' : 'Iniciar sesión'}
               </Button>
 
               <div className="relative w-full py-2">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-white/10" />
+                  <span className="w-full border-t border-white/5" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-transparent px-2 text-slate-500">O</span>
+                  <span className="bg-transparent px-2 text-slate-600">O</span>
                 </div>
               </div>
 
               <Button
                 asChild
-                variant='ghost'
-                className='w-full text-slate-300 hover:text-white hover:bg-white/5 py-6'
+                variant='secondary'
+                className='w-full text-slate-400 hover:text-white hover:bg-white/5 h-12 transition-colors'
               >
                 <Link
                   href={`/auth/new-account?redirectTo=${redirectTo}`}
@@ -202,8 +200,8 @@ export const LoginForm = () => {
                   Crear una cuenta nueva
                 </Link>
               </Button>
-            </CardFooter>
-          </Card>
+            </div>
+          </div>
         </motion.div>
       </form>
     </Form>

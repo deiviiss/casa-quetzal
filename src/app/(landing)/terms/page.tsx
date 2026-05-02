@@ -12,8 +12,8 @@ export default function TermsPage() {
       <HeroSection
         title="Términos y Condiciones"
         subtitle="Marco jurídico y operativo de nuestra comunidad"
-        desktopImage="/imgs/background.png"
-        mobileImage="/imgs/mobile2.png"
+        desktopImage="/imgs/desktop6.png"
+        mobileImage="/imgs/mobile6.png"
         imageAlt="Términos y condiciones Casa Quetzal"
       />
 
@@ -23,7 +23,7 @@ export default function TermsPage() {
             <h2 className="text-3xl font-bold mb-8 text-slate-800 border-b border-slate-100 pb-4 uppercase tracking-tight">
               Términos y Condiciones de Membresía
             </h2>
-            
+
             <div className="space-y-8 text-slate-700 leading-relaxed text-sm md:text-base">
               <div>
                 <h3 className="text-xl font-bold text-slate-800 mb-3">1. Naturaleza de la Membresía</h3>
