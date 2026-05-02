@@ -12,8 +12,8 @@ export default function PrivacyPage() {
       <HeroSection
         title="Política de Privacidad"
         subtitle="Protección de datos y transparencia en nuestra plataforma"
-        desktopImage="/imgs/desktop2.png"
-        mobileImage="/imgs/mobile3.png"
+        desktopImage="/imgs/desktop5.png"
+        mobileImage="/imgs/mobile5.png"
         imageAlt="Privacidad Casa Quetzal"
       />
 
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
             <h2 className="text-3xl font-bold mb-8 text-slate-800 border-b border-slate-100 pb-4 uppercase tracking-tight">
               Política de Privacidad y Protección de Datos Personales
             </h2>
-            
+
             <div className="space-y-8 text-slate-700 leading-relaxed text-sm md:text-base">
               <div>
                 <h3 className="text-xl font-bold text-slate-800 mb-3">1. Identidad y Responsable del Tratamiento</h3>

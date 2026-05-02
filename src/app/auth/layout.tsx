@@ -13,8 +13,8 @@ export default async function AuthLayout({
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-slate-950 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black p-4'>
-      <div className="w-full max-w-md">
+    <div className='flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-emerald-950 via-slate-950 to-black overflow-hidden'>
+      <div className="w-full px-4">
         {children}
       </div>
     </div>

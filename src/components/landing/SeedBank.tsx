@@ -5,7 +5,7 @@ import Image from "next/image"
 
 export default function SeedBank() {
   return (
-    <section className="py-16 relative overflow-hidden max-w-7xl mx-auto">
+    <section className="py-16 relative overflow-hidden mx-auto">
       {/* Gradient background overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50" />
 

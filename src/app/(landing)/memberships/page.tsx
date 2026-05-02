@@ -16,7 +16,7 @@ export default function MembershipPage() {
         title="Elige tu mejor esquema"
         subtitle="Accede a beneficios exclusivos y forma parte de nuestra comunidad"
         desktopImage="/imgs/desktop3.png"
-        mobileImage="/imgs/mobile.png"
+        mobileImage="/imgs/mobile3.png"
         imageAlt="Comunidad CQCS y beneficios de membresía"
       />
       <MembershipCards />

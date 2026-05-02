@@ -17,7 +17,7 @@ export default async function Home() {
         ctaLink="https://www.facebook.com/QuetzalSeeds420"
         ctaText="Únete a nuestra comunidad"
         desktopImage="/imgs/desktop.png"
-        mobileImage="/imgs/mobile3.png"
+        mobileImage="/imgs/mobile.png"
         imageAlt="Cultivos regenerativos de cáñamo"
       />
       <>
