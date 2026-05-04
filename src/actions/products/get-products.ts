@@ -7,10 +7,10 @@ import { Product } from "@/interfaces/product.interface"
 const products: Product[] = [
   {
     id: '1',
-    name: "Pre-Rolados K’aax Ik’",
-    image: "/imgs/pre-rolados.png",
+    name: "Pre-Rolados",
+    image: "/imgs/categoria-pre-rolados.png",
     shortDescription: "Disfruta la experiencia pura del cáñamo con nuestros pre-rolados premium. Flores curadas 2 años sin fertilizantes sintéticos.",
-    longDescription: "Nuestros pre-rolados K’aax Ik’ están elaborados con flores de cáñamo curadas por más de 2 años, garantizando una experiencia suave, aromática y de la más alta calidad. Sin fertilizantes sintéticos, preservamos la pureza del producto y promovemos la regeneración del suelo en su cultivo.",
+    longDescription: "Nuestros pre-rolados están elaborados con flores de cáñamo curadas por más de 2 años, garantizando una experiencia suave, aromática y de la más alta calidad. Sin fertilizantes sintéticos, preservamos la pureza del producto y promovemos la regeneración del suelo en su cultivo.",
     benefits: [
       "Relajación profunda y natural.",
       "Libre de fertilizantes sintéticos.",
@@ -29,10 +29,10 @@ const products: Product[] = [
   },
   {
     id: '2',
-    name: "Cremas, Aceites y Miel con CBD",
-    image: "/imgs/crema-cbd.png",
+    name: "Crema de cañamo con CBD",
+    image: "/imgs/categoria-crema-cbd.png",
     shortDescription: "Infusionados con cáñamo cultivado en espacios regenerativos. Alivio natural y relajación.",
-    longDescription: "Nuestra línea de cremas, aceites y miel con CBD está diseñada para proporcionar alivio y bienestar de manera natural. Cada producto está infusionado con extractos de cáñamo de alta calidad, cultivado en condiciones sustentables.",
+    longDescription: "Nuestra crema de cañamo con CBD está diseñada para proporcionar alivio y bienestar de manera natural. Cada producto está infusionado con extractos de cáñamo de alta calidad, cultivado en condiciones sustentables.",
     benefits: [
       "Alivio del estrés y la ansiedad.",
       "Hidratación y regeneración de la piel.",
@@ -40,12 +40,10 @@ const products: Product[] = [
     ],
     usage: [
       "Aplicar sobre la piel limpia en áreas de tensión o dolor.",
-      "Usar la miel como endulzante o suplemento diario."
     ],
     ingredients: [
       "Extracto de CBD de cáñamo orgánico.",
       "Aceites esenciales naturales.",
-      "Miel 100% pura (en la variante de miel)."
     ],
     origin: "Producido con cáñamo cultivado en espacios regenerativos en México.",
     price: 499,
@@ -55,7 +53,7 @@ const products: Product[] = [
   {
     id: '3',
     name: "Velas y Souvenirs de cáñamo",
-    image: "/imgs/vela-decorativa.png",
+    image: "/imgs/categoria-vela-decorativa.png",
     shortDescription: "Lleva contigo un pedazo de nuestra cultura del cáñamo. Productos ecológicos hechos con fibra de cáñamo.",
     longDescription: "Nuestras velas y souvenirs están elaborados con materiales ecológicos derivados del cáñamo, fusionando tradición y sostenibilidad en cada pieza. Aromas relajantes y un diseño artesanal los convierten en el complemento perfecto para cualquier espacio.",
     benefits: [
@@ -80,8 +78,8 @@ const products: Product[] = [
   {
     id: '4',
     name: "Biofertilizante Orgánico",
-    image: "/imgs/aceite-cbd.png",
-    shortDescription: "Nutre tus cultivos de manera natural con nuestro biofertilizante de cáñamo.",
+    image: "/imgs/categoria-biofertilizantes.png",
+    shortDescription: "Nutre tus cultivos de manera natural con nuestro biofertilizante de cáñamo, la receta de J. Restrepo.",
     longDescription: "Nuestro biofertilizante orgánico está elaborado con procesos anaeróbicos que maximizan los nutrientes esenciales para la regeneración del suelo. Ideal para agricultores que buscan una alternativa sostenible y natural.",
     benefits: [
       "Aporta nutrientes esenciales para el crecimiento de cultivos.",
