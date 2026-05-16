@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 interface ProductCardsProps {
   products: Product[]
@@ -71,13 +72,24 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
         <p className="text-gray-600 mb-4">{product.shortDescription}</p>
         <p className="text-2xl font-bold text-slate-600 mb-4">${product.price} MXN</p>
-        <Button
-          onClick={() => window.open(whatsappLink, "_blank")}
-          disabled={!product.isAvailable}
-          className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
-        >
-          {product.isAvailable ? "Comprar en WhatsApp" : "No Disponible"}
-        </Button>
+        {product.isExclusive ? (
+          <Button
+            asChild
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
+          >
+            <Link href="/platform/dispensary">
+              Ir al Dispensario
+            </Link>
+          </Button>
+        ) : (
+          <Button
+            onClick={() => window.open(whatsappLink, "_blank")}
+            disabled={!product.isAvailable}
+            className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
+          >
+            {product.isAvailable ? "Comprar en WhatsApp" : "No Disponible"}
+          </Button>
+        )}
       </div>
     </motion.div>
   )

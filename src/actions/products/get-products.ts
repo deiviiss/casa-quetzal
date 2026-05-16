@@ -25,7 +25,7 @@ const products: Product[] = [
     origin: "Cultivado en milpas regenerativas sin químicos sintéticos en México.",
     price: 299,
     isAvailable: true,
-    isExclusive: false
+    isExclusive: true
   },
   {
     id: '2',

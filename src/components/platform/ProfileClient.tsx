@@ -221,6 +221,7 @@ export const ProfileClient = ({ user }: profileProps) => {
 
   return (
     <motion.div
+      className="max-w-4xl mx-auto"
       initial="initial"
       animate="animate"
       variants={{

@@ -1,67 +1,7 @@
-// import { ProductList } from "@/components/platform/dispensary/ProductList";
-// import { DispensaryProduct } from "@/interfaces/product.interface";
-
-// const MOCK_PRODUCTS: DispensaryProduct[] = [
-//   {
-//     id: '1',
-//     name: 'Blue Dream',
-//     thc: '20%',
-//     type: 'Hybrid',
-//     description: 'Un híbrido de predominancia sativa conocido por su dulce aroma a bayas y una relajación de cuerpo completo con una suave vigorización cerebral.'
-//   },
-//   {
-//     id: '2',
-//     name: 'Sour Diesel',
-//     thc: '22%',
-//     type: 'Sativa',
-//     description: 'De acción rápida y energizante, Sour Diesel tiene un aroma penetrante a diesel y efectos duraderos perfectos para el uso diurno.'
-//   },
-//   {
-//     id: '3',
-//     name: 'Granddaddy Purple',
-//     thc: '19%',
-//     type: 'Indica',
-//     description: 'Un famoso cruce índica que hereda un complejo aroma a uva y bayas. Perfecto para el manejo del dolor y la relajación.'
-//   },
-//   {
-//     id: '4',
-//     name: 'OG Kush',
-//     thc: '23%',
-//     type: 'Hybrid',
-//     description: 'Una cepa legendaria con un perfil de terpenos único que cuenta con un complejo aroma a combustible, mofeta y especias.'
-//   }
-// ];
-
-// export default function DispensaryPage() {
-//   return (
-//     <div className="space-y-6">
-//       <ProductList products={MOCK_PRODUCTS} />
-//     </div>
-//   );
-// }
-
-// import { ProductCard } from "@/components/platform/dispensary/ProductCard"
-// import type { DispensaryProduct as Product } from "@/interfaces/product.interface"
-
-// interface ProductGridProps {
-//   products: Product[]
-//   className?: string
-// }
-
-// export function ProductGrid({ products, className }: ProductGridProps) {
-//   return (
-//     <div
-//       className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 ${className ?? ""}`}
-//     >
-//       {products.map((product) => (
-//         <ProductCard key={product.id} product={product} />
-//       ))}
-//     </div>
-//   )
-// }
 import { ProductGrid } from "@/components/platform/dispensary/ProductGrid"
 import { products } from "@/data/products"
 import { Leaf } from "lucide-react"
+import Image from "next/image"
 
 export default function Home() {
   return (
@@ -155,13 +95,33 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row">
             <div className="flex items-center gap-2">
-              <Leaf className="size-4 text-emerald-500/50" />
-              <span>CQCS — Selección Artesanal</span>
+              <Image
+                src="/logo.webp"
+                alt="Casa Quetzal"
+                width={50}
+                height={50}
+                className="opacity-50"
+              />
+              <span>MOTA (Mejores Oportunidades de Trabajo Agricola)</span>
             </div>
             <p className="text-xs">
               Producto exclusivo para adultos mayores de 18 años
             </p>
           </div>
+        </div>
+
+        <div className="mt-0 pt-8 border-t border-gray-800 text-center text-xs text-gray-400 tracking-wider">
+          <p className='font-light text-gray-400'>
+            Casa Quetzal Cannabis Seeds® es una marca registrada conforme a las disposiciones aplicables en materia de propiedad industrial.
+          </p>
+
+          <p className='font-light text-gray-400'>
+            El uso, reproducción o distribución no autorizada constituye una infracción susceptible de acciones legales.
+            Proyecto piloto autorizado en el marco de Producción Primaria con Cannabis psicoactivo y no psicoactivo, en cumplimiento del Protocolo de Investigación registrado bajo el expediente EXP. 354/2022-VI-B.
+          </p>
+          <p className='font-light text-gray-400'>
+            Las flores exhibidas provienen exclusivamente de productores formalmente vinculados al citado protocolo, en observancia de la normatividad vigente.
+          </p>
         </div>
       </footer>
     </main>

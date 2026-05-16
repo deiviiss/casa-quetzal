@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoInformationOutline } from 'react-icons/io5'
+import { Eye, EyeOff } from 'lucide-react'
 import { z } from 'zod'
 import { login } from '@/actions/auth/login'
 import { Button } from '@/components/ui/button'
@@ -35,8 +36,9 @@ const loginSchema = z.object({
 export const LoginForm = () => {
   const searchParams = useSearchParams()
 
-  const redirectTo = searchParams.get('redirectTo') || '/platform/profile'
+  const redirectTo = searchParams.get('redirectTo') || '/platform/dispensary'
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
 
   const defaultValuesForm = {
@@ -135,15 +137,28 @@ export const LoginForm = () => {
                   <FormItem>
                     <FormLabel className="text-slate-300">Contraseña</FormLabel>
                     <FormControl>
-                      <Input
-                        type='password'
-                        placeholder='••••••••'
-                        {...field}
-                        value={field.value}
-                        style={{ colorScheme: 'dark' }}
-                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
-                        autoComplete="current-password"
-                      />
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder='••••••••'
+                          {...field}
+                          value={field.value}
+                          style={{ colorScheme: 'dark' }}
+                          className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50 pr-12"
+                          autoComplete="current-password"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-5 w-5" />
+                          ) : (
+                            <Eye className="h-5 w-5" />
+                          )}
+                        </button>
+                      </div>
                     </FormControl>
                     <FormMessage className="text-red-400/80" />
                   </FormItem>

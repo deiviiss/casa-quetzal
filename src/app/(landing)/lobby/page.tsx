@@ -22,8 +22,8 @@ export default async function LobbyPage() {
         desktopImage="/imgs/desktop4.png"
         mobileImage="/imgs/mobile4.png"
         imageAlt="Variedad de productos de cáñamo de CQCS"
-        ctaLink={session?.user ? "/platform/profile" : "/auth/login"}
-        ctaText={session?.user ? "Mi Perfil" : "Iniciar sesión"}
+        ctaLink={session?.user ? "/platform/dispensary" : "/auth/login"}
+        ctaText={session?.user ? "Ir al Dispensario" : "Iniciar sesión"}
       />
       <LobbyDispensario />
       <LoginCTA isLoggedIn={!!session?.user} />

@@ -162,7 +162,7 @@ export const products: Product[] = [
     ]
   },
   {
-    "id": 3,
+    "id": 4,
     "name": "Chak la Reyna Roja",
     "slug": "chak-la-reyna-roja",
 

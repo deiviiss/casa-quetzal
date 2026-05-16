@@ -26,15 +26,10 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
-      <div className="container flex flex-col md:h-16 items-center justify-between p-3 gap-2">
+      <div className="container flex flex-col items-center justify-between p-3 gap-2">
         <div className="flex items-center justify-between w-full max-w-5xl">
-          <Link href="/" className="flex items-center space-x-2 h-0 object-contain overflow-hidden">
-            <Image
-              src="/logo.webp"
-              alt="Casa Quetzal"
-              width={100}
-              height={50}
-            />
+          <Link href={'/'} className="flex items-center space-x-2 object-contain overflow-hidden">
+            <Image src="/logo.webp" alt="logo" width={291} height={366} className='w-14' />
           </Link>
 
           <nav className="hidden md:flex gap-6">

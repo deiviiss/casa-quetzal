@@ -10,7 +10,7 @@ export default async function AuthLayout({
   const userSession = await getUserSessionServer()
 
   if (!userSession) {
-    redirect('/')
+    redirect('/auth/login')
   }
 
   return (
