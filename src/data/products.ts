@@ -160,5 +160,104 @@ export const products: Product[] = [
         sku: "YK-3"
       }
     ]
+  },
+  {
+    "id": 3,
+    "name": "Chak la Reyna Roja",
+    "slug": "chak-la-reyna-roja",
+
+    "type": {
+      "id": 1,
+      "name": "Genética"
+    },
+
+    "shortDescription": "Línea experimental con pigmentación rojiza y comportamiento psicoactivo dual.",
+
+    "fullDescription": "Chak la Reyna Roja representa una línea experimental de alta variabilidad fenotípica enfocada en perfiles sensoriales intensos y exploración terpénica.",
+
+    "geneticType": "Híbrida experimental",
+
+    "cultivationLine": "Exterior / Interior",
+
+    "developmentStatus": "Experimental — fenotipo en observación",
+
+    "dominance": "Híbrida",
+
+    "origin": "Productor asociado no verificado bajo Manual Quetzal",
+
+    "classification": "Experimental",
+
+    "organolepticProfile": "Cítrico, herbal y resinoso",
+
+    "aroma": "Cítrico fresco con fondo herbal-resinoso",
+
+    "flavor": "Notas ácidas y dulces con retrogusto vegetal",
+
+    "thcEstimated": null,
+
+    "technicalData": {
+      "botanicalFeatures": [
+        "Pecíolos intensamente naranjas a rojo profundo",
+        "Alta pigmentación vascular observable",
+        "Fenotipo no estabilizado",
+        "Expresión variable entre individuos",
+        "Adaptable a indoor y outdoor"
+      ],
+
+      "cultivation": {
+        // "methods": [
+        //   "Indoor",
+        //   "Outdoor"
+        // ],
+
+        // "phytosanitaryResistance": [
+        //   "Sin resistencia confirmada a Botrytis cinerea",
+        //   "Sin resistencia confirmada a Oídio"
+        // ],
+
+        // "agronomicStatus": "Genética en evaluación temprana",
+
+        // "climaticCompatibility": "En observación"
+      },
+
+      "effects": [
+        "Inicio cerebral intenso",
+        "Creatividad",
+        "Relajación corporal profunda",
+        "Somnolencia marcada",
+        "Sensación de cuerpo pesado",
+        "Alteración temporal de memoria inmediata"
+      ],
+
+      "terpenes": [
+        "Terpenos cítricos",
+        "Terpenos volátiles"
+      ],
+
+      "warnings": [
+        "Genética experimental",
+        "Perfil fitoquímico no estabilizado",
+        "Requiere monitoreo fitosanitario constante",
+        "Productor aún no auditado bajo estándares CQCS"
+      ],
+
+      "conservation": [
+        "Mantener en ambiente seco y ventilado",
+        "Evitar humedad elevada durante curado",
+        "Almacenar protegido de luz UV"
+      ],
+
+      "technicalObservations": "Presenta comportamiento psicoactivo dual con fase inicial cerebral elevada seguida de sedación profunda. Actualmente continúa en observación técnica y evaluación agronómica."
+    },
+
+    "images": [
+      {
+        "id": 1,
+        "url": "/imgs/products/chak-1.png",
+        "alt": "Chak la Reyna Roja principal"
+      }
+    ],
+
+    "variants": []
   }
 ]
