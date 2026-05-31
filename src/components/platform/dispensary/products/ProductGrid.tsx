@@ -1,4 +1,4 @@
-import { ProductCard } from "@/components/platform/dispensary/ProductCard"
+import { ProductCard } from "@/components/platform/dispensary/products/ProductCard"
 import type { DispensaryProduct as Product } from "@/interfaces/product.interface"
 
 interface ProductGridProps {

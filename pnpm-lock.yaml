@@ -11,6 +11,9 @@ importers:
       '@getbrevo/brevo':
         specifier: 2.2.0
         version: 2.2.0
+      '@googlemaps/js-api-loader':
+        specifier: 1.16.10
+        version: 1.16.10
       '@hookform/resolvers':
         specifier: 3.10.0
         version: 3.10.0(react-hook-form@7.54.2(react@19.2.4))
@@ -18,10 +21,10 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(prisma@6.2.0)
       '@radix-ui/react-label':
-        specifier: ^2.1.8
+        specifier: 2.1.8
         version: 2.1.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@radix-ui/react-slot':
-        specifier: ^1.2.4
+        specifier: 1.2.4
         version: 1.2.4(@types/react@19.2.14)(react@19.2.4)
       bcryptjs:
         specifier: 2.4.3
@@ -48,7 +51,7 @@ importers:
         specifier: 5.0.0-beta.25
         version: 5.0.0-beta.25(next@15.1.11(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       next-cloudinary:
-        specifier: ^6.17.5
+        specifier: 6.17.5
         version: 6.17.5(next@15.1.11(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       next-themes:
         specifier: 0.4.4
@@ -86,6 +89,9 @@ importers:
       zod:
         specifier: 3.23.8
         version: 3.23.8
+      zustand:
+        specifier: 5.0.13
+        version: 5.0.13(@types/react@19.2.14)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))
     devDependencies:
       '@eslint/eslintrc':
         specifier: '3'
@@ -93,8 +99,11 @@ importers:
       '@types/bcryptjs':
         specifier: 2.4.6
         version: 2.4.6
+      '@types/google.maps':
+        specifier: 3.58.1
+        version: 3.58.1
       '@types/node':
-        specifier: ^20.19.37
+        specifier: 20.19.37
         version: 20.19.37
       '@types/react':
         specifier: '19'
@@ -377,6 +386,9 @@ packages:
 
   '@getbrevo/brevo@2.2.0':
     resolution: {integrity: sha512-mNCkXtgqn6jqLglAx1JzZcTj53kBZ5dK9Yd6zVuEyXAvhz68f5Ps6dSJar9HvkHH0Lfr3NrqW76xurjcoxqhIg==}
+
+  '@googlemaps/js-api-loader@1.16.10':
+    resolution: {integrity: sha512-c2erv2k7P2ilYzMmtYcMgAR21AULosQuUHJbStnrvRk2dG93k5cqptDrh9A8p+ZNlyhiqEOgHW7N9PAizdUM7Q==}
 
   '@hono/node-server@1.19.11':
     resolution: {integrity: sha512-dr8/3zEaB+p0D2n/IUrlPF1HZm586qgJNXK1a9fhg/PzdtkK7Ksd5l312tJX2yBuALqDYBlG20QEbayqPyxn+g==}
@@ -1478,6 +1490,9 @@ packages:
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
+
+  '@types/google.maps@3.58.1':
+    resolution: {integrity: sha512-X9QTSvGJ0nCfMzYOnaVs/k6/4L+7F5uCS+4iUmkLEls6J9S/Phv+m/i3mDeyc49ZBgwab3EFO1HEoBY7k98EGQ==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -4191,6 +4206,24 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zustand@5.0.13:
+    resolution: {integrity: sha512-efI2tVaVQPqtOh114loML/Z80Y4NP3yc+Ff0fYiZJPauNeWZeIp/bRFD7I9bfmCOYBh/PHxlglQ9+wvlwnPikQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
+
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
@@ -4539,6 +4572,8 @@ snapshots:
       rewire: 7.0.0
     transitivePeerDependencies:
       - supports-color
+
+  '@googlemaps/js-api-loader@1.16.10': {}
 
   '@hono/node-server@1.19.11(hono@4.12.8)':
     dependencies:
@@ -5632,6 +5667,8 @@ snapshots:
   '@types/cookie@0.6.0': {}
 
   '@types/estree@1.0.8': {}
+
+  '@types/google.maps@3.58.1': {}
 
   '@types/json-schema@7.0.15': {}
 
@@ -8692,3 +8729,9 @@ snapshots:
   zod@3.23.8: {}
 
   zod@3.25.76: {}
+
+  zustand@5.0.13(@types/react@19.2.14)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4)):
+    optionalDependencies:
+      '@types/react': 19.2.14
+      react: 19.2.4
+      use-sync-external-store: 1.6.0(react@19.2.4)

@@ -1,10 +1,12 @@
 import type { DispensaryProduct as Product } from "@/interfaces/product.interface"
 
 export const products: Product[] = [
+  // Hunapu: 3.5g 
   {
-    id: 1,
+    id: '1',
     name: "Hunapú",
     slug: "hunapu",
+    price: 0,
     type: {
       id: 1,
       name: "Genética"
@@ -52,25 +54,32 @@ export const products: Product[] = [
     ],
     variants: [
       {
-        id: 1,
+        id: '1',
         name: "3.5g",
         price: 350,
-        stock: 12,
-        sku: "HUN-35"
+        quantity: 1, // TODO: Que representa
+        stock: 12, // TODO: Que representa
+        sku: "HUN-35",
+        type: "weight",
+        isAvailable: true,
       },
       {
-        id: 2,
+        id: '2',
         name: "7g",
         price: 650,
-        stock: 5,
-        sku: "HUN-7"
+        quantity: 1, // TODO: Que representa
+        stock: 5, // TODO: Que representa
+        sku: "HUN-7",
+        type: "weight",
+        isAvailable: true,
       }
     ]
   },
   {
-    id: 2,
+    id: '2',
     name: "Xbalanqué",
     slug: "xbalanque",
+    price: 650,
     type: {
       id: 1,
       name: "Genética"
@@ -107,14 +116,16 @@ export const products: Product[] = [
     variants: []
   },
   {
-    id: 3,
+    id: '3',
     name: "Yun Kash",
     slug: "yun-kash",
+    price: 0,
     type: {
       id: 2,
       name: "Pre-Rolado"
     },
     shortDescription: "Pre-rolados funcionales de baja potencia.",
+    fullDescription: "Pre-rolados funcionales de baja potencia.",
     geneticType: null,
     thcEstimated: "<5%",
     classification: "Línea funcional",
@@ -146,26 +157,32 @@ export const products: Product[] = [
     ],
     variants: [
       {
-        id: 8,
+        id: '8',
         name: "1 pieza",
         price: 80,
-        stock: 25,
-        sku: "YK-1"
+        quantity: 1, // TODO: Que representa
+        stock: 25, // TODO: Que representa
+        sku: "YK-1",
+        type: "quantity",
+        isAvailable: true,
       },
       {
-        id: 9,
+        id: '9',
         name: "Pack x3",
         price: 220,
-        stock: 10,
-        sku: "YK-3"
+        quantity: 1, // TODO: Que representa
+        stock: 10, // TODO: Que representa
+        sku: "YK-3",
+        type: "quantity",
+        isAvailable: true,
       }
     ]
   },
   {
-    "id": 4,
+    "id": '4',
     "name": "Chak la Reyna Roja",
     "slug": "chak-la-reyna-roja",
-
+    price: 0,
     "type": {
       "id": 1,
       "name": "Genética"
@@ -258,6 +275,27 @@ export const products: Product[] = [
       }
     ],
 
-    "variants": []
+    variants: [
+      {
+        id: '1',
+        name: "3.5g",
+        price: 350,
+        quantity: 1, // TODO: Que representa
+        stock: 12, // TODO: Que representa
+        sku: "HUN-35",
+        type: "weight",
+        isAvailable: true,
+      },
+      {
+        id: '2',
+        name: "7g",
+        price: 650,
+        quantity: 1, // TODO: Que representa
+        stock: 5, // TODO: Que representa
+        sku: "HUN-7",
+        type: "weight",
+        isAvailable: true
+      }
+    ]
   }
 ]

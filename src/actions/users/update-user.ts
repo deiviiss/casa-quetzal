@@ -57,7 +57,7 @@ export const updateUser = async (data: IData) => {
     if (!userParsed.success) {
       return {
         ok: false,
-        message: 'Error updating user'
+        message: 'Error al subir imagen'
       }
     }
 
@@ -102,7 +102,7 @@ export const updateUser = async (data: IData) => {
     if (!userUpdated) {
       return {
         ok: false,
-        message: 'User not updated'
+        message: 'Usuario no encontrado'
       }
     }
 
@@ -111,13 +111,13 @@ export const updateUser = async (data: IData) => {
 
     return {
       ok: true,
-      message: 'Updated successfully'
+      message: 'Usuario actualizado correctamente'
     }
   } catch (error) {
-    console.error('Error updating user', error)
+    console.error('Error al actualizar usuario', error)
     return {
       ok: false,
-      message: 'Error updating user, please contact support'
+      message: 'Error al actualizar usuario, por favor contacte a soporte'
     }
   }
 }

@@ -24,14 +24,6 @@ export interface DispensaryProductImage {
   alt: string
 }
 
-export interface DispensaryProductVariant {
-  id: number
-  name: string
-  price: number
-  stock: number
-  sku: string
-}
-
 export interface DispensaryTechnicalData {
   phenotype?: string
   botanicalFeatures?: string[]
@@ -51,9 +43,21 @@ export interface DispensaryTechnicalData {
   adaptability?: string
 }
 
-export interface DispensaryProduct {
-  id: number
+export interface DispensaryProductVariant {
+  id: string
   name: string
+  price: number
+  quantity: number
+  stock: number
+  sku: string
+  type: "weight" | "quantity" | "presentation"
+  isAvailable: boolean
+}
+
+export interface DispensaryProduct {
+  id: string
+  name: string
+  price: number
   slug: string
   type?: ProductType
   shortDescription?: string
@@ -71,4 +75,5 @@ export interface DispensaryProduct {
   technicalData?: DispensaryTechnicalData
   images?: DispensaryProductImage[]
   variants?: DispensaryProductVariant[]
+  groupedOptions?: Record<string, DispensaryProductVariant[]>
 }

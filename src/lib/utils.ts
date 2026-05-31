@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import type { DispensaryProduct as Product } from '@/interfaces/product.interface'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -42,4 +43,31 @@ export const getCloudinaryVideoThumbnail = (publicId: string): string => {
   // Cloudinary generates images from videos by using a standard image extension
   const baseId = publicId.split(".")[0]
   return `https://res.cloudinary.com/${cloudName}/video/upload/${baseId}.jpg`
+}
+
+export function getProductTotal(product: Product): number {
+  const basePrice = product.price
+  const variantsPrice = (product.variants || []).reduce((total, variant) => {
+    const variantPrice = variant.price || 0
+    const variantQuantity = variant.quantity || 1
+    return total + variantPrice * variantQuantity
+  }, 0)
+
+  return basePrice + variantsPrice
+}
+
+// Capitalize first letter
+export function capitalizeWords(text: string): string {
+  const lowerCaseWords = ['entre', 'de', 'del', 'la', 'y', 'en', 'el', 'los', 'las', 'al', 'a']
+
+  return text
+    .toLowerCase()
+    .split(' ')
+    .map((word, index) => {
+      if (lowerCaseWords.includes(word) && index !== 0) {
+        return word
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1)
+    })
+    .join(' ')
 }
