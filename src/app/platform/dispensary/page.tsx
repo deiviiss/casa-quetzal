@@ -98,7 +98,7 @@ export default function Home() {
       </header>
 
       {/* Products Section */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 lg:px-8">
         <div className="mb-10 flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-foreground">

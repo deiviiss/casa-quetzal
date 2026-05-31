@@ -25,15 +25,15 @@ interface ProductCardProps {
 const dominanceConfig: Record<string, { label: string; className: string }> = {
   Sativa: {
     label: "Sativa",
-    className: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+    className: "bg-emerald-500/50 text-emerald-300 border-emerald-500/30",
   },
   Índica: {
     label: "Índica",
-    className: "bg-violet-500/20 text-violet-300 border-violet-500/30",
+    className: "bg-violet-500/50 text-violet-300 border-violet-500/30",
   },
   Indica: {
     label: "Indica",
-    className: "bg-violet-500/20 text-violet-300 border-violet-500/30",
+    className: "bg-violet-500/50 text-violet-300 border-violet-500/30",
   },
   Híbrida: {
     label: "Híbrida",
@@ -116,8 +116,8 @@ export function ProductCard({ product, className }: ProductCardProps) {
           "border border-border/50",
           "backdrop-blur-xl",
           "transition-all duration-500 ease-out",
-          "hover:border-emerald-500/30",
-          "hover:shadow-[0_0_40px_-12px_rgba(16,185,129,0.25)]",
+          "hover:border-primary/30",
+          "hover:shadow-[0_0_40px_-12px_hsl(var(--primary)/0.25)]",
           "hover:-translate-y-1",
           className
         )}
@@ -128,12 +128,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <div
           className={cn(
             "absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500",
-            "bg-gradient-to-r from-emerald-500/20 via-transparent to-emerald-500/20",
+            "bg-gradient-to-r from-primary/20 via-transparent to-primary/20",
             "group-hover:opacity-100"
           )}
           style={{
             background: isHovered
-              ? "linear-gradient(135deg, rgba(16,185,129,0.1) 0%, transparent 50%, rgba(16,185,129,0.1) 100%)"
+              ? "linear-gradient(135deg, hsl(var(--primary)/0.1) 0%, transparent 50%, hsl(var(--primary)/0.1) 100%)"
               : "transparent",
           }}
         />
@@ -153,23 +153,23 @@ export function ProductCard({ product, className }: ProductCardProps) {
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative">
-                <Leaf className="size-16 text-emerald-500/20" />
+                <Leaf className="size-16 text-primary/20" />
                 <div className="absolute inset-0 animate-pulse">
-                  <Leaf className="size-16 text-emerald-500/10" />
+                  <Leaf className="size-16 text-primary/10" />
                 </div>
               </div>
             </div>
           )}
 
           {/* Image overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-30" />
 
           {/* Floating Badges */}
           <div className="absolute left-3 top-3 flex flex-col gap-2">
             {product.classification && (
               <Badge
                 className={cn(
-                  "border border-emerald-500/30 bg-emerald-950/80 text-emerald-300",
+                  "border border-primary/30 bg-primary/50 rounded-sm text-secondary-foreground",
                   "backdrop-blur-md shadow-lg",
                   "px-3 py-1 text-xs font-medium uppercase tracking-wider"
                 )}
@@ -183,7 +183,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             {dominance && (
               <Badge
                 className={cn(
-                  "border backdrop-blur-md shadow-lg",
+                  "border rounded-sm backdrop-blur-md shadow-lg",
                   "px-2.5 py-1 text-xs font-medium",
                   dominance.className
                 )}
@@ -194,7 +194,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             {product.thcEstimated && (
               <Badge
                 className={cn(
-                  "border border-amber-500/30 bg-amber-950/80 text-amber-300",
+                  "border border-amber-500/30 bg-amber-950/80 rounded-sm text-amber-300",
                   "backdrop-blur-md shadow-lg",
                   "px-2.5 py-1 text-xs font-medium"
                 )}
@@ -210,7 +210,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
               <Badge
                 variant="outline"
                 className={cn(
-                  "border-border/50 bg-card/80 text-muted-foreground",
+                  "border-border/50 bg-card rounded-sm text-muted-foreground",
                   "backdrop-blur-md",
                   "px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider"
                 )}
@@ -288,9 +288,9 @@ export function ProductCard({ product, className }: ProductCardProps) {
                         key={terpene}
                         variant="outline"
                         className={cn(
-                          "border-emerald-500/20 bg-emerald-500/5 text-emerald-300/80",
+                          "border-primary/20 bg-primary/10 text-primary",
                           "px-2 py-0.5 text-[10px] font-medium capitalize",
-                          "transition-colors hover:bg-emerald-500/10"
+                          "transition-colors hover:bg-primary/20"
                         )}
                       >
                         {terpeneIcons[terpene] || <Leaf className="size-3" />}
@@ -314,9 +314,9 @@ export function ProductCard({ product, className }: ProductCardProps) {
                         key={effect}
                         variant="outline"
                         className={cn(
-                          "border-violet-500/20 bg-violet-500/5 text-violet-300/80",
+                          "border-secondary/20 bg-secondary/10 text-secondary dark:border-secondary dark:bg-secondary dark:text-secondary-foreground",
                           "px-2 py-0.5 text-[10px] font-medium capitalize",
-                          "transition-colors hover:bg-violet-500/10"
+                          "transition-colors hover:bg-secondary/20"
                         )}
                       >
                         {effect}
@@ -378,15 +378,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
                 disabled={isSubmitting}
                 className={cn(
                   "w-full gap-2",
-                  "bg-emerald-600 text-white",
-                  "hover:bg-emerald-500",
                   "transition-all duration-300",
-                  "hover:shadow-[0_0_20px_-5px_rgba(16,185,129,0.5)]",
-                  "disabled:bg-muted disabled:text-muted-foreground"
+                  "hover:shadow-[0_0_20px_-5px_hsl(var(--primary)/0.5)]"
                 )}
               >
                 <ShoppingCart className="size-4" />
-                <span>{currentStock === 0 ? "Agotado" : "Agregar al carrito"}</span>
+                <span>{currentStock === 0 ? "Agotado" : isSubmitting ? "Agregando…" : "Agregar al carrito"}</span>
               </Button>
             </div>
           )}
@@ -394,12 +391,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
           {/* No variants state */}
           {!hasVariants && (
             <div className="border-t border-border/30 pt-4">
-              <Badge
-                variant="outline"
-                className="w-full justify-center border-amber-500/30 bg-amber-500/5 py-2 text-amber-300/80"
+              <Button
+                disabled
+                variant="secondary"
+                className="w-full justify-center border-amber-500/30 bg-amber-500/10 py-2 text-amber-500"
               >
                 Próximamente disponible
-              </Badge>
+              </Button>
             </div>
           )}
         </div>
