@@ -17,10 +17,10 @@ export default function RelatedProducts({ relatedProducts }: RelatedProductsProp
   }
 
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="py-20">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-16 text-center text-gray-900"
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-gray-900 dark:text-white"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

@@ -1,9 +1,72 @@
 import type { DispensaryProduct as Product } from "@/interfaces/product.interface"
 
 export const products: Product[] = [
-  // Hunapu: 3.5g 
   {
     id: '1',
+    name: "Yun Kash",
+    slug: "yun-kash",
+    price: 0,
+    type: {
+      id: 2,
+      name: "Pre-Rolado"
+    },
+    shortDescription: "Pre-rolados funcionales de baja potencia.",
+    fullDescription: "Pre-rolados funcionales de baja potencia.",
+    geneticType: null,
+    thcEstimated: "<5%",
+    classification: "Línea funcional",
+    organolepticProfile: "Herbal, terroso y ligeramente dulce",
+    aroma: "Herbal y dulce",
+    technicalData: {
+      userProfile: [
+        "Consumidores funcionales",
+        "Principiantes",
+        "Baja tolerancia"
+      ],
+      effects: ["relajación moderada", "efecto ligero"],
+      materials: [
+        "Flores no premium",
+        "Conservación parcial de tricomas"
+      ],
+      warnings: [
+        "Producto exclusivo para adultos",
+        "No conducir",
+        "Mantener fuera del alcance de menores"
+      ]
+    },
+    images: [
+      {
+        id: 1,
+        url: "/imgs/products/yun-kash-1.png",
+        alt: "Yun Kash principal"
+      }
+    ],
+    variants: [
+      {
+        id: '8',
+        name: "Indoor",
+        price: 299,
+        quantity: 1, // TODO: Que representa
+        stock: 25, // TODO: Que representa
+        sku: "YK-1",
+        type: "quantity",
+        isAvailable: true,
+      },
+      {
+        id: '9',
+        name: "Outdoor",
+        price: 149,
+        quantity: 1, // TODO: Que representa
+        stock: 10, // TODO: Que representa
+        sku: "YK-3",
+        type: "quantity",
+        isAvailable: true,
+      }
+    ]
+  },
+  // Hunapu: 3.5g 
+  {
+    id: '2',
     name: "Hunapú",
     slug: "hunapu",
     price: 0,
@@ -55,8 +118,8 @@ export const products: Product[] = [
     variants: [
       {
         id: '1',
-        name: "3.5g",
-        price: 350,
+        name: "14g",
+        price: 799,
         quantity: 1, // TODO: Que representa
         stock: 12, // TODO: Que representa
         sku: "HUN-35",
@@ -65,21 +128,21 @@ export const products: Product[] = [
       },
       {
         id: '2',
-        name: "7g",
-        price: 650,
+        name: "28g",
+        price: 1449,
         quantity: 1, // TODO: Que representa
         stock: 5, // TODO: Que representa
-        sku: "HUN-7",
+        sku: "HUN-28",
         type: "weight",
         isAvailable: true,
       }
     ]
   },
   {
-    id: '2',
+    id: '3',
     name: "Xbalanqué",
     slug: "xbalanque",
-    price: 650,
+    price: 0,
     type: {
       id: 1,
       name: "Genética"
@@ -113,67 +176,25 @@ export const products: Product[] = [
         alt: "Xblaque principal"
       }
     ],
-    variants: []
-  },
-  {
-    id: '3',
-    name: "Yun Kash",
-    slug: "yun-kash",
-    price: 0,
-    type: {
-      id: 2,
-      name: "Pre-Rolado"
-    },
-    shortDescription: "Pre-rolados funcionales de baja potencia.",
-    fullDescription: "Pre-rolados funcionales de baja potencia.",
-    geneticType: null,
-    thcEstimated: "<5%",
-    classification: "Línea funcional",
-    organolepticProfile: "Herbal, terroso y ligeramente dulce",
-    aroma: "Herbal y dulce",
-    technicalData: {
-      userProfile: [
-        "Consumidores funcionales",
-        "Principiantes",
-        "Baja tolerancia"
-      ],
-      effects: ["relajación moderada", "efecto ligero"],
-      materials: [
-        "Flores no premium",
-        "Conservación parcial de tricomas"
-      ],
-      warnings: [
-        "Producto exclusivo para adultos",
-        "No conducir",
-        "Mantener fuera del alcance de menores"
-      ]
-    },
-    images: [
-      {
-        id: 1,
-        url: "/imgs/products/yun-kash-1.png",
-        alt: "Yun Kash principal"
-      }
-    ],
     variants: [
       {
-        id: '8',
-        name: "1 pieza",
-        price: 80,
+        id: '1',
+        name: "14g",
+        price: 399,
         quantity: 1, // TODO: Que representa
-        stock: 25, // TODO: Que representa
-        sku: "YK-1",
-        type: "quantity",
+        stock: 12, // TODO: Que representa
+        sku: "XBA-35",
+        type: "weight",
         isAvailable: true,
       },
       {
-        id: '9',
-        name: "Pack x3",
-        price: 220,
+        id: '2',
+        name: "28g",
+        price: 699,
         quantity: 1, // TODO: Que representa
-        stock: 10, // TODO: Que representa
-        sku: "YK-3",
-        type: "quantity",
+        stock: 5, // TODO: Que representa
+        sku: "XBA-7",
+        type: "weight",
         isAvailable: true,
       }
     ]
@@ -278,8 +299,8 @@ export const products: Product[] = [
     variants: [
       {
         id: '1',
-        name: "3.5g",
-        price: 350,
+        name: "14g",
+        price: 499,
         quantity: 1, // TODO: Que representa
         stock: 12, // TODO: Que representa
         sku: "HUN-35",
@@ -288,8 +309,8 @@ export const products: Product[] = [
       },
       {
         id: '2',
-        name: "7g",
-        price: 650,
+        name: "28g",
+        price: 899,
         quantity: 1, // TODO: Que representa
         stock: 5, // TODO: Que representa
         sku: "HUN-7",

@@ -16,10 +16,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const whatsappMessage = encodeURIComponent(
     `Hola, estoy interesado en comprar el ${product.name}. ¿Me puedes dar más información?`,
   )
-  const whatsappLink = `https://wa.me/1234567890?text=${whatsappMessage}`
+  const whatsappLink = `https://wa.me/9999688834?text=${whatsappMessage}`
 
   return (
-    <section className="bg-white pt-10 pb-20">
+    <section className="pt-10 pb-20">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -30,7 +30,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           <Button
             variant="ghost"
             asChild
-            className="group text-slate-600 hover:text-slate-900 transition-colors p-0 hover:bg-transparent"
+            className="group text-slate-600 dark:text-slate-200 hover:text-slate-900 transition-colors p-0 hover:bg-transparent"
           >
             <Link href="/products" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
@@ -74,9 +74,15 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{product.name}</h1>
-            <p className="text-xl text-gray-700 leading-relaxed">{product.shortDescription}</p>
-            <p className="text-3xl font-bold text-emerald-900">${product.price} MXN</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">{product.name}</h1>
+            <p className="text-xl text-gray-700 dark:text-slate-200 leading-relaxed">{product.shortDescription}</p>
+            {
+              product.price > 0 ? (
+                <p className="text-3xl font-bold text-emerald-900">${product.price} MXN</p>
+              ) : (
+                null
+              )
+            }
 
             <Button
               className="w-full md:w-auto bg-emerald-900 hover:bg-emerald-800"

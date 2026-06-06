@@ -162,7 +162,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           )}
 
           {/* Image overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-25" />
 
           {/* Floating Badges */}
           <div className="absolute left-3 top-3 flex flex-col gap-2">

@@ -46,7 +46,31 @@ const products: Product[] = [
       "Aceites esenciales naturales.",
     ],
     origin: "Producido con cáñamo cultivado en espacios regenerativos en México.",
-    price: 499,
+    price: 260,
+    isAvailable: false,
+    isExclusive: false
+  },
+  {
+    id: '5',
+    name: "Aceite de CBD Premium",
+    image: "/imgs/categoria-aceite-cbd.png",
+    shortDescription: "Aceite de CBD elaborado con cáñamo cultivado en interior. Bienestar diario y equilibrio natural.",
+    longDescription: "Nuestro Aceite de CBD Premium es elaborado a partir de flores de cáñamo cultivadas en interior bajo condiciones controladas y seleccionadas por su perfil equilibrado de cannabinoides y terpenos. Inspirado en fenotipos de calidad media-alta como Fedora 19, ofrece una experiencia consistente, un perfil aromático suave y una formulación diseñada para integrarse fácilmente a tu rutina diaria de bienestar.",
+    benefits: [
+      "Apoyo al bienestar general.",
+      "Contribuye al equilibrio del sistema endocannabinoide.",
+      "Perfil aromático suave y agradable.",
+      "Fácil integración en la rutina diaria."
+    ],
+    usage: [
+      "Administrar la cantidad recomendada utilizando el gotero de precisión.",
+      "Incorporar a la rutina diaria según las indicaciones del producto."
+    ],
+    ingredients: [
+      "Extracto de cáñamo rico en CBD."
+    ],
+    origin: "Elaborado con flores de cáñamo cultivadas en interior bajo condiciones controladas.",
+    price: 699,
     isAvailable: false,
     isExclusive: false
   },
@@ -71,7 +95,7 @@ const products: Product[] = [
       "Fibra de cáñamo reciclada."
     ],
     origin: "Elaborado con fibra de cáñamo reciclada en talleres sustentables en México.",
-    price: 199,
+    price: 0,
     isAvailable: false,
     isExclusive: false
   },

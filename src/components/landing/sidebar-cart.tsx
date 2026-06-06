@@ -441,14 +441,17 @@ export function SidebarCart() {
                   <span>${getSubtotal().toFixed(2)}</span>
                 </div>
 
-                <p className="text-xs text-muted-foreground">
-                  *No incluye envío
+                <p className="text-[10px] text-muted-foreground">
+                  ✓ Tu suscripción incluye envío dentro de las zonas de cobertura.
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  **El precio final se confirmará por WhatsApp
+                <p className="text-[10px] text-muted-foreground">
+                  ✓ Los precios publicados incluyen los impuestos aplicables al momento de la compra.
                 </p>
-                <p className="text-xs text-muted-foreground  mb-2">
-                  **Al hacer clic en &quot;Hacer pedido&quot; aceptas nuestros <Link href={'/terms'} className='hover:underline' target='_blank'>T&C</Link>
+                <p className="text-[10px] text-muted-foreground">
+                  ✓ El precio final y la disponibilidad serán confirmados por WhatsApp antes de procesar tu pedido.
+                </p>
+                <p className="text-[10px] text-muted-foreground  mb-2">
+                  ✓ Al hacer clic en &quot;Hacer pedido&quot; aceptas nuestros <Link href={'/terms'} className='hover:underline' target='_blank'>T&C</Link>
                 </p>
               </div>
 

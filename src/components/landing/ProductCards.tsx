@@ -68,10 +68,14 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           </div>
         )}
       </div>
-      <div className="p-6">
-        <h3 className="dark text-secondary text-xl font-semibold mb-2">{product.name}</h3>
-        <p className="text-gray-600 mb-4">{product.shortDescription}</p>
-        <p className="text-2xl font-bold text-slate-600 mb-4">${product.price} MXN</p>
+      <div className="p-6 flex flex-col justify-between h-full">
+        <div>
+          <h3 className="dark text-secondary text-xl font-semibold mb-2">{product.name}</h3>
+          <p className="text-gray-600 mb-4">{product.shortDescription}</p>
+        </div>
+        {
+          product.price > 0 && <p className="text-2xl font-bold text-slate-600 mb-4">${product.price} MXN</p>
+        }
         {product.isExclusive ? (
           <Button
             asChild
