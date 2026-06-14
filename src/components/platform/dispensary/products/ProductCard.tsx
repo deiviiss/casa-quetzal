@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { ShoppingCart, Leaf, Droplets, Sparkles, Wind } from "lucide-react"
+import { ShoppingCart, Leaf, Droplets, Sparkles, Wind, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -98,6 +98,22 @@ export function ProductCard({ product, className }: ProductCardProps) {
     product.variants?.[0] || null
   )
   const [isHovered, setIsHovered] = useState(false)
+  const [isImageViewerOpen, setIsImageViewerOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (product.images) {
+      setCurrentImageIndex((prev) => (prev + 1) % product.images.length)
+    }
+  }
+
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (product.images) {
+      setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length)
+    }
+  }
 
   const hasImage = product.images && product.images.length > 0
   const dominance = product.dominance
@@ -139,7 +155,18 @@ export function ProductCard({ product, className }: ProductCardProps) {
         />
 
         {/* Image Section */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-muted/30 to-muted/10">
+        <div
+          className={cn(
+            "relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-muted/30 to-muted/10",
+            hasImage && "cursor-pointer"
+          )}
+          onClick={() => {
+            if (hasImage) {
+              setCurrentImageIndex(0)
+              setIsImageViewerOpen(true)
+            }
+          }}
+        >
           {hasImage ? (
             <Image
               src={product.images![0].url}
@@ -403,6 +430,68 @@ export function ProductCard({ product, className }: ProductCardProps) {
         </div>
       </article>
 
+      {/* Full-screen Image Viewer */}
+      {isImageViewerOpen && hasImage && (
+        <div className="fixed inset-0 z-[9999] bg-background/95 backdrop-blur-sm flex items-center justify-center">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4 z-50 rounded-full bg-background/20 hover:bg-background/40 hover:text-foreground"
+            onClick={() => setIsImageViewerOpen(false)}
+          >
+            <X className="size-6" />
+            <span className="sr-only">Cerrar</span>
+          </Button>
+
+          {product.images!.length > 2 && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 rounded-full bg-background/20 hover:bg-background/40 hover:text-foreground"
+              onClick={handlePrevImage}
+            >
+              <ChevronLeft className="size-8" />
+              <span className="sr-only">Anterior</span>
+            </Button>
+          )}
+          
+          {product.images!.length > 1 && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 rounded-full bg-background/20 hover:bg-background/40 hover:text-foreground"
+              onClick={handleNextImage}
+            >
+              <ChevronRight className="size-8" />
+              <span className="sr-only">Siguiente</span>
+            </Button>
+          )}
+
+          <div className="relative w-full h-full max-w-6xl max-h-[90vh] p-4 flex items-center justify-center">
+            <div className="relative w-full h-full">
+              {product.images!.map((img, index) => (
+                <div
+                  key={img.id || index}
+                  className={cn(
+                    "absolute inset-0 transition-opacity duration-300",
+                    currentImageIndex === index ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                  )}
+                >
+                  <Image
+                    src={img.url}
+                    alt={img.alt || product.name}
+                    fill
+                    className="object-contain"
+                    sizes="100vw"
+                    quality={100}
+                    priority={index === currentImageIndex}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

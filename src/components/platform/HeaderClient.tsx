@@ -12,11 +12,10 @@ import { useCartStore, useUiStore } from "@/store"
 import { cn } from "@/lib/utils"
 
 interface HeaderClientProps {
-  hasMembership: boolean
   isAdmin: boolean
 }
 
-export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientProps) {
+export default function HeaderClient({ isAdmin }: HeaderClientProps) {
   const path = usePathname()
   const isProfilePage = path.includes('/platform/profile')
   const isAdminPage = path.includes('/platform/admin')

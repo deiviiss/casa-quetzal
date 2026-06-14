@@ -73,7 +73,7 @@ export interface DispensaryProduct {
   classification?: string
   developmentStatus?: string
   technicalData?: DispensaryTechnicalData
-  images?: DispensaryProductImage[]
+  images: DispensaryProductImage[]
   variants?: DispensaryProductVariant[]
   groupedOptions?: Record<string, DispensaryProductVariant[]>
 }

@@ -153,7 +153,7 @@ export const GoogleMaps = ({ isOpen, onLocationChange, moveToLocation, initialLo
         google.maps.event.clearInstanceListeners(markerRef.current)
       }
     }
-  }, [isOpen])
+  }, [isOpen, moveToLocation, initialLocation])
 
   return (
     <div ref={mapRef} className='w-full h-full' />

@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation'
 import HeaderServer from '@/components/platform/HeaderServer'
 import { getUserSessionServer } from '@/actions/auth/getUserSessionServer'
 import { SidebarCart } from '@/components/landing/sidebar-cart'
-import Image from 'next/image'
 import { PlatformFooter } from '@/components/platform/PlatformFooter'
 
 
@@ -24,7 +23,6 @@ export default async function AuthLayout({
       <div className='pb-10'>
         {children}
       </div>
-
 
       <PlatformFooter />
     </div>

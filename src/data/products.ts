@@ -39,6 +39,11 @@ export const products: Product[] = [
         id: 1,
         url: "/imgs/products/yun-kash-1.png",
         alt: "Yun Kash principal"
+      },
+      {
+        id: 2,
+        url: "/imgs/products/yun-kash-2.png",
+        alt: "Yun Kash secundario"
       }
     ],
     variants: [
@@ -113,6 +118,11 @@ export const products: Product[] = [
         id: 1,
         url: "/imgs/products/hunapu-1.png",
         alt: "Hunapú principal"
+      },
+      {
+        id: 2,
+        url: "/imgs/products/hunapu-2.png",
+        alt: "Hunapú secundario"
       }
     ],
     variants: [
@@ -174,6 +184,11 @@ export const products: Product[] = [
         id: 1,
         url: "/imgs/products/xbalanque-1.png",
         alt: "Xblaque principal"
+      },
+      {
+        id: 2,
+        url: "/imgs/products/xbalanque-2.png",
+        alt: "Xblaque secundario"
       }
     ],
     variants: [
@@ -293,6 +308,11 @@ export const products: Product[] = [
         "id": 1,
         "url": "/imgs/products/chak-1.png",
         "alt": "Chak la Reyna Roja principal"
+      },
+      {
+        "id": 2,
+        "url": "/imgs/products/chak-2.png",
+        "alt": "Chak la Reyna Roja secundario"
       }
     ],
 
