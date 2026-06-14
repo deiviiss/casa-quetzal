@@ -35,8 +35,8 @@ export default function FloatingWhatsAppButton() {
         >
           {/* Scroll to top button */}
           <div className="flex flex-col items-center group cursor-pointer" onClick={scrollToTop}>
-            <span 
-              className="text-[10px] font-bold tracking-[0.2em] text-gray-800 mb-3" 
+            <span
+              className="hidden sm:block text-[10px] font-bold tracking-[0.2em] text-gray-800 mb-3"
               style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
             >
               VOLVER ARRIBA

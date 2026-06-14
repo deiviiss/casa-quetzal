@@ -1,3 +1,5 @@
+import FloatingWhatsAppButton from "@/components/landing/FloatingWhatsAppButton"
+
 export default function DispensaryLayout({
   children,
 }: {
@@ -8,6 +10,7 @@ export default function DispensaryLayout({
       <div className="flex flex-col min-h-screen">
         <main className="flex-grow">
           {children}
+          <FloatingWhatsAppButton />
         </main>
       </div>
     </>

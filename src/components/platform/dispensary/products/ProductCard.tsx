@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import { ShoppingCart, Leaf, Droplets, Sparkles, Wind, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -72,7 +72,6 @@ export function ProductCard({ product, className }: ProductCardProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const hasVariants = product.variants && product.variants.length > 0
-  // const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleAddToCart = () => {
     if (!selectedVariant) return
@@ -100,18 +99,27 @@ export function ProductCard({ product, className }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   const handleNextImage = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (product.images) {
-      setCurrentImageIndex((prev) => (prev + 1) % product.images.length)
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: scrollRef.current.clientWidth, behavior: "smooth" })
     }
   }
 
   const handlePrevImage = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (product.images) {
-      setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length)
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -scrollRef.current.clientWidth, behavior: "smooth" })
+    }
+  }
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget
+    const index = Math.round(target.scrollLeft / target.clientWidth)
+    if (index !== currentImageIndex) {
+      setCurrentImageIndex(index)
     }
   }
 
@@ -432,18 +440,10 @@ export function ProductCard({ product, className }: ProductCardProps) {
 
       {/* Full-screen Image Viewer */}
       {isImageViewerOpen && hasImage && (
-        <div className="fixed inset-0 z-[9999] bg-background/95 backdrop-blur-sm flex items-center justify-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-4 right-4 z-50 rounded-full bg-background/20 hover:bg-background/40 hover:text-foreground"
-            onClick={() => setIsImageViewerOpen(false)}
-          >
-            <X className="size-6" />
-            <span className="sr-only">Cerrar</span>
-          </Button>
+        <div className="fixed inset-0 z-[99999] bg-background/95 backdrop-blur-sm flex items-center justify-center">
 
-          {product.images!.length > 2 && (
+
+          {currentImageIndex > 0 && (
             <Button
               variant="ghost"
               size="icon"
@@ -454,8 +454,8 @@ export function ProductCard({ product, className }: ProductCardProps) {
               <span className="sr-only">Anterior</span>
             </Button>
           )}
-          
-          {product.images!.length > 1 && (
+
+          {currentImageIndex < product.images!.length - 1 && (
             <Button
               variant="ghost"
               size="icon"
@@ -467,15 +467,26 @@ export function ProductCard({ product, className }: ProductCardProps) {
             </Button>
           )}
 
-          <div className="relative w-full h-full max-w-6xl max-h-[90vh] p-4 flex items-center justify-center">
-            <div className="relative w-full h-full">
+          <div className="relative w-full h-full max-w-6xl max-h-[90vh] flex items-center justify-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-14 min-[520px]:top-2 right-2 sm:top-0 md:right-4 z-50 rounded-full bg-background/40 hover:bg-background/60 hover:text-foreground backdrop-blur-md"
+              onClick={() => setIsImageViewerOpen(false)}
+            >
+              <X className="size-6" />
+              <span className="sr-only">Cerrar</span>
+            </Button>
+
+            <div
+              ref={scrollRef}
+              className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+              onScroll={handleScroll}
+            >
               {product.images!.map((img, index) => (
                 <div
                   key={img.id || index}
-                  className={cn(
-                    "absolute inset-0 transition-opacity duration-300",
-                    currentImageIndex === index ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-                  )}
+                  className="w-full h-full shrink-0 snap-center relative"
                 >
                   <Image
                     src={img.url}
@@ -484,7 +495,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
                     className="object-contain"
                     sizes="100vw"
                     quality={100}
-                    priority={index === currentImageIndex}
+                    priority={index === 0}
                   />
                 </div>
               ))}
