@@ -212,20 +212,6 @@ export default function UserDetail({ user }: UserDetailProps) {
           phoneNumber: user.phoneNumber
         }}
       />
-
-      <UserMemberForm
-        isOpen={isUserMemberFormOpen}
-        onClose={() => {
-          setIsUserMemberFormOpen(false)
-          router.refresh()
-        }}
-        user={{
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          phoneNumber: user.phoneNumber
-        }}
-      />
     </div>
   )
 }

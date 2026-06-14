@@ -11,7 +11,7 @@ export const deleteUserImage = async (imageUrl: string) => {
   if (!imageUrl || imageUrl.trim() === "") {
     return {
       ok: true,
-      message: "No image to delete"
+      message: "No hay imagen para eliminar"
     };
   }
 
@@ -20,7 +20,7 @@ export const deleteUserImage = async (imageUrl: string) => {
   if (!imageParsed.success) {
     return {
       ok: false,
-      message: 'Error validating image'
+      message: 'Error al validar la imagen'
     }
   }
 
@@ -36,19 +36,19 @@ export const deleteUserImage = async (imageUrl: string) => {
     if (result.result !== 'ok') {
       return {
         ok: false,
-        message: 'Error deleting image'
+        message: 'Error al eliminar la imagen'
       }
     }
 
     return {
       ok: true,
-      message: 'Deleted successfully'
+      message: 'Eliminada exitosamente'
     }
   } catch (error) {
     console.error('Error deleting user', error)
     return {
       ok: false,
-      message: 'Error deleting user, please contact support'
+      message: 'Error al eliminar la imagen del usuario, por favor contacta a soporte'
     }
   }
 }

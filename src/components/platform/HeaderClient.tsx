@@ -40,17 +40,6 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
 
           {/* Membership link and Admin button for desktop */}
           <nav className="hidden md:flex gap-6">
-            {/* {hasMembership && (
-              <Link href="/platform/dispensary">
-                <motion.span
-                  className="text-sm font-medium text-muted-foreground hover:text-primary"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Mi Membresía
-                </motion.span>
-              </Link>
-            )} */}
             {isAdmin && (
               <Button
                 asChild
@@ -99,18 +88,6 @@ export default function HeaderClient({ hasMembership, isAdmin }: HeaderClientPro
           </div>
         </div>
         <nav className="flex md:hidden gap-6">
-          {hasMembership && (
-            <Link href="/platform/dispensary">
-              <motion.span
-                className="text-sm font-medium text-muted-foreground hover:text-primary"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Mi Membresía
-              </motion.span>
-            </Link>
-          )}
-
           {isAdmin && (
             <Link href="/platform/admin" className="flex items-center gap-1">
               <Shield className="h-4 w-4 text-primary" />

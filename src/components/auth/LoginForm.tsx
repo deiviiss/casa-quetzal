@@ -189,7 +189,7 @@ export const LoginForm = () => {
               <Button
                 type='submit'
                 disabled={isSubmitting}
-                className='w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold h-12 rounded-lg transition-colors active:scale-[0.98]'
+                className='w-full bg-secondary hover:bg-secondary/80 text-white font-semibold h-12 rounded-lg transition-colors active:scale-[0.98]'
               >
                 {isSubmitting ? 'Iniciando sesión…' : 'Iniciar sesión'}
               </Button>
@@ -205,8 +205,8 @@ export const LoginForm = () => {
 
               <Button
                 asChild
-                variant='secondary'
-                className='w-full text-slate-400 hover:text-white hover:bg-white/5 h-12 transition-colors'
+                variant='destructive'
+                className='w-full text-slate-400 hover:text-white hover:bg-red-50/5 h-12 transition-colors'
               >
                 <Link
                   href={`/auth/new-account?redirectTo=${redirectTo}`}

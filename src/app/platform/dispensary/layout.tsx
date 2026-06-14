@@ -1,7 +1,7 @@
 export default function DispensaryLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <>
@@ -11,5 +11,5 @@ export default function DispensaryLayout({
         </main>
       </div>
     </>
-  );
+  )
 }

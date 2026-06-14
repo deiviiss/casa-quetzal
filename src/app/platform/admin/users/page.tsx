@@ -10,16 +10,16 @@ export default async function AdminUsersPage() {
       <div className="mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-primary flex items-center gap-3">
           <UsersIcon className="h-8 w-8" />
-          Users Management
+          Gestión de Usuarios
         </h1>
         <p className="text-muted-foreground mt-2">
-          Manage parents and their associated children records from this panel.
+          Gestiona los registros de usuarios, sus membresías y productos desde este panel.
         </p>
       </div>
 
       {!ok ? (
         <div className="p-8 text-center text-red-500 bg-red-50 rounded-lg border border-red-200">
-          Failed to load users. Please try again later.
+          Error al cargar los usuarios. Por favor, inténtalo de nuevo más tarde.
         </div>
       ) : (
         <UserList users={users} />

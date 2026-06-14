@@ -8,7 +8,7 @@ export async function grantMembershipAccess(userId: string) {
   try {
     const isAdmin = await validateUserAdmin()
     if (!isAdmin) {
-      return { ok: false, message: 'Unauthorized' }
+      return { ok: false, message: 'No autorizado' }
     }
 
     // 1. Find the Membership product
@@ -17,7 +17,7 @@ export async function grantMembershipAccess(userId: string) {
     })
 
     if (!membershipProduct) {
-      return { ok: false, message: 'Membership product not found in database. Please contact support.' }
+      return { ok: false, message: 'Producto de membresía no encontrado en la base de datos. Por favor, contacta a soporte.' }
     }
 
     // 2. Check if user already has it
@@ -31,7 +31,7 @@ export async function grantMembershipAccess(userId: string) {
     })
 
     if (existingPurchase) {
-      return { ok: false, message: 'User already has Membership access' }
+      return { ok: false, message: 'El usuario ya tiene acceso de membresía' }
     }
 
     // 3. Create purchase
@@ -43,10 +43,10 @@ export async function grantMembershipAccess(userId: string) {
     })
 
     revalidatePath(`/platform/admin/users/${userId}`)
-    return { ok: true, message: 'Membership access granted' }
+    return { ok: true, message: 'Acceso de membresía otorgado' }
   } catch (error) {
     console.error('Error granting access:', error)
-    return { ok: false, message: 'Error granting access' }
+    return { ok: false, message: 'Error al otorgar acceso' }
   }
 }
 
@@ -54,7 +54,7 @@ export async function revokeMembershipAccess(userId: string) {
   try {
     const isAdmin = await validateUserAdmin()
     if (!isAdmin) {
-      return { ok: false, message: 'Unauthorized' }
+      return { ok: false, message: 'No autorizado' }
     }
 
     const membershipProduct = await prisma.product.findFirst({
@@ -62,7 +62,7 @@ export async function revokeMembershipAccess(userId: string) {
     })
 
     if (!membershipProduct) {
-      return { ok: false, message: 'Membership product not found' }
+      return { ok: false, message: 'Producto de membresía no encontrado' }
     }
 
     await prisma.purchase.deleteMany({
@@ -73,10 +73,10 @@ export async function revokeMembershipAccess(userId: string) {
     })
 
     revalidatePath(`/platform/admin/users/${userId}`)
-    return { ok: true, message: 'Membership access removed' }
+    return { ok: true, message: 'Acceso de membresía revocado' }
   } catch (error) {
     console.error('Error revoking access:', error)
-    return { ok: false, message: 'Error removing access' }
+    return { ok: false, message: 'Error al revocar acceso' }
   }
 }
 

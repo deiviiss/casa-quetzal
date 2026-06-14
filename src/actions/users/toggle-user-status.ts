@@ -16,7 +16,7 @@ export const toggleUserStatus = async ({ id, status }: Props) => {
     if (!isAdmin) {
       return {
         ok: false,
-        message: 'You must be authenticated as an administrator'
+        message: 'Debes estar autenticado como administrador'
       }
     }
 
@@ -32,7 +32,7 @@ export const toggleUserStatus = async ({ id, status }: Props) => {
     if (!updatedUser) {
       return {
         ok: false,
-        message: 'User not found'
+        message: 'Usuario no encontrado'
       }
     }
 
@@ -40,13 +40,13 @@ export const toggleUserStatus = async ({ id, status }: Props) => {
 
     return {
       ok: true,
-      message: updatedUser.isActive ? 'User successfully activated' : 'User successfully deactivated'
+      message: updatedUser.isActive ? 'Usuario activado exitosamente' : 'Usuario desactivado exitosamente'
     }
   } catch (error) {
     console.error('Error changing user status:', error)
     return {
       ok: false,
-      message: 'Error deactivating user, please contact support'
+      message: 'Error al cambiar el estado del usuario, por favor contacta a soporte'
     }
   }
 }

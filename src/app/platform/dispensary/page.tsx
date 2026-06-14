@@ -1,8 +1,25 @@
 import { ProductGrid } from "@/components/platform/dispensary/products/ProductGrid"
 import { products } from "@/data/products"
 import Image from "next/image"
+import { redirect } from 'next/navigation'
+import { getUserSessionServer } from '@/actions/auth/getUserSessionServer'
+import { userHasMembership } from '@/actions/auth/access'
 
-export default function Home() {
+export default async function Home() {
+  const session = await getUserSessionServer()
+
+  if (!session) {
+    return redirect('/auth/login')
+  }
+
+  // Artificial delay for loading screen
+  await new Promise(resolve => setTimeout(resolve, 2500))
+
+  // Verify membership
+  const hasMembership = await userHasMembership(session.id)
+  if (!hasMembership && session.role !== 'admin') {
+    return redirect('/no-access')
+  }
   const mobileImage = '/imgs/hero-dispensary-mobile.png'
   const desktopImage = '/imgs/hero-dispensary.png'
   const imageAlt = 'Cultivos regenerativos de cáñamo'

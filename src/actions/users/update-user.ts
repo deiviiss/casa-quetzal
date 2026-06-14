@@ -12,20 +12,20 @@ const userSchema = z.object({
     .uuid(),
   name: z
     .string()
-    .min(3, { message: 'The name must have at least 3 characters' })
-    .max(255, { message: 'The name must have less than 255 characters' }),
+    .min(3, { message: 'El nombre debe tener al menos 3 caracteres' })
+    .max(255, { message: 'El nombre debe tener menos de 255 caracteres' }),
   email: z
     .string()
-    .email({ message: 'The email is not valid' }),
+    .email({ message: 'El correo no es válido' }),
   phoneNumber: z
     .string()
-    .min(10, { message: 'The phone number must be 10 characters without the country code' })
-    .max(10, { message: 'The phone number must be 10 characters without the country code' }),
+    .min(10, { message: 'El número de teléfono debe tener 10 caracteres sin el código de país' })
+    .max(10, { message: 'El número de teléfono debe tener 10 caracteres sin el código de país' }),
   password: z
     .string()
     .optional()
     .refine(value => !value || (value.length >= 6 && value.length <= 10), {
-      message: 'The password must be between 6 and 10 characters if provided'
+      message: 'La contraseña debe tener entre 6 y 10 caracteres si se proporciona'
     }),
   role: z
     .enum(ROLE_VALUES)

@@ -27,7 +27,7 @@ export const getAllUsers = async () => {
     console.error('Error fetching all users:', error)
     return {
       ok: false,
-      message: 'Error fetching users'
+      message: 'Error al obtener los usuarios'
     }
   }
 }

@@ -27,9 +27,9 @@ import { noticeSuccess, noticeFailure } from '@/components/toast-notifications/T
 import { Loader2 } from 'lucide-react'
 
 const userMemberSchema = z.object({
-  name: z.string().min(3, 'Name must be at least 3 characters'),
-  email: z.string().email('Invalid email address'),
-  phoneNumber: z.string().length(10, 'Phone number must be 10 digits'),
+  name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres'),
+  email: z.string().email('La dirección de correo electrónico no es válida'),
+  phoneNumber: z.string().length(10, 'El número de teléfono debe tener 10 dígitos'),
 })
 
 type UserMemberFormValues = z.infer<typeof userMemberSchema>
@@ -65,10 +65,10 @@ export default function UserMemberForm({ isOpen, onClose, user }: UserMemberForm
     })
 
     if (result.ok) {
-      noticeSuccess('User information updated successfully')
+      noticeSuccess('Información de usuario actualizada con éxito')
       onClose()
     } else {
-      noticeFailure(result.message || 'Error updating user information')
+      noticeFailure(result.message || 'Error al actualizar la información del usuario')
     }
     setIsSubmitting(false)
   }
@@ -77,9 +77,9 @@ export default function UserMemberForm({ isOpen, onClose, user }: UserMemberForm
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit User Information</DialogTitle>
+          <DialogTitle>Editar Información del Usuario</DialogTitle>
           <DialogDescription>
-            Update the contact details for this user account.
+            Actualiza los detalles de contacto de esta cuenta de usuario.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -89,9 +89,9 @@ export default function UserMemberForm({ isOpen, onClose, user }: UserMemberForm
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>Nombre Completo</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter user's name" {...field} />
+                    <Input placeholder="Ingresa el nombre del usuario" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,9 +102,9 @@ export default function UserMemberForm({ isOpen, onClose, user }: UserMemberForm
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Correo</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Enter email address" {...field} />
+                    <Input type="email" placeholder="Ingresa el correo electrónico" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,9 +115,9 @@ export default function UserMemberForm({ isOpen, onClose, user }: UserMemberForm
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Número de Teléfono</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter 10-digit phone number" {...field} />
+                    <Input placeholder="Ingresa el número de teléfono de 10 dígitos" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -125,11 +125,11 @@ export default function UserMemberForm({ isOpen, onClose, user }: UserMemberForm
             />
             <DialogFooter className="pt-4 gap-2">
               <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
-                Cancel
+                Cancelar
               </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Save Changes
+                Guardar Cambios
               </Button>
             </DialogFooter>
           </form>

@@ -12,13 +12,13 @@ export const updateUserImage = async (imageUrl: string) => {
   const imageParsed = imageSchema.safeParse(imageUrl);
 
   if (!imageParsed.success) {
-    return { ok: false, message: "Invalid image URL" };
+    return { ok: false, message: "URL de imagen inválida" };
   }
 
   if (!imageParsed.success) {
     return {
       ok: false,
-      message: 'Error validating image'
+      message: 'Error al validar la imagen'
     }
   }
 
@@ -30,7 +30,7 @@ export const updateUserImage = async (imageUrl: string) => {
     if (!userSession) {
       return {
         ok: false,
-        message: 'Session not found'
+        message: 'Sesión no encontrada'
       }
     }
 
@@ -39,7 +39,7 @@ export const updateUserImage = async (imageUrl: string) => {
     if (!user) {
       return {
         ok: false,
-        message: 'User not found'
+        message: 'Usuario no encontrado'
       }
     }
 
@@ -53,7 +53,7 @@ export const updateUserImage = async (imageUrl: string) => {
     if (!userImageUpdated) {
       return {
         ok: false,
-        message: 'User image not updated'
+        message: 'Imagen de usuario no actualizada'
       }
     }
 
@@ -61,13 +61,13 @@ export const updateUserImage = async (imageUrl: string) => {
 
     return {
       ok: true,
-      message: 'Updated successfully'
+      message: 'Actualizado exitosamente'
     }
   } catch (error) {
     console.error('Error updating user', error)
     return {
       ok: false,
-      message: 'Error updating user, please contact support'
+      message: 'Error al actualizar el usuario, por favor contacta a soporte'
     }
   }
 }

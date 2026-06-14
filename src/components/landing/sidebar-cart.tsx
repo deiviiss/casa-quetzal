@@ -94,7 +94,7 @@ export function SidebarCart() {
     //   type: 'order_completed' // Event type for order completion
     // })
 
-    const phoneNumber = "9811250049"
+    const phoneNumber = "9999688834"
     let messageOrder = '🛒 *Nuevo Pedido*\n\n'
 
     // messageOrder += `*Código de verificación:* BD-${order.shortId}\n\n`
