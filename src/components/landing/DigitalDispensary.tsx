@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function DigitalDispensary() {
   const memberships = [
@@ -88,12 +89,12 @@ export default function DigitalDispensary() {
               transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
               whileHover={{ y: -8 }}
             >
-              {/* Card */}
-              <div className="relative h-full bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200/50 overflow-hidden">
+              <Link href="/memberships" className="block h-full cursor-pointer">
+                {/* Card */}
+                <div className="relative h-full bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200/50 overflow-hidden">
                 {/* Gradient accent bar */}
                 <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${membership.gradient}`} />
 
-                {/* Icon */}
                 {/* Icon */}
                 <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 flex justify-center">
                   <div className="relative w-20 h-20">
@@ -130,7 +131,8 @@ export default function DigitalDispensary() {
 
                 {/* Hover effect gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${membership.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl`} />
-              </div>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>
@@ -142,7 +144,7 @@ export default function DigitalDispensary() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.8 }}
         >
-          <a
+          <Link
             href="memberships"
             className="group inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 px-8 rounded-full text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
           >
@@ -155,7 +157,7 @@ export default function DigitalDispensary() {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
