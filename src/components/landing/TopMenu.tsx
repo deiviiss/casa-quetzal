@@ -50,7 +50,7 @@ export const TopMenu = () => {
           <ul className="space-x-4 flex items-center">
             <li>
               <Link href="/products" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <SiHomeassistantcommunitystore size={17} />
+                <SiHomeassistantcommunitystore size={20} />
                 <span className='hidden sm:inline'>
                   Catálogo
                 </span>
@@ -66,7 +66,7 @@ export const TopMenu = () => {
             </li>
             <li>
               <Link href="/lobby" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <FaShopLock size={17} />
+                <FaShopLock size={20} />
                 <span className='hidden sm:inline'>
                   Dispensario
                 </span>
@@ -78,7 +78,7 @@ export const TopMenu = () => {
                 aria-label="Abrir carrito"
                 className="relative hover:text-slate-200 transition-colors flex items-center"
               >
-                <ShoppingBag size={17} />
+                <ShoppingBag size={20} />
                 {totalItems > 0 && (
                   <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-xs font-bold text-white flex items-center justify-center leading-none">
                     {totalItems > 99 ? '99+' : totalItems}
