@@ -13,7 +13,7 @@ export default async function Home() {
   }
 
   // Artificial delay for loading screen
-  await new Promise(resolve => setTimeout(resolve, 2500))
+  await new Promise(resolve => setTimeout(resolve, 250000))
 
   // Verify membership
   const hasMembership = await userHasMembership(session.id)

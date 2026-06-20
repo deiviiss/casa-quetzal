@@ -14,7 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { toast } from "sonner"
-import { useCartStore } from "@/store"
+import { useNewCartStore } from "@/store/new-cart-store"
+import { mapDispensaryToCartItem } from "@/lib/cart-adapters"
 import type { DispensaryProduct as Product, DispensaryProductVariant as ProductVariant } from "@/interfaces/product.interface"
 
 interface ProductCardProps {
@@ -68,7 +69,7 @@ function getStockStatus(stock: number): { label: string; className: string } {
 }
 
 export function ProductCard({ product, className }: ProductCardProps) {
-  const { addToCart } = useCartStore()
+  const { addToCart } = useNewCartStore()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const hasVariants = product.variants && product.variants.length > 0
@@ -79,16 +80,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
     setIsSubmitting(true)
 
     setTimeout(() => {
-      const productWithSelectedVariant = {
-        ...product,
-        variants: [selectedVariant]
-      }
+      const cartItem = mapDispensaryToCartItem(product, selectedVariant)
 
-      addToCart(productWithSelectedVariant)
+      addToCart(cartItem)
 
       setIsSubmitting(false)
 
-      toast.success(`${productWithSelectedVariant.name} ${selectedVariant?.name} agregado al carrito`, {
+      toast.success(`${product.name} ${selectedVariant?.name} agregado al carrito`, {
         position: 'bottom-right'
       })
     }, 300)

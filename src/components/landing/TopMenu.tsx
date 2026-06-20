@@ -7,6 +7,9 @@ import { useEffect, useState } from 'react'
 import { FaShopLock } from 'react-icons/fa6'
 import { GiBurningForest } from 'react-icons/gi'
 import { SiHomeassistantcommunitystore } from 'react-icons/si'
+import { ShoppingBag } from 'lucide-react'
+import { useNewCartStore } from '@/store/new-cart-store'
+import { useUiStore } from '@/store'
 
 export const TopMenu = () => {
   const logo = '/logo.webp'
@@ -31,6 +34,10 @@ export const TopMenu = () => {
     }
   }, [])
 
+  const { getTotalItems } = useNewCartStore()
+  const { openSideCart } = useUiStore()
+  const totalItems = getTotalItems()
+
   return (
     <div className={`w-full fixed top-0 z-20 text-white ${isProductDetail ? 'bg-slate-800' : bgColor} transition-colors duration-300 py-1`}>
       <header className="container mx-auto lg:px-20 px-4 py-1 flex justify-between items-center">
@@ -40,7 +47,7 @@ export const TopMenu = () => {
           </Link>
         </div>
         <nav>
-          <ul className="space-x-4 flex">
+          <ul className="space-x-4 flex items-center">
             <li>
               <Link href="/products" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
                 <SiHomeassistantcommunitystore size={17} />
@@ -64,6 +71,20 @@ export const TopMenu = () => {
                   Dispensario
                 </span>
               </Link>
+            </li>
+            <li>
+              <button
+                onClick={openSideCart}
+                aria-label="Abrir carrito"
+                className="relative hover:text-slate-200 transition-colors flex items-center"
+              >
+                <ShoppingBag size={17} />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-xs font-bold text-white flex items-center justify-center leading-none">
+                    {totalItems > 99 ? '99+' : totalItems}
+                  </span>
+                )}
+              </button>
             </li>
           </ul>
         </nav>

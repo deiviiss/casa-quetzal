@@ -6,6 +6,9 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useNewCartStore } from "@/store/new-cart-store"
+import { mapProductToCartItem } from "@/lib/cart-adapters"
+import { toast } from "sonner"
 
 interface ProductCardsProps {
   products: Product[]
@@ -35,8 +38,20 @@ export default function ProductCards({ products }: ProductCardsProps) {
 
 export function ProductCard({ product, index }: { product: Product; index: number }) {
   const router = useRouter()
-  const whatsappMessage = encodeURIComponent(`Hola, quiero comprar el producto: ${product.name}`)
-  const whatsappLink = `https://wa.me/529999688834?text=${whatsappMessage}`
+  const { addToCart } = useNewCartStore()
+
+  const handleAddToCart = () => {
+    try {
+      const cartItem = mapProductToCartItem(product)
+      addToCart(cartItem)
+      toast.success(`${product.name} agregado al carrito`, {
+        position: 'bottom-right'
+      })
+    } catch (e) {
+      console.error('[ProductCard Landing]', e)
+      toast.error('No se pudo agregar el producto al carrito')
+    }
+  }
 
   return (
     <motion.div
@@ -87,11 +102,11 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
           </Button>
         ) : (
           <Button
-            onClick={() => window.open(whatsappLink, "_blank")}
+            onClick={handleAddToCart}
             disabled={!product.isAvailable}
             className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
           >
-            {product.isAvailable ? "Comprar en WhatsApp" : "No Disponible"}
+            {product.isAvailable ? "Agregar al carrito" : "No Disponible"}
           </Button>
         )}
       </div>

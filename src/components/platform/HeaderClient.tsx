@@ -8,7 +8,8 @@ import { Shield, ShoppingCart } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ToogleDarkMode } from "@/components/dark-mode/toogle-dark-mode/toogle-dark-mode"
-import { useCartStore, useUiStore } from "@/store"
+import { useUiStore } from "@/store"
+import { useNewCartStore } from "@/store/new-cart-store"
 import { cn } from "@/lib/utils"
 
 interface HeaderClientProps {
@@ -21,11 +22,11 @@ export default function HeaderClient({ isAdmin }: HeaderClientProps) {
   const isAdminPage = path.includes('/platform/admin')
 
   const { openSideCart } = useUiStore()
-  const totalItems = useCartStore((state) => state.getTotalItems())
+  const totalItems = useNewCartStore((state) => state.getTotalItems())
 
   return (
     <motion.header
-      className="sticky top-0 z-50 w-full mx-auto border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      className="sticky top-0 z-40 w-full mx-auto border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}

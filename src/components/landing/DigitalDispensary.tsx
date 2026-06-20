@@ -92,45 +92,45 @@ export default function DigitalDispensary() {
               <Link href="/memberships" className="block h-full cursor-pointer">
                 {/* Card */}
                 <div className="relative h-full bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200/50 overflow-hidden">
-                {/* Gradient accent bar */}
-                <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${membership.gradient}`} />
+                  {/* Gradient accent bar */}
+                  <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${membership.gradient}`} />
 
-                {/* Icon */}
-                <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 flex justify-center">
-                  <div className="relative w-20 h-20">
-                    <Image
-                      src={membership.icon}
-                      alt={`${membership.title} icon`}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-
-                {/* Title */}
-                <h3 className="text-2xl font-bold mb-3 text-slate-800">
-                  {membership.title}
-                </h3>
-
-                {/* Price (if available) */}
-                {membership.price && (
-                  <div className="mb-4">
-                    <div className="flex items-baseline gap-1">
-                      <span className={`text-3xl font-bold bg-gradient-to-r ${membership.gradient} bg-clip-text text-transparent`}>
-                        {membership.price}
-                      </span>
-                      <span className="text-slate-500 text-sm">/{membership.period}</span>
+                  {/* Icon */}
+                  <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                    <div className="relative w-20 h-20">
+                      <Image
+                        src={membership.icon}
+                        alt={`${membership.title} icon`}
+                        fill
+                        className="object-contain"
+                      />
                     </div>
                   </div>
-                )}
 
-                {/* Description */}
-                <p className="text-slate-600 leading-relaxed">
-                  {membership.description}
-                </p>
+                  {/* Title */}
+                  <h3 className="text-2xl font-bold mb-3 text-slate-800">
+                    {membership.title}
+                  </h3>
 
-                {/* Hover effect gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${membership.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl`} />
+                  {/* Price (if available) */}
+                  {membership.price && (
+                    <div className="mb-4">
+                      <div className="flex items-baseline gap-1">
+                        <span className={`text-3xl font-bold bg-gradient-to-r ${membership.gradient} bg-clip-text text-transparent`}>
+                          {membership.price}
+                        </span>
+                        <span className="text-slate-500 text-sm">/{membership.period}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Description */}
+                  <p className="text-slate-600 leading-relaxed">
+                    {membership.description}
+                  </p>
+
+                  {/* Hover effect gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${membership.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl`} />
                 </div>
               </Link>
             </motion.div>

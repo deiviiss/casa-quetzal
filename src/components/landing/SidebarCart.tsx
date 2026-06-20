@@ -21,8 +21,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 // import { logEvent } from '@/lib/event-logger'
-import { capitalizeWords, cn, getProductTotal } from '@/lib/utils'
-import { useUiStore, useCartStore } from '@/store';
+import { capitalizeWords, cn } from '@/lib/utils'
+import { useUiStore } from '@/store';
+import { useNewCartStore } from '@/store/new-cart-store';
 import { LocationPicker } from '../maps/location-picker'
 // import CartItem from '@/components/cart/CartItem';
 
@@ -52,7 +53,7 @@ export function SidebarCart() {
   const [showSafariModal, setShowSafariModal] = useState(false)
   const [pendingMessage, setPendingMessage] = useState<string | null>(null)
   const { isSideCartOpen, closeSideCart } = useUiStore()
-  const { cart, removeFromCart, updateQuantity, clearCart, getSubtotal, getCartItemTotal } = useCartStore()
+  const { cart, removeFromCart, updateQuantity, clearCart, getSubtotal, getCartItemTotal } = useNewCartStore()
 
   // Close sidebar with Escape key
   useEffect(() => {
@@ -70,10 +71,10 @@ export function SidebarCart() {
 
   const generateAndSendWhatsApp = async (option: 'pickup' | 'delivery') => {
     const items = cart.map((item) => ({
-      itemId: item.product.id,
+      itemId: item.productId,
       // categoryId: item.product.categoryId,
       quantity: item.quantity,
-      unitPrice: getProductTotal(item.product)
+      unitPrice: item.price
     }))
 
     const formData = new FormData()
@@ -100,25 +101,18 @@ export function SidebarCart() {
     // messageOrder += `*Código de verificación:* BD-${order.shortId}\n\n`
 
     cart.forEach((item) => {
-      const productName = item.product.name
+      const productName = item.name
       const quantity = item.quantity
-      const unitTotal = getProductTotal(item.product) // already includes options
+      const unitTotal = item.price // already includes options
       const lineTotal = unitTotal * quantity
 
-      const hasVariant = item.product.variants?.some(variant => variant.type === 'quantity')
+      const hasVariant = item.variantType === 'quantity'
 
       messageOrder += `*${quantity}x* ${productName} - ${hasVariant ? '*Pendiente*' : `$${lineTotal.toFixed(2)}`}\n`
 
       // Only show options if they exist
-      if (item.product.variants && item.product.variants.length > 0) {
-        // Group by ID to avoid duplicates (if they come from error)
-        const printed = new Set()
-        item.product.variants.forEach((variant) => {
-          if (!printed.has(variant.id)) {
-            messageOrder += `   - ${variant.name}\n`
-            printed.add(variant.id)
-          }
-        })
+      if (item.variantName) {
+        messageOrder += `   - ${item.variantName}\n`
       }
 
       messageOrder += '\n' // Separator between products
@@ -312,9 +306,11 @@ export function SidebarCart() {
               : (
                 <ul className="space-y-4">
                   {cart.map((item) => {
-                    const weightOption = item.product.variants?.find(variant => variant.type === 'weight')
+                    const weightOption = item.variantType === 'weight'
 
-                    const quantityOption = item.product.variants?.find(variant => variant.type === 'quantity')
+                    const quantityOption = item.variantType === 'quantity'
+
+                    const noVariants = !item.variantType
 
                     return (
                       <motion.li
@@ -327,15 +323,15 @@ export function SidebarCart() {
                         {/* Product image */}
                         <div className="relative h-16 w-16 rounded-md overflow-hidden flex-shrink-0">
                           <Image
-                            src={item.product.images?.[0].url || '/placeholder.svg?height=64&width=64'}
-                            alt={item.product.name}
+                            src={item.imageUrl || '/placeholder.svg?height=64&width=64'}
+                            alt={item.name}
                             fill
                             className="object-cover"
                           />
                         </div>
 
                         <div className="flex-1">
-                          <h3 className="font-medium text-sm">{item.product.name}</h3>
+                          <h3 className="font-medium text-sm">{item.name}</h3>
 
                           {/* WEIGHT */}
                           {weightOption && (
@@ -376,32 +372,32 @@ export function SidebarCart() {
                           )}
 
                           {/* Variants name */}
-                          <div className="flex flex-col mt-1">
-                            {item.product.variants?.map(variant => (
-                              <div key={variant.id} className="flex gap-2 items-center text-xs">
-                                <span>{variant.name}</span>
-                              </div>))}
-                          </div>
+                          {item.variantName && (
+                            <div className="flex flex-col mt-1">
+                              <div className="flex gap-2 items-center text-xs">
+                                <span>{item.variantName}</span>
+                              </div>
+                            </div>
+                          )}
 
                           {/* NO VARIANTS → simple control */}
-                          {!item.product.variants || item.product.variants.length === 0
-                            ? (
-                              <div className="flex items-center mt-1">
-                                <button
-                                  onClick={() => { updateQuantity(item.cartItemId, Math.max(1, item.quantity - 1)) }}
-                                  className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
-                                >
-                                  -
-                                </button>
-                                <span className="mx-2 w-6 text-center text-sm">{item.quantity}</span>
-                                <button
-                                  onClick={() => { updateQuantity(item.cartItemId, item.quantity + 1) }}
-                                  className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
-                                >
-                                  +
-                                </button>
-                              </div>)
-                            : null}
+                          {noVariants && (
+                            <div className="flex items-center mt-1">
+                              <button
+                                onClick={() => { updateQuantity(item.cartItemId, Math.max(1, item.quantity - 1)) }}
+                                className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
+                              >
+                                -
+                              </button>
+                              <span className="mx-2 w-6 text-center text-sm">{item.quantity}</span>
+                              <button
+                                onClick={() => { updateQuantity(item.cartItemId, item.quantity + 1) }}
+                                className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
+                              >
+                                +
+                              </button>
+                            </div>
+                          )}
                         </div>
 
                         {/* Price and delete */}
@@ -414,7 +410,7 @@ export function SidebarCart() {
                             }
                           </span>
                           <button
-                            onClick={() => { handleRemoveItem(item.cartItemId, item.product.name) }}
+                            onClick={() => { handleRemoveItem(item.cartItemId, item.name) }}
                             className="text-destructive/70 hover:text-destructive mt-1"
                           >
                             <Trash2 className="h-4 w-4" />

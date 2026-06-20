@@ -3,6 +3,7 @@ import { Oswald } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers/Provider";
 import { Toaster } from "sonner";
+import { SidebarCart } from "@/components/landing/SidebarCart";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -27,6 +28,7 @@ export default function RootLayout({
         className={`${oswald.variable} antialiased`}
       >
         <Providers>
+          <SidebarCart />
           {children}
           <Toaster
             position="top-right"

@@ -60,6 +60,7 @@ export const GoogleMaps = ({ isOpen, onLocationChange, moveToLocation, initialLo
       mapInstanceRef.current.setCenter(moveToLocation)
       markerRef.current.position = moveToLocation
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moveToLocation])
 
   // Initialize Google Maps
@@ -153,6 +154,7 @@ export const GoogleMaps = ({ isOpen, onLocationChange, moveToLocation, initialLo
         google.maps.event.clearInstanceListeners(markerRef.current)
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, moveToLocation, initialLocation])
 
   return (

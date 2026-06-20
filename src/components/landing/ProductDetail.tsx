@@ -7,16 +7,29 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Product } from "@/interfaces/product.interface"
+import { useNewCartStore } from "@/store/new-cart-store"
+import { mapProductToCartItem } from "@/lib/cart-adapters"
+import { toast } from "sonner"
 
 interface ProductDetailProps {
   product: Product
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
-  const whatsappMessage = encodeURIComponent(
-    `Hola, estoy interesado en comprar el ${product.name}. ¿Me puedes dar más información?`,
-  )
-  const whatsappLink = `https://wa.me/9999688834?text=${whatsappMessage}`
+  const { addToCart } = useNewCartStore()
+
+  const handleAddToCart = () => {
+    try {
+      const cartItem = mapProductToCartItem(product)
+      addToCart(cartItem)
+      toast.success(`${product.name} agregado al carrito`, {
+        position: 'bottom-right'
+      })
+    } catch (e) {
+      console.error('[ProductDetail]', e)
+      toast.error('No se pudo agregar el producto al carrito')
+    }
+  }
 
   return (
     <section className="pt-10 pb-20">
@@ -86,10 +99,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
             <Button
               className="w-full md:w-auto bg-emerald-900 hover:bg-emerald-800"
-              onClick={() => window.open(whatsappLink, "_blank")}
+              onClick={handleAddToCart}
               disabled={!product.isAvailable}
             >
-              {product.isAvailable ? "Comprar en WhatsApp" : "No Disponible"}
+              {product.isAvailable ? "Agregar al carrito" : "No Disponible"}
             </Button>
           </motion.div>
         </div>
