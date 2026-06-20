@@ -11,6 +11,8 @@ interface NewCartState {
   clearCart: () => void
   getTotalItems: () => number
   getSubtotal: () => number
+  hasDispensaryItems: () => boolean
+  removeDispensaryItems: () => void
 }
 
 export const useNewCartStore = create<NewCartState>()(
@@ -67,6 +69,14 @@ export const useNewCartStore = create<NewCartState>()(
 
       getSubtotal: () => {
         return get().cart.reduce((total, item) => total + item.price * item.quantity, 0)
+      },
+
+      hasDispensaryItems: () => {
+        return get().cart.some((item) => item.variantType !== null)
+      },
+
+      removeDispensaryItems: () => {
+        set({ cart: get().cart.filter((item) => item.variantType === null) })
       }
     }),
     {
