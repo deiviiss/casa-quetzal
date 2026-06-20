@@ -2,9 +2,7 @@
 
 import { Product } from "@/interfaces/product.interface"
 import { motion } from "framer-motion"
-import Image from "next/image"
-import Link from "next/link"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ProductCard } from "./ProductCards"
 
 interface RelatedProductsProps {
   relatedProducts: Product[]
@@ -28,41 +26,9 @@ export default function RelatedProducts({ relatedProducts }: RelatedProductsProp
           Productos Relacionados
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {relatedProducts.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-            >
-              <Link href={`/products/${product.id}`}>
-                <Card className="h-full rounded-xl shadow-xl border border-gray-200 hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between overflow-hidden">
-
-                  <>
-                    <Image
-                      src={product.image || "/placeholder.svg"}
-                      alt={product.name}
-                      width={400}
-                      height={300}
-                      className="w-full h-48 object-cover rounded-t-xl"
-                    />
-
-                    <CardHeader>
-                      <CardTitle className="text-xl font-semibold text-emerald-900">{product.name}</CardTitle>
-                    </CardHeader>
-                  </>
-
-                  <CardContent className="pb-0 flex-1 ">
-                    <p className="text-gray-700 leading-relaxed mb-4">{product.shortDescription}</p>
-                  </CardContent>
-
-                  <CardContent>
-                    <p className="text-xl font-bold text-emerald-900 text-end">${product.price} MXN</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            </motion.div>
+            <ProductCard key={product.id} product={product} index={index} />
           ))}
         </div>
       </div>

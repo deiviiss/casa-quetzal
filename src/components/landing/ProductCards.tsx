@@ -33,7 +33,7 @@ export default function ProductCards({ products }: ProductCardsProps) {
   )
 }
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+export function ProductCard({ product, index }: { product: Product; index: number }) {
   const router = useRouter()
   const whatsappMessage = encodeURIComponent(`Hola, quiero comprar el producto: ${product.name}`)
   const whatsappLink = `https://wa.me/529999688834?text=${whatsappMessage}`
@@ -46,7 +46,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       transition={{ duration: 0.8, delay: index * 0.1 }}
       whileHover={{ scale: 1.05 }}
     >
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
         <Image
           src={product.image || "/placeholder.svg"}
           alt={product.name}

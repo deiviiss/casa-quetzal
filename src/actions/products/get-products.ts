@@ -46,8 +46,8 @@ const products: Product[] = [
       "Aceites esenciales naturales.",
     ],
     origin: "Producido con cáñamo cultivado en espacios regenerativos en México.",
-    price: 260,
-    isAvailable: false,
+    price: 239,
+    isAvailable: true,
     isExclusive: false
   },
   {
@@ -71,7 +71,7 @@ const products: Product[] = [
     ],
     origin: "Elaborado con flores de cáñamo cultivadas en interior bajo condiciones controladas.",
     price: 699,
-    isAvailable: false,
+    isAvailable: true,
     isExclusive: false
   },
   {
@@ -96,7 +96,7 @@ const products: Product[] = [
     ],
     origin: "Elaborado con fibra de cáñamo reciclada en talleres sustentables en México.",
     price: 0,
-    isAvailable: false,
+    isAvailable: true,
     isExclusive: false
   },
   {
