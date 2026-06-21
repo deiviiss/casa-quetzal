@@ -32,7 +32,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   }
 
   return (
-    <section className="pt-10 pb-20">
+    <section className="pt-10 pb-20 bg-secondary-foreground">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -43,7 +43,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           <Button
             variant="ghost"
             asChild
-            className="group text-slate-600 dark:text-slate-200 hover:text-slate-900 transition-colors p-0 hover:bg-transparent"
+            className="group text-slate-600 hover:text-slate-900 transition-colors p-0 hover:bg-transparent"
           >
             <Link href="/products" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
@@ -87,8 +87,8 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">{product.name}</h1>
-            <p className="text-xl text-gray-700 dark:text-slate-200 leading-relaxed">{product.shortDescription}</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{product.name}</h1>
+            <p className="text-xl text-gray-700 leading-relaxed">{product.shortDescription}</p>
             {
               product.price > 0 ? (
                 <p className="text-3xl font-bold text-emerald-900">${product.price} MXN</p>
@@ -97,13 +97,24 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               )
             }
 
-            <Button
-              className="w-full md:w-auto bg-emerald-900 hover:bg-emerald-800"
-              onClick={handleAddToCart}
-              disabled={!product.isAvailable}
-            >
-              {product.isAvailable ? "Agregar al carrito" : "No Disponible"}
-            </Button>
+            {product.isExclusive ? (
+              <Button
+                asChild
+                className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700"
+              >
+                <Link href="/platform/dispensary">
+                  Ir al Dispensario
+                </Link>
+              </Button>
+            ) : (
+              <Button
+                className="w-full md:w-auto bg-emerald-900 hover:bg-emerald-800"
+                onClick={handleAddToCart}
+                disabled={!product.isAvailable}
+              >
+                {product.isAvailable ? "Agregar al carrito" : "No Disponible"}
+              </Button>
+            )}
           </motion.div>
         </div>
 
@@ -113,12 +124,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12"
         >
 
-          <Card className="p-6">
+          <Card className="p-6 dark:bg-primary/10">
             <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Descripción</h2>
             <p className="text-gray-700 leading-relaxed">{product.longDescription}</p>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-6 dark:bg-primary/10">
             <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Beneficios</h2>
             <ul className="list-disc list-inside space-y-2">
               {product.benefits.map((benefit, index) => (
@@ -131,7 +142,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           </Card>
 
           {product.ingredients && (
-            <Card className="p-6">
+            <Card className="p-6 dark:bg-primary/10">
               <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Ingredientes</h2>
               <ul className="list-disc list-inside space-y-2">
                 {product.ingredients.map((ingredient, index) => (
@@ -144,7 +155,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           )}
 
           {product.usage && (
-            <Card className="p-6">
+            <Card className="p-6 dark:bg-primary/10">
               <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Modo de Uso</h2>
               <ul className="list-disc list-inside space-y-2">
                 {product.usage.map((instruction, index) => (
@@ -156,7 +167,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             </Card>
           )}
 
-          <Card className="p-6 mt-8">
+          <Card className="p-6 dark:bg-primary/10">
             <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Origen y Trazabilidad</h2>
             <p className="text-gray-700 leading-relaxed">{product.origin}</p>
           </Card>
@@ -165,4 +176,3 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     </section>
   )
 }
-
