@@ -53,4 +53,10 @@ export interface CartItem {
    * "" cuando el producto no tiene imagen (el Sidebar renderiza un ícono por defecto).
    */
   imageUrl: string;
+
+  /**
+   * Tipo de producto (ej. "membership").
+   */
+  type?: string;
 }
+

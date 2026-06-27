@@ -1,8 +1,7 @@
 'use server'
 
-import { Product } from "@/interfaces/product.interface"
-
-// import prisma from '@/lib/prisma'
+import { Product, DbProduct } from "@/interfaces/product.interface"
+import prisma from '@/lib/prisma'
 
 const products: Product[] = [
   {
@@ -131,5 +130,43 @@ export const getProducts = async () => {
   return {
     ok: true,
     products
+  }
+}
+
+export const getMembershipProduct = async (): Promise<{ ok: boolean; product?: DbProduct; message?: string }> => {
+  try {
+    const dbProduct = await prisma.product.findFirst({
+      where: {
+        type: 'membership',
+        isActive: true
+      }
+    })
+
+    if (!dbProduct) {
+      return {
+        ok: false,
+        message: 'Membership product not found or inactive'
+      }
+    }
+
+    // Map Prisma model to the decoupled DbProduct interface
+    const product: DbProduct = {
+      id: dbProduct.id,
+      name: dbProduct.name,
+      type: dbProduct.type,
+      price: dbProduct.price,
+      isActive: dbProduct.isActive
+    }
+
+    return {
+      ok: true,
+      product
+    }
+  } catch (error) {
+    console.error('Error fetching membership product:', error)
+    return {
+      ok: false,
+      message: 'Error fetching membership product'
+    }
   }
 }

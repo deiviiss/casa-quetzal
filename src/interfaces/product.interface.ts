@@ -11,6 +11,7 @@ export interface Product {
   origin: string;
   isAvailable: boolean;
   isExclusive: boolean;
+  type?: string;
 }
 
 export interface ProductType {
@@ -76,4 +77,12 @@ export interface DispensaryProduct {
   images: DispensaryProductImage[]
   variants?: DispensaryProductVariant[]
   groupedOptions?: Record<string, DispensaryProductVariant[]>
+}
+
+export interface DbProduct {
+  id: string;
+  name: string;
+  type: string;
+  price: number;
+  isActive: boolean;
 }

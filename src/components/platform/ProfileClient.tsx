@@ -12,6 +12,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Input } from "@/components/ui/input"
 import { type User } from "@/interfaces/user.interface"
+import { DbProduct } from "@/interfaces/product.interface"
+import { mapDbProductToCartItem } from "@/lib/cart-adapters"
+import { useNewCartStore } from "@/store/new-cart-store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -54,9 +57,30 @@ const passwordSchema = z.object({
 
 interface profileProps {
   user: User
+  membershipProduct?: DbProduct | null
 }
 
-export const ProfileClient = ({ user }: profileProps) => {
+export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
+  const addToCart = useNewCartStore((state) => state.addToCart)
+
+  const hasMembership = user.purchase?.some((p) => p.product?.type === 'membership') || user.role === 'admin'
+
+  const handleAddMembership = () => {
+    if (!membershipProduct) {
+      noticeFailure("No se pudo cargar el producto de membresía.")
+      return
+    }
+
+    try {
+      const cartItem = mapDbProductToCartItem(membershipProduct)
+      addToCart(cartItem)
+      noticeSuccess("Membresía agregada al carrito con éxito")
+    } catch (error) {
+      console.error("[Add Membership Error]", error)
+      noticeFailure("Error al agregar la membresía al carrito")
+    }
+  }
+
   const [activeTab, setActiveTab] = useState("personal")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -236,6 +260,36 @@ export const ProfileClient = ({ user }: profileProps) => {
         </div>
         <ButtonLogout />
       </motion.div>
+
+      {/* Banner de Adquisición de Membresía */}
+      {!hasMembership && membershipProduct && (
+        <motion.div
+          variants={fadeInUp}
+          className="mb-6 p-4 rounded-xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/10 via-emerald-600/5 to-transparent backdrop-blur-sm relative overflow-hidden shadow-md animate-in fade-in slide-in-from-top-4 duration-300"
+        >
+          {/* Subtle ambient glow */}
+          <div className="absolute -right-8 -top-8 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+          
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+            <div className="space-y-1">
+              <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                <span>✨</span> Adquiere tu Membresía
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Activa tu cuenta y accede al dispensario digital agregando la membresía a tu carrito.
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <Button
+                onClick={handleAddMembership}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2 rounded-lg transition-all shadow-md shadow-emerald-600/20 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Adquirir membresía
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-8">
         {/* Sidebar navigation */}

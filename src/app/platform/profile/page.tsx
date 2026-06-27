@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { getUserSessionServer } from '@/actions/auth/getUserSessionServer'
 import { getUserById } from '@/actions/users/get-user-by-id'
 import { ProfileClient } from '@/components/platform/ProfileClient'
+import { getMembershipProduct } from '@/actions/products/get-products'
 
 export const metadata: Metadata = {
   title: "Perfil - Casa Quetzal",
@@ -22,8 +23,10 @@ const ProfilePage = async () => {
     redirect('/')
   }
 
+  const { product: membershipProduct } = await getMembershipProduct()
+
   return (
-    <ProfileClient user={user} />
+    <ProfileClient user={user} membershipProduct={membershipProduct || null} />
   )
 }
 

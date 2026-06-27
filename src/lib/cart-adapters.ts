@@ -1,4 +1,4 @@
-import { Product, DispensaryProduct, DispensaryProductVariant } from "@/interfaces/product.interface";
+import { Product, DispensaryProduct, DispensaryProductVariant, DbProduct } from "@/interfaces/product.interface";
 import { CartItem } from "@/interfaces/cart.interface";
 
 /**
@@ -23,6 +23,7 @@ export function mapDispensaryToCartItem(product: DispensaryProduct, variant: Dis
     price: finalUnitPrice,
     quantity: 1, // Cantidad inicial por defecto
     imageUrl: product.images && product.images.length > 0 ? product.images[0].url : "",
+    type: product.type?.name,
   };
 }
 
@@ -43,5 +44,27 @@ export function mapProductToCartItem(product: Product): CartItem {
     price: product.price || 0,
     quantity: 1, // Cantidad inicial por defecto
     imageUrl: product.image || "",
+    type: product.type,
+  };
+}
+
+/**
+ * Convierte un DbProduct (base de datos) en un CartItem plano.
+ */
+export function mapDbProductToCartItem(product: DbProduct): CartItem {
+  if (!product.id) {
+    throw new Error(`[Cart Adapter] DbProduct '${product.name}' must have an ID to be added to cart.`);
+  }
+
+  return {
+    cartItemId: `${product.id}-base`,
+    productId: product.id,
+    name: product.name,
+    variantName: null,
+    variantType: null,
+    price: product.price || 0,
+    quantity: 1,
+    imageUrl: "/logo.webp", // Default brand logo for database products
+    type: product.type,
   };
 }

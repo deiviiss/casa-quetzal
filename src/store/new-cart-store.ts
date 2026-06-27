@@ -25,6 +25,10 @@ export const useNewCartStore = create<NewCartState>()(
         const existingItemIndex = cart.findIndex((i) => i.cartItemId === item.cartItemId)
 
         if (existingItemIndex !== -1) {
+          // If it's a membership, do not increment quantity
+          if (cart[existingItemIndex].type === 'membership') {
+            return
+          }
           // Increment quantity if it already exists
           const updatedCart = [...cart]
           updatedCart[existingItemIndex].quantity += item.quantity
@@ -41,6 +45,10 @@ export const useNewCartStore = create<NewCartState>()(
       },
 
       updateQuantity: (cartItemId: string, quantity: number) => {
+        const existingItem = get().cart.find((item) => item.cartItemId === cartItemId)
+        if (existingItem?.type === 'membership') {
+          return
+        }
         if (quantity <= 0) {
           get().removeFromCart(cartItemId)
           return
