@@ -225,7 +225,7 @@ export function SidebarCart() {
 
   const handleClearCart = () => {
     clearCart()
-    toast.error('Carrito vaciado')
+    toast.error('Carrito vacío')
   }
 
   const handleConfirmLocation = (address: string, lat: number, lng: number) => {
