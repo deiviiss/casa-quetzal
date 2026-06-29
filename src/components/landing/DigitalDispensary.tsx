@@ -3,13 +3,14 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
+import { HiUserGroup } from "react-icons/hi"
 
 export default function DigitalDispensary() {
   const memberships = [
     {
       title: "Consumer",
-      price: "$8,500",
-      period: "anual",
+      price: "$99",
+      period: "mensual",
       description: "Acceso a productos con THC",
       gradient: "from-emerald-500 to-teal-600",
       icon: "/imgs/icon-consumers.png"
@@ -52,7 +53,7 @@ export default function DigitalDispensary() {
             className="inline-block mb-4"
           >
             <span className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold shadow-lg">
-              <span className="mr-2">✨</span>
+              <HiUserGroup className="mr-2 text-xl" />
               Plataforma Digital
             </span>
           </motion.div>

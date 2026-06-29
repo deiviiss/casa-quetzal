@@ -160,7 +160,7 @@ export default function MembershipCards() {
 }
 
 function MembershipCard({ membership, index, onOpenRTQ }: MembershipCardProps) {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("annual")
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly")
 
   const isConsumer = membership.id === "consumer"
 

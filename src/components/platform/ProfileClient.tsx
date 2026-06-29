@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Loader, Settings, Upload, User as UserIcon, X } from "lucide-react"
+import { MdCardMembership } from "react-icons/md"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Input } from "@/components/ui/input"
@@ -269,11 +270,11 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
         >
           {/* Subtle ambient glow */}
           <div className="absolute -right-8 -top-8 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
-          
+
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
             <div className="space-y-1">
               <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-                <span>✨</span> Adquiere tu Membresía
+                <MdCardMembership className="text-primary" /> Adquiere tu Membresía
               </h3>
               <p className="text-sm text-muted-foreground">
                 Activa tu cuenta y accede al dispensario digital agregando la membresía a tu carrito.
