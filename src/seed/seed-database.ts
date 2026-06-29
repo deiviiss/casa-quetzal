@@ -3,7 +3,9 @@ import { countries } from './seed-countries'
 import prisma from '../lib/prisma'
 
 const main = async () => {
-  // delete all data
+  // delete all data (order matters for FK constraints)
+  await prisma.purchase.deleteMany()
+  await prisma.product.deleteMany()
   await prisma.userAddress.deleteMany()
   await prisma.country.deleteMany()
   await prisma.user.deleteMany()
@@ -21,6 +23,16 @@ const main = async () => {
     data: countries
   })
 
+  // products (membership)
+  await prisma.product.create({
+    data: {
+      name: 'Membresía Dispensario',
+      type: 'membership',
+      price: 0,
+      isActive: true,
+    }
+  })
+
   console.log('Seed executed successfully')
 }
 
@@ -30,3 +42,4 @@ const main = async () => {
   main()
 }
 )()
+

@@ -13,11 +13,11 @@ const passwordSchema = z.object({
     .uuid(),
   currentPassword: z
     .string()
-    .min(6, { message: 'Current password is required' }),
+    .min(6, { message: 'La contraseña actual es requerida' }),
   newPassword: z
     .string()
-    .min(6, { message: 'The new password must have at least 6 characters' })
-    .max(10, { message: 'The new password must be less than 10 characters' })
+    .min(6, { message: 'La nueva contraseña debe tener al menos 6 caracteres' })
+    .max(10, { message: 'La nueva contraseña debe tener menos de 10 caracteres' })
 })
 
 
@@ -33,7 +33,7 @@ export const updateUserPassword = async (data: IData) => {
   if (!passwordUserParsed.success) {
     return {
       ok: false,
-      message: 'Error updating user'
+      message: 'Error al actualizar usuario'
     }
   }
 
@@ -46,7 +46,7 @@ export const updateUserPassword = async (data: IData) => {
     if (!userSession) {
       return {
         ok: false,
-        message: 'Session not found'
+        message: 'Sesión no encontrada'
       }
     }
 
@@ -55,7 +55,7 @@ export const updateUserPassword = async (data: IData) => {
     if (!user) {
       return {
         ok: false,
-        message: 'User not found'
+        message: 'Usuario no encontrado'
       }
     }
 
@@ -64,7 +64,7 @@ export const updateUserPassword = async (data: IData) => {
     if (!isPasswordValid) {
       return {
         ok: false,
-        message: 'Current password is incorrect'
+        message: 'La contraseña actual es incorrecta'
       }
     }
 
@@ -82,7 +82,7 @@ export const updateUserPassword = async (data: IData) => {
     if (!userUpdated) {
       return {
         ok: false,
-        message: 'User not updated'
+        message: 'Usuario no actualizado'
       }
     }
 
@@ -90,13 +90,13 @@ export const updateUserPassword = async (data: IData) => {
 
     return {
       ok: true,
-      message: 'Updated successfully'
+      message: 'Actualizado exitosamente'
     }
   } catch (error) {
     console.error('Error updating user', error)
     return {
       ok: false,
-      message: 'Error updating user, please contact support'
+      message: 'Error al actualizar el usuario, por favor contacta a soporte'
     }
   }
 }

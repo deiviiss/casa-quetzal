@@ -1,16 +1,65 @@
 import Link from 'next/link'
 import { auth } from '@/auth'
+import { FaInstagram, FaTiktok, FaFacebookF, FaYoutube } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 
 export const Footer = async () => {
   const session = await auth()
   return (
-    <footer className="w-full bg-slate-900 text-gray-300 p-5  print:hidden">
+    <footer className="w-full bg-slate-900 text-gray-200 p-5 print:hidden">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* About Us Section */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Acerca de</h3>
             <p className="text-sm text-gray-400">En Casa Quetzal Cannabis Seeds impulsamos el cáñamo en México con innovación genética, sustentabilidad y trazabilidad, apostando por un futuro sostenible y próspero.</p>
+            <div className="flex space-x-4 mt-6">
+              <a
+                href="https://www.instagram.com/quetzalseeds420"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="text-gray-500 hover:text-white transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 rounded-sm"
+              >
+                <FaInstagram size={20} aria-hidden="true" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@quetzalseeds420"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="text-gray-500 hover:text-white transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 rounded-sm"
+              >
+                <FaTiktok size={20} aria-hidden="true" />
+              </a>
+              <a
+                href="https://www.facebook.com/QuetzalSeeds420"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="text-gray-500 hover:text-white transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 rounded-sm"
+              >
+                <FaFacebookF size={20} aria-hidden="true" />
+              </a>
+              <a
+                href="https://youtube.com/@quetzalseeds420"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="text-gray-500 hover:text-white transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 rounded-sm"
+              >
+                <FaYoutube size={20} aria-hidden="true" />
+              </a>
+              <a
+                href="https://x.com/QuetzalSeeds420"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+                className="text-gray-500 hover:text-white transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 rounded-sm"
+              >
+                <FaXTwitter size={20} aria-hidden="true" />
+              </a>
+            </div>
           </div>
 
           <div>

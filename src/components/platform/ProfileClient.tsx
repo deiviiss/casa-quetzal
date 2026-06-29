@@ -1,16 +1,21 @@
 'use client'
 
 import { useRef, useState } from "react"
+import Image from "next/image"
 import { ButtonLogout } from '@/components/auth/ButtonLogout'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Loader, Settings, Upload, User as UserIcon, X } from "lucide-react"
+import { MdCardMembership } from "react-icons/md"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Input } from "@/components/ui/input"
 import { type User } from "@/interfaces/user.interface"
+import { DbProduct } from "@/interfaces/product.interface"
+import { mapDbProductToCartItem } from "@/lib/cart-adapters"
+import { useNewCartStore } from "@/store/new-cart-store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -53,9 +58,30 @@ const passwordSchema = z.object({
 
 interface profileProps {
   user: User
+  membershipProduct?: DbProduct | null
 }
 
-export const ProfileClient = ({ user }: profileProps) => {
+export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
+  const addToCart = useNewCartStore((state) => state.addToCart)
+
+  const hasMembership = user.purchase?.some((p) => p.product?.type === 'membership') || user.role === 'admin'
+
+  const handleAddMembership = () => {
+    if (!membershipProduct) {
+      noticeFailure("No se pudo cargar el producto de membresía.")
+      return
+    }
+
+    try {
+      const cartItem = mapDbProductToCartItem(membershipProduct)
+      addToCart(cartItem)
+      noticeSuccess("Membresía agregada al carrito con éxito")
+    } catch (error) {
+      console.error("[Add Membership Error]", error)
+      noticeFailure("Error al agregar la membresía al carrito")
+    }
+  }
+
   const [activeTab, setActiveTab] = useState("personal")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -167,7 +193,7 @@ export const ProfileClient = ({ user }: profileProps) => {
       const { ok: okDeleteImage } = await deleteUserImage(user.image || '')
 
       if (!okDeleteImage) {
-        noticeFailure("Error deleting old image, please contact support")
+        noticeFailure("Error al eliminar la imagen anterior, por favor contacte a soporte")
         return
       }
 
@@ -187,14 +213,14 @@ export const ProfileClient = ({ user }: profileProps) => {
       const { ok, message } = await updateUserImage(data.url)
 
       if (!ok) {
-        noticeFailure(message || "Error uploading image")
+        noticeFailure(message || "Error al actualizar la imagen")
         return
       }
 
       noticeSuccess("Imagen de perfil actualizada con éxito");
     } catch (error) {
-      console.error("Error uploading image:", error);
-      noticeFailure("An error occurred while uploading the image");
+      console.error("Error al subir la imagen:", error);
+      noticeFailure("Error al subir la imagen");
     } finally {
       setIsSubmitting(false)
       setAvatarModalOpen(false);
@@ -221,6 +247,7 @@ export const ProfileClient = ({ user }: profileProps) => {
 
   return (
     <motion.div
+      className="max-w-4xl w-full mx-auto px-2"
       initial="initial"
       animate="animate"
       variants={{
@@ -230,10 +257,40 @@ export const ProfileClient = ({ user }: profileProps) => {
       <motion.div variants={fadeInUp} className="flex items-center gap-4 justify-between mb-8 pt-8">
         <div>
           <h1 className="text-3xl font-bold text-primary">Mi Perfil</h1>
-          <p className="text-muted-foreground">Gestiona los ajustes de tu cuenta y suscripción</p>
+          <p className="text-muted-foreground">Gestiona los ajustes de tu cuenta</p>
         </div>
         <ButtonLogout />
       </motion.div>
+
+      {/* Banner de Adquisición de Membresía */}
+      {!hasMembership && membershipProduct && (
+        <motion.div
+          variants={fadeInUp}
+          className="mb-6 p-4 rounded-xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/10 via-emerald-600/5 to-transparent backdrop-blur-sm relative overflow-hidden shadow-md animate-in fade-in slide-in-from-top-4 duration-300"
+        >
+          {/* Subtle ambient glow */}
+          <div className="absolute -right-8 -top-8 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+            <div className="space-y-1">
+              <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                <MdCardMembership className="text-primary" /> Adquiere tu Membresía
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Activa tu cuenta y accede al dispensario digital agregando la membresía a tu carrito.
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <Button
+                onClick={handleAddMembership}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2 rounded-lg transition-all shadow-md shadow-emerald-600/20 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Adquirir membresía
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-8">
         {/* Sidebar navigation */}
@@ -241,7 +298,7 @@ export const ProfileClient = ({ user }: profileProps) => {
           {/* User info card */}
           <Card>
             <CardContent className="p-6 flex flex-col items-center">
-              <Avatar className="h-24 w-24 mb-4">
+              <Avatar className="h-24 w-24 mb-4 bg-secondary-foreground dark:bg-secondary-foreground/75">
                 <AvatarImage
                   src={user.image || "/imgs/avatar.png"}
                   alt="Profile"
@@ -264,7 +321,7 @@ export const ProfileClient = ({ user }: profileProps) => {
           </Card>
 
           {/* sidebar navigation */}
-          <Card >
+          <Card className="relative">
             <CardContent className="p-4">
               <nav className="space-y-2">
                 {navItems.map((item) => (
@@ -281,11 +338,26 @@ export const ProfileClient = ({ user }: profileProps) => {
               </nav>
             </CardContent>
           </Card>
+
+          {/* Decorative image */}
+          <motion.div
+            variants={fadeInUp}
+            className="absolute -bottom-[470px] right-6 md:-bottom-12 md:right-1 lg:-bottom-16 lg:right-14 z-20 opacity-80 hover:opacity-100 transition-opacity pointer-events-none over"
+          >
+            <Image
+              src="/imgs/profile_emoji.svg"
+              alt=""
+              width={120}
+              height={120}
+              className="object-contain drop-shadow-2xl"
+              aria-hidden="true"
+            />
+          </motion.div>
         </motion.div>
 
         {/* Main content Tabs */}
         <motion.div variants={fadeInUp}>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-col">
             <div className="overflow-x-auto scrollbar-hide hidden md:block">
               <TabsList className="flex w-max gap-2">
                 {navItems.map((item) => (
@@ -297,7 +369,7 @@ export const ProfileClient = ({ user }: profileProps) => {
             </div>
 
             <TabsContent value="personal">
-              <Card>
+              <Card className="relative z-10">
                 <CardHeader>
                   <CardTitle>Información Personal</CardTitle>
                   <CardDescription>Actualiza tus datos personales e información de contacto</CardDescription>
@@ -364,7 +436,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                         )}
                       </div>
                       <Button className="mt-4" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? "Guardando..." : "Guardar cambios"}
+                        {isSubmitting ? "Guardando…" : "Guardar cambios"}
                       </Button>
                     </form>
                   </Form>
@@ -448,7 +520,7 @@ export const ProfileClient = ({ user }: profileProps) => {
                           </div>
 
                           <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Actualizando..." : "Actualizar Contraseña"}
+                            {isSubmitting ? "Actualizando…" : "Actualizar Contraseña"}
                           </Button>
                         </form>
                       </Form>
@@ -488,7 +560,7 @@ export const ProfileClient = ({ user }: profileProps) => {
 
           <div className="grid gap-4 py-4">
             <div className="flex flex-col items-center gap-4">
-              <Avatar className="h-32 w-32">
+              <Avatar className="h-32 w-32 bg-secondary-foreground dark:bg-secondary-foreground/75">
                 <AvatarImage
                   src={avatarPreview || "/imgs/avatar.png"}
                   alt="Preview"

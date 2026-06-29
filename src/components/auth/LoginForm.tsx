@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoInformationOutline } from 'react-icons/io5'
+import { Eye, EyeOff } from 'lucide-react'
 import { z } from 'zod'
 import { login } from '@/actions/auth/login'
 import { Button } from '@/components/ui/button'
@@ -35,8 +36,9 @@ const loginSchema = z.object({
 export const LoginForm = () => {
   const searchParams = useSearchParams()
 
-  const redirectTo = searchParams.get('redirectTo') || '/platform/profile'
+  const redirectTo = searchParams.get('redirectTo') || '/platform/dispensary'
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
 
   const defaultValuesForm = {
@@ -135,15 +137,28 @@ export const LoginForm = () => {
                   <FormItem>
                     <FormLabel className="text-slate-300">Contraseña</FormLabel>
                     <FormControl>
-                      <Input
-                        type='password'
-                        placeholder='••••••••'
-                        {...field}
-                        value={field.value}
-                        style={{ colorScheme: 'dark' }}
-                        className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50"
-                        autoComplete="current-password"
-                      />
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder='••••••••'
+                          {...field}
+                          value={field.value}
+                          style={{ colorScheme: 'dark' }}
+                          className="h-12 bg-[#161616] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-emerald-500/50 pr-12"
+                          autoComplete="current-password"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-5 w-5" />
+                          ) : (
+                            <Eye className="h-5 w-5" />
+                          )}
+                        </button>
+                      </div>
                     </FormControl>
                     <FormMessage className="text-red-400/80" />
                   </FormItem>
@@ -174,7 +189,7 @@ export const LoginForm = () => {
               <Button
                 type='submit'
                 disabled={isSubmitting}
-                className='w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold h-12 rounded-lg transition-colors active:scale-[0.98]'
+                className='w-full bg-secondary hover:bg-secondary/80 text-white font-semibold h-12 rounded-lg transition-colors active:scale-[0.98]'
               >
                 {isSubmitting ? 'Iniciando sesión…' : 'Iniciar sesión'}
               </Button>
@@ -190,8 +205,8 @@ export const LoginForm = () => {
 
               <Button
                 asChild
-                variant='secondary'
-                className='w-full text-slate-400 hover:text-white hover:bg-white/5 h-12 transition-colors'
+                variant='destructive'
+                className='w-full text-slate-400 hover:text-white hover:bg-red-50/5 h-12 transition-colors'
               >
                 <Link
                   href={`/auth/new-account?redirectTo=${redirectTo}`}

@@ -1,8 +1,7 @@
 'use server'
 
-import { Product } from "@/interfaces/product.interface"
-
-// import prisma from '@/lib/prisma'
+import { Product, DbProduct } from "@/interfaces/product.interface"
+import prisma from '@/lib/prisma'
 
 const products: Product[] = [
   {
@@ -25,7 +24,7 @@ const products: Product[] = [
     origin: "Cultivado en milpas regenerativas sin químicos sintéticos en México.",
     price: 299,
     isAvailable: true,
-    isExclusive: false
+    isExclusive: true
   },
   {
     id: '2',
@@ -46,8 +45,32 @@ const products: Product[] = [
       "Aceites esenciales naturales.",
     ],
     origin: "Producido con cáñamo cultivado en espacios regenerativos en México.",
-    price: 499,
-    isAvailable: false,
+    price: 239,
+    isAvailable: true,
+    isExclusive: false
+  },
+  {
+    id: '5',
+    name: "Aceite de CBD Premium",
+    image: "/imgs/categoria-aceite-cbd.png",
+    shortDescription: "Aceite de CBD elaborado con cáñamo cultivado en interior. Bienestar diario y equilibrio natural.",
+    longDescription: "Nuestro Aceite de CBD Premium es elaborado a partir de flores de cáñamo cultivadas en interior bajo condiciones controladas y seleccionadas por su perfil equilibrado de cannabinoides y terpenos. Inspirado en fenotipos de calidad media-alta como Fedora 19, ofrece una experiencia consistente, un perfil aromático suave y una formulación diseñada para integrarse fácilmente a tu rutina diaria de bienestar.",
+    benefits: [
+      "Apoyo al bienestar general.",
+      "Contribuye al equilibrio del sistema endocannabinoide.",
+      "Perfil aromático suave y agradable.",
+      "Fácil integración en la rutina diaria."
+    ],
+    usage: [
+      "Administrar la cantidad recomendada utilizando el gotero de precisión.",
+      "Incorporar a la rutina diaria según las indicaciones del producto."
+    ],
+    ingredients: [
+      "Extracto de cáñamo rico en CBD."
+    ],
+    origin: "Elaborado con flores de cáñamo cultivadas en interior bajo condiciones controladas.",
+    price: 699,
+    isAvailable: true,
     isExclusive: false
   },
   {
@@ -71,8 +94,8 @@ const products: Product[] = [
       "Fibra de cáñamo reciclada."
     ],
     origin: "Elaborado con fibra de cáñamo reciclada en talleres sustentables en México.",
-    price: 199,
-    isAvailable: false,
+    price: 0,
+    isAvailable: true,
     isExclusive: false
   },
   {
@@ -107,5 +130,43 @@ export const getProducts = async () => {
   return {
     ok: true,
     products
+  }
+}
+
+export const getMembershipProduct = async (): Promise<{ ok: boolean; product?: DbProduct; message?: string }> => {
+  try {
+    const dbProduct = await prisma.product.findFirst({
+      where: {
+        type: 'membership',
+        isActive: true
+      }
+    })
+
+    if (!dbProduct) {
+      return {
+        ok: false,
+        message: 'Membership product not found or inactive'
+      }
+    }
+
+    // Map Prisma model to the decoupled DbProduct interface
+    const product: DbProduct = {
+      id: dbProduct.id,
+      name: dbProduct.name,
+      type: dbProduct.type,
+      price: dbProduct.price,
+      isActive: dbProduct.isActive
+    }
+
+    return {
+      ok: true,
+      product
+    }
+  } catch (error) {
+    console.error('Error fetching membership product:', error)
+    return {
+      ok: false,
+      message: 'Error fetching membership product'
+    }
   }
 }

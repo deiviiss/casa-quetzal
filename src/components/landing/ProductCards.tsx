@@ -5,6 +5,10 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { useNewCartStore } from "@/store/new-cart-store"
+import { mapProductToCartItem } from "@/lib/cart-adapters"
+import { toast } from "sonner"
 
 interface ProductCardsProps {
   products: Product[]
@@ -32,10 +36,22 @@ export default function ProductCards({ products }: ProductCardsProps) {
   )
 }
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+export function ProductCard({ product, index }: { product: Product; index: number }) {
   const router = useRouter()
-  const whatsappMessage = encodeURIComponent(`Hola, quiero comprar el producto: ${product.name}`)
-  const whatsappLink = `https://wa.me/529999688834?text=${whatsappMessage}`
+  const { addToCart } = useNewCartStore()
+
+  const handleAddToCart = () => {
+    try {
+      const cartItem = mapProductToCartItem(product)
+      addToCart(cartItem)
+      toast.success(`${product.name} agregado al carrito`, {
+        position: 'bottom-right'
+      })
+    } catch (e) {
+      console.error('[ProductCard Landing]', e)
+      toast.error('No se pudo agregar el producto al carrito')
+    }
+  }
 
   return (
     <motion.div
@@ -45,7 +61,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       transition={{ duration: 0.8, delay: index * 0.1 }}
       whileHover={{ scale: 1.05 }}
     >
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
         <Image
           src={product.image || "/placeholder.svg"}
           alt={product.name}
@@ -67,17 +83,32 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           </div>
         )}
       </div>
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-        <p className="text-gray-600 mb-4">{product.shortDescription}</p>
-        <p className="text-2xl font-bold text-slate-600 mb-4">${product.price} MXN</p>
-        <Button
-          onClick={() => window.open(whatsappLink, "_blank")}
-          disabled={!product.isAvailable}
-          className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
-        >
-          {product.isAvailable ? "Comprar en WhatsApp" : "No Disponible"}
-        </Button>
+      <div className="p-6 flex flex-col justify-between h-full">
+        <div>
+          <h3 className="dark text-secondary text-xl font-semibold mb-2">{product.name}</h3>
+          <p className="text-gray-600 mb-4">{product.shortDescription}</p>
+        </div>
+        {
+          product.price > 0 && <p className="text-2xl font-bold text-slate-600 mb-4">${product.price} MXN</p>
+        }
+        {product.isExclusive ? (
+          <Button
+            asChild
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
+          >
+            <Link href="/platform/dispensary">
+              Ir al Dispensario
+            </Link>
+          </Button>
+        ) : (
+          <Button
+            onClick={handleAddToCart}
+            disabled={!product.isAvailable}
+            className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded transition duration-300 text-center"
+          >
+            {product.isAvailable ? "Agregar al carrito" : "No Disponible"}
+          </Button>
+        )}
       </div>
     </motion.div>
   )

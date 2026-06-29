@@ -25,20 +25,20 @@ export const getUserById = async (id: string): Promise<Response> => {
     if (!user) {
       return {
         ok: false,
-        message: 'User not found'
+        message: 'Usuario no encontrado'
       }
     }
 
     return {
       ok: true,
-      message: 'User found',
+      message: 'Usuario encontrado',
       user: user as unknown as User
     }
   } catch (error) {
     console.error('Error fetching user', error)
     return {
       ok: false,
-      message: 'Error fetching user, please contact support'
+      message: 'Error al obtener el usuario, por favor contacta a soporte'
     }
   }
 }
