@@ -1,7 +1,6 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { User } from '@/interfaces/user.interface'
 
 export const getAllUsers = async (query?: string) => {
   try {
