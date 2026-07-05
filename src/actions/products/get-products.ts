@@ -73,30 +73,70 @@ const products: Product[] = [
     isAvailable: true,
     isExclusive: false
   },
+  // {
+  //   id: '3',
+  //   name: "Velas y Souvenirs de cáñamo",
+  //   image: "/imgs/categoria-vela-decorativa.png",
+  //   shortDescription: "Lleva contigo un pedazo de nuestra cultura del cáñamo. Productos ecológicos hechos con fibra de cáñamo.",
+  //   longDescription: "Nuestras velas y souvenirs están elaborados con materiales ecológicos derivados del cáñamo, fusionando tradición y sostenibilidad en cada pieza. Aromas relajantes y un diseño artesanal los convierten en el complemento perfecto para cualquier espacio.",
+  //   benefits: [
+  //     "Ambientación con aromas relajantes.",
+  //     "Materiales ecológicos y biodegradables.",
+  //     "Diseño artesanal y exclusivo."
+  //   ],
+  //   usage: [
+  //     "Encender en un espacio cerrado para un ambiente relajante.",
+  //     "Usar como decoración sostenible en el hogar."
+  //   ],
+  //   ingredients: [
+  //     "Cera de cáñamo.",
+  //     "Esencias naturales.",
+  //     "Fibra de cáñamo reciclada."
+  //   ],
+  //   origin: "Elaborado con fibra de cáñamo reciclada en talleres sustentables en México.",
+  //   price: 0,
+  //   isAvailable: true,
+  //   isExclusive: false
+  // },
   {
     id: '3',
-    name: "Velas y Souvenirs de cáñamo",
-    image: "/imgs/categoria-vela-decorativa.png",
-    shortDescription: "Lleva contigo un pedazo de nuestra cultura del cáñamo. Productos ecológicos hechos con fibra de cáñamo.",
-    longDescription: "Nuestras velas y souvenirs están elaborados con materiales ecológicos derivados del cáñamo, fusionando tradición y sostenibilidad en cada pieza. Aromas relajantes y un diseño artesanal los convierten en el complemento perfecto para cualquier espacio.",
+    name: "Mechero de Cáñamo CQCS",
+    shortDescription:
+      "Mechero de cáñamo encerado, llama limpia y encendido natural para tu ritual.",
+
+    longDescription:
+      "El Mechero de Cáñamo CQCS es una alternativa práctica para quienes buscan un encendido más controlado. Consiste en un encendedor recargable envuelto con cuerda de cáñamo natural impregnada con cera de abeja. Una vez encendida la punta de la cuerda, permite transferir la llama de forma gradual sin exponer directamente la pieza a la llama del encendedor. Su diseño es compacto, reutilizable y fácil de transportar, ideal para el uso diario y para quienes valoran materiales de origen natural.",
+
+    price: 59,
+    image: "/imgs/product-hemp-wick-lighter.png",
     benefits: [
-      "Ambientación con aromas relajantes.",
-      "Materiales ecológicos y biodegradables.",
-      "Diseño artesanal y exclusivo."
+      "Encendido gradual y preciso.",
+      "Cuerda de cáñamo de origen vegetal.",
+      "Cera de abeja natural como recubrimiento.",
+      "Encendedor recargable y reutilizable.",
+      "Fácil de transportar.",
+      "Favorece un mejor control de la llama.",
+      "Diseño artesanal y funcional."
     ],
     usage: [
-      "Encender en un espacio cerrado para un ambiente relajante.",
-      "Usar como decoración sostenible en el hogar."
+      "Enciende la punta de la cuerda de cáñamo con el encendedor.",
+      "Permite que la llama se estabilice durante unos segundos.",
+      "Utiliza la llama de la cuerda para encender el material deseado.",
+      "Apaga la cuerda soplando suavemente o sofocando la llama.",
+      "Sustituye la cuerda cuando sea necesario."
     ],
     ingredients: [
-      "Cera de cáñamo.",
-      "Esencias naturales.",
-      "Fibra de cáñamo reciclada."
+      "Cuerda de fibra de cáñamo 100% natural.",
+      "Cera de abeja natural.",
+      "Encendedor recargable de butano.",
+      "Soporte de fijación para la cuerda."
     ],
-    origin: "Elaborado con fibra de cáñamo reciclada en talleres sustentables en México.",
-    price: 0,
+    origin:
+      "Ensamblado artesanalmente en Campeche, México, utilizando cuerda de cáñamo natural y cera de abeja seleccionada.",
+
     isAvailable: true,
-    isExclusive: false
+    isExclusive: false,
+    type: "accessory"
   },
   {
     id: '4',
