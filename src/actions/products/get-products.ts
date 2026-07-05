@@ -73,31 +73,6 @@ const products: Product[] = [
     isAvailable: true,
     isExclusive: false
   },
-  // {
-  //   id: '3',
-  //   name: "Velas y Souvenirs de cáñamo",
-  //   image: "/imgs/categoria-vela-decorativa.png",
-  //   shortDescription: "Lleva contigo un pedazo de nuestra cultura del cáñamo. Productos ecológicos hechos con fibra de cáñamo.",
-  //   longDescription: "Nuestras velas y souvenirs están elaborados con materiales ecológicos derivados del cáñamo, fusionando tradición y sostenibilidad en cada pieza. Aromas relajantes y un diseño artesanal los convierten en el complemento perfecto para cualquier espacio.",
-  //   benefits: [
-  //     "Ambientación con aromas relajantes.",
-  //     "Materiales ecológicos y biodegradables.",
-  //     "Diseño artesanal y exclusivo."
-  //   ],
-  //   usage: [
-  //     "Encender en un espacio cerrado para un ambiente relajante.",
-  //     "Usar como decoración sostenible en el hogar."
-  //   ],
-  //   ingredients: [
-  //     "Cera de cáñamo.",
-  //     "Esencias naturales.",
-  //     "Fibra de cáñamo reciclada."
-  //   ],
-  //   origin: "Elaborado con fibra de cáñamo reciclada en talleres sustentables en México.",
-  //   price: 0,
-  //   isAvailable: true,
-  //   isExclusive: false
-  // },
   {
     id: '3',
     name: "Mechero de Cáñamo CQCS",
@@ -162,6 +137,81 @@ const products: Product[] = [
     price: 399,
     isAvailable: false,
     isExclusive: false
+  },
+  {
+    id: '6',
+    name: "Miel de Cannabis CQCS",
+    shortDescription:
+      "Miel multifloral infusionada con cannabis, menos del 5% de THC.",
+    longDescription:
+      "La Miel de Cannabis CQCS combina miel multifloral mexicana con una infusión cuidadosamente elaborada de cannabis, manteniendo un contenido inferior al 5% de THC. Su formulación busca preservar las características naturales de la miel mientras incorpora los compuestos vegetales del cannabis en un producto artesanal de alta calidad. Ideal para acompañar bebidas, alimentos o como parte de una rutina de bienestar, siempre siguiendo las recomendaciones de consumo responsable y la legislación aplicable.",
+    price: 129,
+    image: "/imgs/product-miel-cannabis.png",
+    benefits: [
+      "Elaboración artesanal.",
+      "Menos del 5% de THC.",
+      "Miel multifloral 100% natural.",
+      "Fácil de incorporar a bebidas y alimentos.",
+      "Sabor suave con notas herbales.",
+      "Ingredientes de origen natural.",
+      "Presentación lista para consumir."
+    ],
+    usage: [
+      "Consumir directamente o como endulzante.",
+      "Agregar a café, té o infusiones tibias.",
+      "Untar sobre pan, galletas o fruta.",
+      "No calentar en exceso para conservar sus propiedades.",
+      "Mantener fuera del alcance de menores de edad."
+    ],
+    ingredients: [
+      "Miel multifloral mexicana.",
+      "Extracto de cannabis (<5% THC).",
+      "Terpenos naturales de cannabis."
+    ],
+    origin:
+      "Elaborada artesanalmente en Campeche, México, con miel de productores locales y cannabis con trazabilidad documentada.",
+    isAvailable: true,
+    isExclusive: false,
+    type: "Alimentos"
+  },
+  {
+    id: "7",
+    name: "Gomitas Pokers (CBD)",
+    shortDescription: "Gomitas infusionadas con cannabinoides de origen vegetal para consumo responsable.",
+    longDescription: "Las Gomitas de CBD CQCS son un alimento funcional elaborado con extracto de cannabis rico en cannabidiol (CBD), formulado para ofrecer una experiencia consistente mediante un proceso de dosificación estandarizado. Cada lote es elaborado bajo controles de calidad y trazabilidad, conservando el perfil natural de cannabinoides y terpenos presentes en el extracto. Debido a la naturaleza del extracto utilizado, el producto puede contener tetrahidrocannabinol (THC) en concentraciones suficientes para producir efectos psicoactivos en personas sensibles. Se recomienda un consumo responsable y conforme a la legislación aplicable.",
+    price: 199,
+    image: "/imgs/product-gomitas-cbd.png",
+    benefits: [
+      "Dosificación uniforme por pieza.",
+      "Elaboración con extracto de cannabis de espectro amplio.",
+      "Perfil natural de cannabinoides y terpenos.",
+      "Presentación práctica para transportar.",
+      "Lotes con trazabilidad documentada.",
+      "Sabor agradable y fácil consumo.",
+      "Proceso de fabricación estandarizado."
+    ],
+    usage: [
+      "Iniciar con una gomita o la porción recomendada.",
+      "Esperar al menos 2 horas antes de consumir una dosis adicional.",
+      "Consumir preferentemente después de alimentos.",
+      "No conducir vehículos ni operar maquinaria tras su consumo.",
+      "Mantener fuera del alcance de menores de edad y mascotas.",
+      "Advertencia: este producto contiene THC y puede producir efectos psicoactivos."
+    ],
+    ingredients: [
+      "Extracto de cannabis rico en CBD.",
+      "Azúcar.",
+      "Jarabe de glucosa.",
+      "Pectina.",
+      "Ácido cítrico.",
+      "Saborizantes naturales.",
+      "Colorantes de origen natural.",
+      "Terpenos naturales de cannabis."
+    ],
+    origin: "Elaboradas artesanalmente en Campeche, México, utilizando extracto de cannabis con trazabilidad por lote y materias primas seleccionadas.",
+    isAvailable: true,
+    isExclusive: false,
+    type: "Comestibles"
   }
 ];
 
