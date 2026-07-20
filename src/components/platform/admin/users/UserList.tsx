@@ -11,17 +11,27 @@ import { toggleUserStatus } from '@/actions/users/toggle-user-status'
 import { noticeSuccess, noticeFailure } from '@/components/toast-notifications/ToastNotifications'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
+import { Membership } from '@/interfaces/membership.interface'
+import { getMembershipSummary, isMembershipActive } from '@/lib/membership-helpers'
+
 interface User {
   id: string
   name: string
   email: string
   phoneNumber: string
   isActive: boolean
-  membershipActive: boolean
+  membership?: Membership | null
 }
 
 interface UserListProps {
   users: User[]
+}
+
+const toneClasses: Record<string, string> = {
+  success: 'bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400 border-none',
+  warning: 'bg-amber-100 text-amber-800 hover:bg-amber-100 dark:bg-amber-900/30 dark:text-amber-400 border-none',
+  danger: 'bg-red-100 text-red-800 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 border-none',
+  neutral: 'bg-slate-100 text-slate-700 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-300 border-none',
 }
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
@@ -66,7 +76,7 @@ export default function UserList({ users }: UserListProps) {
     }
   }
 
-  const activeMemberships = users.filter(user => user.membershipActive).length
+  const activeMemberships = users.filter(user => isMembershipActive(user.membership)).length
   const inactiveMemberships = users.length - activeMemberships
 
   return (
@@ -115,9 +125,21 @@ export default function UserList({ users }: UserListProps) {
                   <Badge variant={user.isActive ? "default" : "destructive"}>
                     {user.isActive ? "Activo" : "Inactivo"}
                   </Badge>
-                  <Badge variant={user.membershipActive ? "secondary" : "destructive"} >
-                    {user.membershipActive ? "Membresía" : "Sin Membresía"}
-                  </Badge>
+                  {(() => {
+                    const summary = getMembershipSummary(user.membership)
+                    return (
+                      <div className="flex flex-col items-end">
+                        <Badge className={`uppercase text-[10px] ${toneClasses[summary.tone]}`}>
+                          {summary.label}
+                        </Badge>
+                        {summary.detail && (
+                          <span className="text-[10px] text-muted-foreground mt-0.5 font-medium">
+                            {summary.detail}
+                          </span>
+                        )}
+                      </div>
+                    )
+                  })()}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 text-xs">
@@ -204,9 +226,21 @@ export default function UserList({ users }: UserListProps) {
                     </Badge>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <Badge variant={user.membershipActive ? "secondary" : "destructive"} className={`uppercase text-[10px] ${user.membershipActive ? 'bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/30' : ''}`}>
-                      {user.membershipActive ? "Activa" : "Inactiva"}
-                    </Badge>
+                    {(() => {
+                      const summary = getMembershipSummary(user.membership)
+                      return (
+                        <div className="flex flex-col items-center justify-center">
+                          <Badge className={`uppercase text-[10px] ${toneClasses[summary.tone]}`}>
+                            {summary.label}
+                          </Badge>
+                          {summary.detail && (
+                            <span className="text-[10px] text-muted-foreground mt-1 font-medium">
+                              {summary.detail}
+                            </span>
+                          )}
+                        </div>
+                      )
+                    })()}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">

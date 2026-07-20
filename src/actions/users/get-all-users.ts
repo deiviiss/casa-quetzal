@@ -16,15 +16,9 @@ export const getAllUsers = async (query?: string) => {
         } : {})
       },
       include: {
-        _count: {
-          select: {
-            purchase: {
-              where: {
-                product: {
-                  type: 'membership'
-                }
-              }
-            }
+        membership: {
+          include: {
+            product: true
           }
         }
       },
@@ -35,13 +29,7 @@ export const getAllUsers = async (query?: string) => {
 
     return {
       ok: true,
-      users: users.map(user => {
-        const { _count, ...rest } = user
-        return {
-          ...rest,
-          membershipActive: _count.purchase > 0
-        }
-      })
+      users
     }
   } catch (error) {
     console.error('Error fetching all users:', error)

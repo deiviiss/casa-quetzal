@@ -4,7 +4,9 @@ import prisma from '@/lib/prisma'
 import { validateUserAdmin } from '../auth/validate-user-admin'
 import { revalidatePath } from 'next/cache'
 
-export async function grantMembershipAccess(userId: string) {
+import { userHasMembership } from '../auth/access'
+
+export async function grantMembershipAccess(userId: string, expiresAt?: Date) {
   try {
     const isAdmin = await validateUserAdmin()
     if (!isAdmin) {
@@ -20,7 +22,41 @@ export async function grantMembershipAccess(userId: string) {
       return { ok: false, message: 'Producto de membresía no encontrado en la base de datos. Por favor, contacta a soporte.' }
     }
 
-    // 2. Check if user already has it
+    // 2. Check if user already has an active membership
+    const existingMembership = await prisma.membership.findUnique({
+      where: { userId }
+    })
+
+    if (existingMembership && existingMembership.status === 'ACTIVE' && new Date(existingMembership.expiresAt) > new Date()) {
+      return { ok: false, message: 'El usuario ya tiene acceso de membresía activo' }
+    }
+
+    // 3. Calculate expiration date if not provided (defaulting to 1 year)
+    let calculatedExpiresAt = expiresAt
+    if (!calculatedExpiresAt) {
+      calculatedExpiresAt = new Date()
+      calculatedExpiresAt.setFullYear(calculatedExpiresAt.getFullYear() + 1)
+    }
+
+    // 4. Upsert membership
+    await prisma.membership.upsert({
+      where: { userId },
+      update: {
+        productId: membershipProduct.id,
+        status: 'ACTIVE',
+        startsAt: new Date(),
+        expiresAt: calculatedExpiresAt
+      },
+      create: {
+        userId,
+        productId: membershipProduct.id,
+        status: 'ACTIVE',
+        startsAt: new Date(),
+        expiresAt: calculatedExpiresAt
+      }
+    })
+
+    // 5. Create purchase (only for historical logs, check if it exists first to avoid @@unique constraint violations)
     const existingPurchase = await prisma.purchase.findUnique({
       where: {
         userId_productId: {
@@ -30,17 +66,14 @@ export async function grantMembershipAccess(userId: string) {
       }
     })
 
-    if (existingPurchase) {
-      return { ok: false, message: 'El usuario ya tiene acceso de membresía' }
+    if (!existingPurchase) {
+      await prisma.purchase.create({
+        data: {
+          userId,
+          productId: membershipProduct.id
+        }
+      })
     }
-
-    // 3. Create purchase
-    await prisma.purchase.create({
-      data: {
-        userId,
-        productId: membershipProduct.id
-      }
-    })
 
     revalidatePath(`/platform/admin/users/${userId}`)
     return { ok: true, message: 'Acceso de membresía otorgado' }
@@ -65,12 +98,20 @@ export async function revokeMembershipAccess(userId: string) {
       return { ok: false, message: 'Producto de membresía no encontrado' }
     }
 
-    await prisma.purchase.deleteMany({
-      where: {
-        userId,
-        productId: membershipProduct.id
-      }
+    // Update status to CANCELLED and set expiration to now
+    const existingMembership = await prisma.membership.findUnique({
+      where: { userId }
     })
+
+    if (existingMembership) {
+      await prisma.membership.update({
+        where: { userId },
+        data: {
+          status: 'CANCELLED',
+          expiresAt: new Date()
+        }
+      })
+    }
 
     revalidatePath(`/platform/admin/users/${userId}`)
     return { ok: true, message: 'Acceso de membresía revocado' }
@@ -81,17 +122,5 @@ export async function revokeMembershipAccess(userId: string) {
 }
 
 export async function checkUserMembershipAccess(userId: string) {
-  try {
-    const purchase = await prisma.purchase.findFirst({
-      where: {
-        userId,
-        product: {
-          type: 'membership'
-        }
-      }
-    })
-    return !!purchase
-  } catch {
-    return false
-  }
+  return userHasMembership(userId)
 }

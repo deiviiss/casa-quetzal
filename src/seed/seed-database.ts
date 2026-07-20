@@ -4,6 +4,7 @@ import prisma from '../lib/prisma'
 
 const main = async () => {
   // delete all data (order matters for FK constraints)
+  await prisma.membership.deleteMany()
   await prisma.purchase.deleteMany()
   await prisma.product.deleteMany()
   await prisma.userAddress.deleteMany()

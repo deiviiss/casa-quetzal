@@ -28,8 +28,26 @@ export const userHasProduct = async (userId: string, productType: ProductType): 
   }
 }
 
-export async function userHasMembership(userId: string) {
-  return userHasProduct(userId, "membership")
+export async function userHasMembership(userId: string): Promise<boolean> {
+  try {
+    const membership = await prisma.membership.findUnique({
+      where: { userId },
+      include: {
+        product: true
+      }
+    })
+
+    if (!membership) return false
+
+    return (
+      membership.status === 'ACTIVE' &&
+      membership.product.isActive &&
+      new Date(membership.expiresAt) > new Date()
+    )
+  } catch (error) {
+    console.error('Error checking membership access:', error)
+    return false
+  }
 }
 
 /**

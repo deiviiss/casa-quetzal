@@ -26,9 +26,10 @@ model User {
 
   address UserAddress?
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime?  @updatedAt
-  purchase  Purchase[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?   @updatedAt
+  purchase   Purchase[]
+  membership Membership?
 
   @@map("users")
 }
@@ -67,7 +68,8 @@ model Product {
   price    Int
   isActive Boolean @default(true)
 
-  purchases Purchase[]
+  purchases   Purchase[]
+  memberships Membership[]
 
   @@map("products")
 }
@@ -84,4 +86,33 @@ model Purchase {
 
   @@unique([userId, productId])
   @@map("purchases")
+}
+
+enum MembershipStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  SUSPENDED
+}
+
+model Membership {
+  id String @id @default(uuid())
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  status MembershipStatus @default(ACTIVE)
+
+  startsAt  DateTime
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([expiresAt])
+  @@map("memberships")
 }
