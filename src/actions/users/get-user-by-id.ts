@@ -18,6 +18,11 @@ export const getUserById = async (id: string): Promise<Response> => {
           include: {
             product: true
           }
+        },
+        membership: {
+          include: {
+            product: true
+          }
         }
       }
     })

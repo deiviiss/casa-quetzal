@@ -1,4 +1,5 @@
 import { Purchase } from "./purchase.interface";
+import { Membership } from "./membership.interface";
 
 export interface User {
   id: string;
@@ -21,6 +22,7 @@ export interface User {
   updatedAt?: Date | null;
 
   purchase: Purchase[];
+  membership?: Membership | null;
 }
 
 export const ROLE_VALUES = ['admin', 'user'] as const

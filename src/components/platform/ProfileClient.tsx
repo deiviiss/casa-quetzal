@@ -64,7 +64,10 @@ interface profileProps {
 export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
   const addToCart = useNewCartStore((state) => state.addToCart)
 
-  const hasMembership = user.purchase?.some((p) => p.product?.type === 'membership') || user.role === 'admin'
+  const hasMembership = (user.membership ? (
+    user.membership.status === 'ACTIVE' &&
+    new Date(user.membership.expiresAt) > new Date()
+  ) : false) || user.role === 'admin'
 
   const handleAddMembership = () => {
     if (!membershipProduct) {
