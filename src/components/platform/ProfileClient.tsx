@@ -26,6 +26,7 @@ import { updateUserPassword } from "@/actions/users/update-user-password"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { updateUserImage } from "@/actions/users/update-user-image"
 import { deleteUserImage } from "@/actions/users/delete-user-image"
+import { MembershipCard } from "@/components/platform/membership/MembershipCard"
 
 const userSchema = z.object({
   name: z.string().min(3, { message: 'El nombre es obligatorio' }).max(255, { message: 'El nombre debe tener menos de 255 caracteres' }),
@@ -245,6 +246,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
 
   const navItems = [
     { icon: <UserIcon className="h-4 w-4" />, label: "Información Personal", value: "personal" },
+    { icon: <MdCardMembership className="h-4 w-4" />, label: "Membresía", value: "membership" },
     { icon: <Settings className="h-4 w-4" />, label: "Ajustes", value: "settings" },
   ]
 
@@ -324,7 +326,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
           </Card>
 
           {/* sidebar navigation */}
-          <Card className="relative">
+          <Card className="">
             <CardContent className="p-4">
               <nav className="space-y-2">
                 {navItems.map((item) => (
@@ -341,25 +343,10 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
               </nav>
             </CardContent>
           </Card>
-
-          {/* Decorative image */}
-          <motion.div
-            variants={fadeInUp}
-            className="absolute -bottom-[470px] right-6 md:-bottom-12 md:right-1 lg:-bottom-16 lg:right-14 z-20 opacity-80 hover:opacity-100 transition-opacity pointer-events-none over"
-          >
-            <Image
-              src="/imgs/profile_emoji.svg"
-              alt=""
-              width={120}
-              height={120}
-              className="object-contain drop-shadow-2xl"
-              aria-hidden="true"
-            />
-          </motion.div>
         </motion.div>
 
         {/* Main content Tabs */}
-        <motion.div variants={fadeInUp}>
+        <motion.div variants={fadeInUp} className="relative">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-col">
             <div className="overflow-x-auto scrollbar-hide hidden md:block">
               <TabsList className="flex w-max gap-2">
@@ -447,6 +434,15 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
               </Card>
             </TabsContent>
 
+            <TabsContent value="membership">
+              <MembershipCard
+                membership={user.membership}
+                variant="user"
+                membershipProduct={membershipProduct}
+                onAddMembership={handleAddMembership}
+              />
+            </TabsContent>
+
             <TabsContent value="settings">
               <Card>
                 <CardHeader>
@@ -532,13 +528,13 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button
+                  {/* <Button
                     variant="outline"
                     className="text-destructive hover:bg-destructive/10"
                     onClick={() => noticeFailure("Eliminar no está permitido")}
                   >
                     Eliminar Cuenta
-                  </Button>
+                  </Button> */}
                   <Button
                     onClick={() => noticeSuccess("Ajustes guardados con éxito")}
                   >
@@ -547,6 +543,20 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
               </Card>
             </TabsContent>
           </Tabs>
+          {/* Decorative image */}
+          <motion.div
+            variants={fadeInUp}
+            className="absolute -bottom-24 -right-2 lg:bottom-16 lg:-right-16 z-20 opacity-80 hover:opacity-100 transition-opacity pointer-events-none over"
+          >
+            <Image
+              src="/imgs/profile_emoji.png"
+              alt=""
+              width={120}
+              height={120}
+              className="object-contain drop-shadow-2xl"
+              aria-hidden="true"
+            />
+          </motion.div>
         </motion.div>
       </div>
 

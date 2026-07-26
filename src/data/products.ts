@@ -128,21 +128,31 @@ export const products: Product[] = [
     variants: [
       {
         id: '1',
-        name: "14g",
-        price: 799,
+        name: "3.5g",
+        price: 199,
         quantity: 1, // TODO: Que representa
         stock: 12, // TODO: Que representa
-        sku: "HUN-35",
+        sku: "HUNASINGLE",
         type: "weight",
         isAvailable: true,
       },
       {
         id: '2',
+        name: "14g",
+        price: 799,
+        quantity: 1, // TODO: Que representa
+        stock: 12, // TODO: Que representa
+        sku: "HUNA14GR",
+        type: "weight",
+        isAvailable: true,
+      },
+      {
+        id: '3',
         name: "28g",
         price: 1449,
         quantity: 1, // TODO: Que representa
         stock: 5, // TODO: Que representa
-        sku: "HUN-28",
+        sku: "HUNA28GR",
         type: "weight",
         isAvailable: true,
       }
@@ -183,73 +193,83 @@ export const products: Product[] = [
       {
         id: 1,
         url: "/imgs/products/xbalanque-1.png",
-        alt: "Xblaque principal"
+        alt: "Xbalanque principal"
       },
       {
         id: 2,
         url: "/imgs/products/xbalanque-2.png",
-        alt: "Xblaque secundario"
+        alt: "Xbalanque secundario"
       }
     ],
     variants: [
       {
         id: '1',
-        name: "14g",
-        price: 399,
+        name: "3.5g",
+        price: 99,
         quantity: 1, // TODO: Que representa
         stock: 12, // TODO: Que representa
-        sku: "XBA-35",
+        sku: "XBAGEMPACK",
         type: "weight",
         isAvailable: true,
       },
       {
         id: '2',
+        name: "14g",
+        price: 399,
+        quantity: 1, // TODO: Que representa
+        stock: 12, // TODO: Que representa
+        sku: "XBAGEM014",
+        type: "weight",
+        isAvailable: true,
+      },
+      {
+        id: '3',
         name: "28g",
         price: 699,
         quantity: 1, // TODO: Que representa
         stock: 5, // TODO: Que representa
-        sku: "XBA-7",
+        sku: "XBAGEM028",
         type: "weight",
         isAvailable: true,
       }
     ]
   },
   {
-    "id": '4',
-    "name": "Chak la Reyna Roja",
-    "slug": "chak-la-reyna-roja",
+    id: '4',
+    name: "Chak la Reyna Roja",
+    slug: "chak-la-reyna-roja",
     price: 0,
-    "type": {
-      "id": 1,
-      "name": "Genética"
+    type: {
+      id: 1,
+      name: "Genética"
     },
 
-    "shortDescription": "Línea experimental con pigmentación rojiza y comportamiento psicoactivo dual.",
+    shortDescription: "Línea experimental con pigmentación rojiza y comportamiento psicoactivo dual.",
 
-    "fullDescription": "Chak la Reyna Roja representa una línea experimental de alta variabilidad fenotípica enfocada en perfiles sensoriales intensos y exploración terpénica.",
+    fullDescription: "Chak la Reyna Roja representa una línea experimental de alta variabilidad fenotípica enfocada en perfiles sensoriales intensos y exploración terpénica.",
 
-    "geneticType": "Híbrida experimental",
+    geneticType: "Híbrida experimental",
 
-    "cultivationLine": "Exterior / Interior",
+    cultivationLine: "Exterior / Interior",
 
-    "developmentStatus": "Experimental — fenotipo en observación",
+    developmentStatus: "Experimental — fenotipo en observación",
 
-    "dominance": "Híbrida",
+    dominance: "Híbrida",
 
-    "origin": "Productor asociado no verificado bajo Manual Quetzal",
+    origin: "Productor asociado no verificado bajo Manual Quetzal",
 
-    "classification": "Experimental",
+    classification: "Experimental",
 
-    "organolepticProfile": "Cítrico, herbal y resinoso",
+    organolepticProfile: "Cítrico, herbal y resinoso",
 
-    "aroma": "Cítrico fresco con fondo herbal-resinoso",
+    aroma: "Cítrico fresco con fondo herbal-resinoso",
 
-    "flavor": "Notas ácidas y dulces con retrogusto vegetal",
+    flavor: "Notas ácidas y dulces con retrogusto vegetal",
 
-    "thcEstimated": null,
+    thcEstimated: null,
 
-    "technicalData": {
-      "botanicalFeatures": [
+    technicalData: {
+      botanicalFeatures: [
         "Pecíolos intensamente naranjas a rojo profundo",
         "Alta pigmentación vascular observable",
         "Fenotipo no estabilizado",
@@ -257,7 +277,7 @@ export const products: Product[] = [
         "Adaptable a indoor y outdoor"
       ],
 
-      "cultivation": {
+      cultivation: {
         // "methods": [
         //   "Indoor",
         //   "Outdoor"
@@ -272,8 +292,7 @@ export const products: Product[] = [
 
         // "climaticCompatibility": "En observación"
       },
-
-      "effects": [
+      effects: [
         "Inicio cerebral intenso",
         "Creatividad",
         "Relajación corporal profunda",
@@ -282,58 +301,68 @@ export const products: Product[] = [
         "Alteración temporal de memoria inmediata"
       ],
 
-      "terpenes": [
+      terpenes: [
         "Terpenos cítricos",
         "Terpenos volátiles"
       ],
 
-      "warnings": [
+      warnings: [
         "Genética experimental",
         "Perfil fitoquímico no estabilizado",
         "Requiere monitoreo fitosanitario constante",
         "Productor aún no auditado bajo estándares CQCS"
       ],
 
-      "conservation": [
+      conservation: [
         "Mantener en ambiente seco y ventilado",
         "Evitar humedad elevada durante curado",
         "Almacenar protegido de luz UV"
       ],
 
-      "technicalObservations": "Presenta comportamiento psicoactivo dual con fase inicial cerebral elevada seguida de sedación profunda. Actualmente continúa en observación técnica y evaluación agronómica."
+      technicalObservations: "Presenta comportamiento psicoactivo dual con fase inicial cerebral elevada seguida de sedación profunda. Actualmente continúa en observación técnica y evaluación agronómica."
     },
 
-    "images": [
+    images: [
       {
-        "id": 1,
-        "url": "/imgs/products/chak-1.png",
-        "alt": "Chak la Reyna Roja principal"
+        id: 1,
+        url: "/imgs/products/chak-1.png",
+        alt: "Chak la Reyna Roja principal"
       },
       {
-        "id": 2,
-        "url": "/imgs/products/chak-2.png",
-        "alt": "Chak la Reyna Roja secundario"
+        id: 2,
+        url: "/imgs/products/chak-2.png",
+        alt: "Chak la Reyna Roja secundario"
       }
     ],
 
     variants: [
       {
         id: '1',
-        name: "14g",
-        price: 499,
+        name: "3.5g",
+        price: 149,
         quantity: 1, // TODO: Que representa
         stock: 12, // TODO: Que representa
-        sku: "HUN-35",
+        sku: "CHAKQNPACK",
         type: "weight",
         isAvailable: true,
       },
       {
         id: '2',
+        name: "14g",
+        price: 499,
+        quantity: 1, // TODO: Que representa
+        stock: 12, // TODO: Que representa
+        sku: "CHAKQN014",
+        type: "weight",
+        isAvailable: true,
+      },
+      {
+        id: '3',
         name: "28g",
         price: 899,
         quantity: 1, // TODO: Que representa
         stock: 5, // TODO: Que representa
-        sku: "HUN-7",
+        sku: "CHAKQN028",
         type: "weight",
         isAvailable: true
       }
