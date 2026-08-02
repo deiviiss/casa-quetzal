@@ -1,6 +1,6 @@
 import { ProductGrid } from "@/components/platform/dispensary/products/ProductGrid"
 import { products } from "@/data/products"
-import Image from "next/image"
+import Image, { getImageProps } from "next/image"
 import { redirect } from 'next/navigation'
 import { getUserSessionServer } from '@/actions/auth/getUserSessionServer'
 import { userHasMembership } from '@/actions/auth/access'
@@ -24,6 +24,20 @@ export default async function Home() {
   const desktopImage = '/imgs/hero-dispensary.webp'
   const imageAlt = 'Cultivos regenerativos de cáñamo'
 
+  const common = { alt: imageAlt, fill: true, priority: true, sizes: "100vw", quality: 75 }
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({
+    ...common,
+    src: desktopImage,
+  })
+  const {
+    props: { srcSet: mobileSrcSet, ...rest },
+  } = getImageProps({
+    ...common,
+    src: mobileImage,
+  })
+
   return (
     <main className="min-h-screen">
       <header className="relative overflow-hidden border-b border-border/30 bg-gradient-to-b from-card/50 to-transparent">
@@ -43,25 +57,11 @@ export default async function Home() {
         <div
           className="absolute inset-0 w-full h-full"
         >
-          {/* mobile */}
-          <Image
-            src={mobileImage}
-            alt={imageAlt}
-            fill
-            className="object-cover sm:hidden"
-            quality={100}
-            priority
-          />
-
-          {/* desktop */}
-          <Image
-            src={desktopImage}
-            alt={imageAlt}
-            fill
-            className="object-cover hidden sm:block"
-            quality={100}
-            priority
-          />
+          <picture className="w-full h-full">
+            <source media="(min-width: 640px)" srcSet={desktopSrcSet} />
+            <source media="(max-width: 639px)" srcSet={mobileSrcSet} />
+            <img {...rest} alt={imageAlt} className="object-cover w-full h-full" />
+          </picture>
           <div className="absolute inset-0 bg-black bg-opacity-60" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">

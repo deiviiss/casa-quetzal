@@ -47,31 +47,31 @@ export const TopMenu = ({ user }: TopMenuProps) => {
     <div className={`w-full fixed top-0 z-40 text-white ${isProductDetail ? 'bg-slate-800' : bgColor} transition-colors duration-300 py-1`}>
       <header className="container mx-auto lg:px-20 px-4 py-1 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <Link href={'/'}>
-            <Image src={logo} alt="logo" width={291} height={366} className='w-14 ' />
+          <Link href={'/'} aria-label="Ir a la página principal - Casa Quetzal">
+            <Image src={logo} alt="Logo Casa Quetzal" width={56} height={70} sizes="56px" className='w-14 h-auto' priority />
           </Link>
         </div>
         <nav>
           <ul className="space-x-4 flex items-center">
             <li>
-              <Link href="/products" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <SiHomeassistantcommunitystore size={20} />
+              <Link href="/products" aria-label="Catálogo" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
+                <SiHomeassistantcommunitystore size={20} title="Catálogo" aria-label="Catálogo" />
                 <span className='hidden sm:inline'>
                   Catálogo
                 </span>
               </Link>
             </li>
             <li>
-              <Link href="/memberships" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <GiBurningForest size={20} />
+              <Link href="/memberships" aria-label="Membresías" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
+                <GiBurningForest size={20} title="Membresías" aria-label="Membresías" />
                 <span className='hidden sm:inline'>
                   Membresías
                 </span>
               </Link>
             </li>
             <li>
-              <Link href={user ? "/platform/dispensary" : "/lobby"} className="hover:text-slate-200 transition-transform flex items-center space-x-2">
-                <FaShopLock size={20} />
+              <Link href={user ? "/platform/dispensary" : "/lobby"} aria-label="Dispensario" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
+                <FaShopLock size={20} title="Dispensario" aria-label="Dispensario" />
                 <span className='hidden sm:inline'>
                   Dispensario
                 </span>

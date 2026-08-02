@@ -24,19 +24,19 @@ export default function DigitalStrategy() {
               beneficios.
             </p>
             <div className="flex space-x-4 mb-6">
-              <a href="https://www.instagram.com/casaquetzalcannabisseeds/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/casaquetzalcannabisseeds/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Casa Quetzal">
                 <FaInstagram className="text-3xl text-pink-600 hover:scale-110 transition-transform" />
               </a>
-              <a href="https://www.tiktok.com/@quetzalseeds420" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.tiktok.com/@quetzalseeds420" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Casa Quetzal">
                 <FaTiktok className="text-3xl text-black hover:scale-110 transition-transform" />
               </a>
-              <a href="https://www.facebook.com/QuetzalSeeds420" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/QuetzalSeeds420" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Casa Quetzal">
                 <FaFacebookF className="text-3xl text-blue-600 hover:scale-110 transition-transform" />
               </a>
-              <a href="https://youtube.com/@quetzalseeds420" target="_blank" rel="noopener noreferrer">
+              <a href="https://youtube.com/@quetzalseeds420" target="_blank" rel="noopener noreferrer" aria-label="YouTube de Casa Quetzal">
                 <FaYoutube className="text-3xl text-red-600 hover:scale-110 transition-transform" />
               </a>
-              <a href="https://x.com/QuetzalSeeds420" target="_blank" rel="noopener noreferrer">
+              <a href="https://x.com/QuetzalSeeds420" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter) de Casa Quetzal">
                 <FaXTwitter className="text-3xl text-black hover:scale-110 transition-transform" />
               </a>
             </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useScroll, useTransform } from "framer-motion"
-import Image from "next/image"
+import { getImageProps } from "next/image"
 import Link from "next/link"
 import { useRef } from "react"
 
@@ -26,31 +26,31 @@ export default function HeroSection({ title, subtitle, desktopImage, mobileImage
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
 
+  const common = { alt: imageAlt, fill: true, priority: true, sizes: "100vw", quality: 75 }
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({
+    ...common,
+    src: desktopImage,
+  })
+  const {
+    props: { srcSet: mobileSrcSet, ...rest },
+  } = getImageProps({
+    ...common,
+    src: mobileImage,
+  })
+
   return (
     <section ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden">
       <motion.div
         style={{ y, scale }}
         className="absolute inset-0 w-full h-full"
       >
-        {/* mobile */}
-        <Image
-          src={mobileImage}
-          alt={imageAlt}
-          fill
-          className="object-cover sm:hidden"
-          quality={100}
-          priority
-        />
-
-        {/* desktop */}
-        <Image
-          src={desktopImage}
-          alt={imageAlt}
-          fill
-          className="object-cover hidden sm:block"
-          quality={100}
-          priority
-        />
+        <picture className="w-full h-full">
+          <source media="(min-width: 640px)" srcSet={desktopSrcSet} />
+          <source media="(max-width: 639px)" srcSet={mobileSrcSet} />
+          <img {...rest} alt={imageAlt} className="object-cover w-full h-full" />
+        </picture>
       </motion.div>
       <div className="absolute inset-0 bg-black bg-opacity-60" />
       <motion.div

@@ -34,7 +34,12 @@ export default function FloatingWhatsAppButton() {
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
           {/* Scroll to top button */}
-          <div className="flex flex-col items-center group cursor-pointer" onClick={scrollToTop}>
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Volver arriba"
+            className="flex flex-col items-center group cursor-pointer border-none bg-transparent"
+          >
             <span
               className="hidden sm:block text-[10px] font-bold tracking-[0.2em] text-gray-800 mb-3"
               style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
@@ -44,7 +49,7 @@ export default function FloatingWhatsAppButton() {
             <div className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.15)] border border-gray-100 group-hover:bg-gray-50 transition-colors">
               <ChevronUp className="w-5 h-5 text-gray-800 stroke-[1.5]" />
             </div>
-          </div>
+          </button>
 
           {/* WhatsApp button */}
           <motion.a

@@ -21,8 +21,8 @@ export default function SeedBank() {
           src="/imgs/background.webp"
           alt="Semillas de cáñamo"
           fill
+          sizes="100vw"
           className="object-cover"
-          priority
         />
       </div>
 
@@ -33,6 +33,7 @@ export default function SeedBank() {
             src="/logo_milpa.webp"
             alt="Logo Milpa"
             fill
+            sizes="(max-width: 768px) 224px, 224px"
             className="object-contain"
           />
         </div>

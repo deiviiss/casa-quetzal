@@ -76,6 +76,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
               {products.map((_, index) => (
                 <button
                   key={index}
+                  aria-label={`Ver producto destacado ${index + 1}`}
                   className={`w-3 h-3 rounded-full transition-colors ${index === currentProduct ? "bg-emerald-900" : "bg-gray-300"}`}
                   onClick={() => setCurrentProduct(index)}
                 />

@@ -69,7 +69,8 @@ export default function CallToAction() {
               name="email"
               type="email"
               placeholder="Tu correo electrónico"
-              className="flex-grow px-4 py-2 rounded-full text-gray-800"
+              aria-label="Tu correo electrónico"
+              className="flex-grow px-4 py-2 rounded-full bg-white text-slate-900 placeholder:text-slate-500 font-medium border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               required
               disabled={isSubmittingMessage}
             />
