@@ -27,7 +27,7 @@ export default function AboutUs() {
             <div className="relative">
               <div className="absolute -inset-4 bg-emerald-900/10 rounded-xl transform rotate-2" />
               <Image
-                src="/imgs/productores.png"
+                src="/imgs/productores.webp"
                 alt="Productor local en la comunidad"
                 width={600}
                 height={400}
@@ -68,7 +68,7 @@ export default function AboutUs() {
             <div className="relative">
               <div className="absolute -inset-4 bg-amber-900/10 rounded-xl transform -rotate-2" />
               <Image
-                src="/imgs/arbenses.png"
+                src="/imgs/arbenses.webp"
                 alt="Productor local en la comunidad"
                 width={600}
                 height={400}
@@ -109,7 +109,7 @@ export default function AboutUs() {
             <div className="relative">
               <div className="absolute -inset-4 bg-teal-900/10 rounded-xl transform rotate-1" />
               <Image
-                src="/imgs/productores.jpg"
+                src="/imgs/productores_2.webp"
                 alt="Junta Ejidal de Tinun"
                 width={600}
                 height={400}

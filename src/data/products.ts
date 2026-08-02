@@ -37,12 +37,12 @@ export const products: Product[] = [
     images: [
       {
         id: 1,
-        url: "/imgs/products/yun-kash-1.png",
+        url: "/imgs/products/yun-kash-1.webp",
         alt: "Yun Kash principal"
       },
       {
         id: 2,
-        url: "/imgs/products/yun-kash-2.png",
+        url: "/imgs/products/yun-kash-2.webp",
         alt: "Yun Kash secundario"
       }
     ],
@@ -116,12 +116,12 @@ export const products: Product[] = [
     images: [
       {
         id: 1,
-        url: "/imgs/products/hunapu-1.png",
+        url: "/imgs/products/hunapu-1.webp",
         alt: "Hunapú principal"
       },
       {
         id: 2,
-        url: "/imgs/products/hunapu-2.png",
+        url: "/imgs/products/hunapu-2.webp",
         alt: "Hunapú secundario"
       }
     ],
@@ -192,12 +192,12 @@ export const products: Product[] = [
     images: [
       {
         id: 1,
-        url: "/imgs/products/xbalanque-1.png",
+        url: "/imgs/products/xbalanque-1.webp",
         alt: "Xbalanque principal"
       },
       {
         id: 2,
-        url: "/imgs/products/xbalanque-2.png",
+        url: "/imgs/products/xbalanque-2.webp",
         alt: "Xbalanque secundario"
       }
     ],
@@ -325,12 +325,12 @@ export const products: Product[] = [
     images: [
       {
         id: 1,
-        url: "/imgs/products/chak-1.png",
+        url: "/imgs/products/chak-1.webp",
         alt: "Chak la Reyna Roja principal"
       },
       {
         id: 2,
-        url: "/imgs/products/chak-2.png",
+        url: "/imgs/products/chak-2.webp",
         alt: "Chak la Reyna Roja secundario"
       }
     ],

@@ -97,7 +97,7 @@ function MainView({
       <div className="mb-8 flex justify-center">
         <div className="relative w-24 h-24">
           <Image
-            src="/imgs/quetzal.png"
+            src="/imgs/quetzal.svg"
             alt="Casa Quetzal Logo"
             fill
             className="object-contain"

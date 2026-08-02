@@ -27,7 +27,7 @@ const memberships: Membership[] = [
   {
     id: "consumer",
     title: "Consumer",
-    icon: "/imgs/icon-consumers.png",
+    icon: "/imgs/icon-consumers.webp",
     price: "$8,499 MXN",
     period: "anual",
     description: "Acceso al protocolo de investigación CQCS",
@@ -44,7 +44,7 @@ const memberships: Membership[] = [
   {
     id: "productores",
     title: "Productores",
-    icon: "/imgs/icon-productores.png",
+    icon: "/imgs/icon-productores.webp",
     description: "Acceso a semillas certificadas y acompañamiento técnico",
     gradient: "from-amber-500 to-orange-600",
     benefits: [
@@ -74,7 +74,7 @@ const memberships: Membership[] = [
   {
     id: "socios",
     title: "Socios",
-    icon: "/imgs/icon-socios.png",
+    icon: "/imgs/icon-socios.webp",
     description: "Participación estratégica dentro del ecosistema CQCS",
     gradient: "from-purple-500 to-pink-600",
     benefits: [

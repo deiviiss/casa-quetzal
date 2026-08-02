@@ -91,11 +91,11 @@ export const LoginForm = () => {
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <Image
-                  src="/imgs/quetzal.png"
+                  src="/imgs/quetzal.svg"
                   alt="Casa Quetzal"
                   width={140}
                   height={140}
-                  className="drop-shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                  className="drop-shadow-[0_0_15px_rgba(16,185,129,0.2)] w-20 h-20"
                   priority
                 />
               </motion.div>

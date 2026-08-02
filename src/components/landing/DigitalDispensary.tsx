@@ -13,13 +13,13 @@ export default function DigitalDispensary() {
       period: "mensual",
       description: "Acceso a productos con THC",
       gradient: "from-emerald-500 to-teal-600",
-      icon: "/imgs/icon-consumers.png"
+      icon: "/imgs/icon-consumers.webp"
     },
     {
       title: "Productores",
       description: "Acceso a semillas certificadas y asistencia técnica",
       gradient: "from-amber-500 to-orange-600",
-      icon: "/imgs/icon-productores.png"
+      icon: "/imgs/icon-productores.webp"
     },
     {
       title: "Distribuidores",
@@ -31,7 +31,7 @@ export default function DigitalDispensary() {
       title: "Socios",
       description: "Participación en decisiones estratégicas",
       gradient: "from-purple-500 to-pink-600",
-      icon: "/imgs/icon-socios.png"
+      icon: "/imgs/icon-socios.webp"
     },
   ]
 

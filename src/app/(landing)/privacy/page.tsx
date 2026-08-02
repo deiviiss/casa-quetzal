@@ -12,8 +12,8 @@ export default function PrivacyPage() {
       <HeroSection
         title="Política de Privacidad"
         subtitle="Protección de datos y transparencia en nuestra plataforma"
-        desktopImage="/imgs/desktop5.png"
-        mobileImage="/imgs/mobile5.png"
+        desktopImage="/imgs/desktop5.webp"
+        mobileImage="/imgs/mobile5.webp"
         imageAlt="Privacidad Casa Quetzal"
       />
 
