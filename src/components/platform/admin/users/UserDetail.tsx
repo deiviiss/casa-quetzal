@@ -7,8 +7,7 @@ import {
   Pencil,
   User as UserIcon,
   Mail,
-  Phone,
-  ShieldCheck
+  Phone
 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
