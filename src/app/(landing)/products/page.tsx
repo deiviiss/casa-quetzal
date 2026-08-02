@@ -21,8 +21,8 @@ export default async function Products() {
       <HeroSection
         title="Descubre nuestros productos"
         subtitle="Semillas certificadas, productos derivados y más, con trazabilidad garantizada"
-        desktopImage="/imgs/desktop2.png"
-        mobileImage="/imgs/mobile2.png"
+        desktopImage="/imgs/desktop2.webp"
+        mobileImage="/imgs/mobile2.webp"
         imageAlt="Variedad de productos de cáñamo de CQCS"
       />
       <ProductCards products={products} />

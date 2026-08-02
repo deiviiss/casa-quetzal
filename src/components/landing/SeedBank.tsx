@@ -12,13 +12,13 @@ export default function SeedBank() {
       {/* Responsive background image - desktop only */}
       <div
         className="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none"
-        style={{ backgroundImage: "url('/imgs/background.png')" }}
+        style={{ backgroundImage: "url('/imgs/background.webp')" }}
       />
 
       {/* Mobile image */}
       <div className="md:hidden absolute inset-0 opacity-20 pointer-events-none">
         <Image
-          src="/imgs/background.png"
+          src="/imgs/background.webp"
           alt="Semillas de cáñamo"
           fill
           className="object-cover"

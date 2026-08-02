@@ -232,7 +232,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
   };
 
   const clearAvatarPreview = () => {
-    setAvatarPreview('/imgs/avatar.png')
+    setAvatarPreview('/imgs/avatar.webp')
     if (fileInputRef.current) {
       fileInputRef.current.value = ""
     }
@@ -305,7 +305,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
             <CardContent className="p-6 flex flex-col items-center">
               <Avatar className="h-24 w-24 mb-4 bg-secondary-foreground dark:bg-secondary-foreground/75">
                 <AvatarImage
-                  src={user.image || "/imgs/avatar.png"}
+                  src={user.image || "/imgs/avatar.webp"}
                   alt="Profile"
                   className="object-cover"
                 />
@@ -549,7 +549,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
             className="absolute -bottom-24 -right-2 lg:bottom-16 lg:-right-16 z-20 opacity-80 hover:opacity-100 transition-opacity pointer-events-none over"
           >
             <Image
-              src="/imgs/profile_emoji.png"
+              src="/imgs/profile_emoji.webp"
               alt=""
               width={120}
               height={120}
@@ -575,7 +575,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
             <div className="flex flex-col items-center gap-4">
               <Avatar className="h-32 w-32 bg-secondary-foreground dark:bg-secondary-foreground/75">
                 <AvatarImage
-                  src={avatarPreview || "/imgs/avatar.png"}
+                  src={avatarPreview || "/imgs/avatar.webp"}
                   alt="Preview"
                   className="object-cover"
                 />

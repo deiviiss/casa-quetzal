@@ -14,43 +14,43 @@ export const metadata: Metadata = {
 
 const carouselItems: CarouselImage[] = [
   {
-    url: "/carrousel/c1.jpg",
+    url: "/carrousel/c1.webp",
     alt: "Instalaciones de cultivo CQCS",
     title: "Infraestructura de Invernadero",
     description: "Cultivos de interior y exterior en un entorno controlado con los estándares técnicos más estrictos.",
   },
   {
-    url: "/carrousel/c2.jpg",
+    url: "/carrousel/c2.webp",
     alt: "Plantas en floración",
     title: "Flores de Interior y Exterior",
     description: "Variedades seleccionadas bajo un estricto protocolo de investigación y trazabilidad integral.",
   },
   {
-    url: "/carrousel/c3.jpg",
+    url: "/carrousel/c3.webp",
     alt: "Genéticas exclusivas",
     title: "Semillas Certificadas",
     description: "Conservación de acahuales y desarrollo genético enfocado en la estabilidad y calidad.",
   },
   {
-    url: "/carrousel/c4.jpg",
+    url: "/carrousel/c4.webp",
     alt: "Control de calidad",
     title: "Ecosistema Trazable CQCS",
     description: "Acceso regulado y participación comunitaria dentro de un marco jurídico en desarrollo.",
   },
   {
-    url: "/carrousel/c5.jpg",
+    url: "/carrousel/c5.webp",
     alt: "Cuidado orgánico y biológico",
     title: "Cuidado Orgánico y Biológico",
     description: "Aplicamos biofertilizantes y métodos de control biológico respetuosos con el medio ambiente.",
   },
   {
-    url: "/carrousel/c6.jpg",
+    url: "/carrousel/c6.webp",
     alt: "Cosecha y maduración de tricomas",
     title: "Cosecha en el Punto Justo",
     description: "Nuestros cultivadores determinan el punto exacto de madurez de los tricomas para cosechar.",
   },
   {
-    url: "/carrousel/c7.jpg",
+    url: "/carrousel/c7.webp",
     alt: "Secado y curado en condiciones controladas",
     title: "Secado y Curado Controlado",
     description: "Procesamos las flores en condiciones de temperatura y humedad reguladas para preservar los terpenos.",
@@ -65,8 +65,8 @@ export default async function LobbyPage() {
       <HeroSection
         title="Acceso exclusivo a flores"
         subtitle="De interior y exterior"
-        desktopImage="/imgs/desktop4.png"
-        mobileImage="/imgs/mobile4.png"
+        desktopImage="/imgs/desktop4.webp"
+        mobileImage="/imgs/mobile4.webp"
         imageAlt="Variedad de productos de cáñamo de CQCS"
         ctaLink={session?.user ? "/platform/dispensary" : "/auth/login"}
         ctaText={session?.user ? "Ir al Dispensario" : "Iniciar sesión"}

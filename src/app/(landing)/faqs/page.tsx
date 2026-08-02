@@ -67,8 +67,8 @@ export default function FAQsPage() {
       <HeroSection
         title="Preguntas Frecuentes"
         subtitle="Resolvemos tus dudas sobre el ecosistema Casa Quetzal"
-        desktopImage="/imgs/desktop3.png"
-        mobileImage="/imgs/mobile.png"
+        desktopImage="/imgs/desktop3.webp"
+        mobileImage="/imgs/mobile.webp"
         imageAlt="FAQs Casa Quetzal"
       />
 

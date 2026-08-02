@@ -11,7 +11,7 @@ export default function NoAccessPage() {
       <div className="absolute inset-0 w-full h-full">
         {/* mobile */}
         <Image
-          src="/imgs/mobile7.png"
+          src="/imgs/mobile7.webp"
           alt="Casa Quetzal"
           fill
           className="object-cover sm:hidden"
@@ -21,7 +21,7 @@ export default function NoAccessPage() {
 
         {/* desktop */}
         <Image
-          src="/imgs/desktop7.png"
+          src="/imgs/desktop7.webp"
           alt="Casa Quetzal"
           fill
           className="object-cover hidden sm:block"

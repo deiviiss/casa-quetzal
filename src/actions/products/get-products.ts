@@ -7,7 +7,7 @@ const products: Product[] = [
   {
     id: '1',
     name: "Pre-Rolados",
-    image: "/imgs/categoria-pre-rolados.png",
+    image: "/imgs/categoria-pre-rolados.webp",
     shortDescription: "Disfruta la experiencia pura del cáñamo con nuestros pre-rolados premium. Flores curadas 2 años sin fertilizantes sintéticos.",
     longDescription: "Nuestros pre-rolados están elaborados con flores de cáñamo curadas por más de 2 años, garantizando una experiencia suave, aromática y de la más alta calidad. Sin fertilizantes sintéticos, preservamos la pureza del producto y promovemos la regeneración del suelo en su cultivo.",
     benefits: [
@@ -29,7 +29,7 @@ const products: Product[] = [
   {
     id: '2',
     name: "Crema de cañamo con CBD",
-    image: "/imgs/categoria-crema-cbd.png",
+    image: "/imgs/categoria-crema-cbd.webp",
     shortDescription: "Infusionados con cáñamo cultivado en espacios regenerativos. Alivio natural y relajación.",
     longDescription: "Nuestra crema de cañamo con CBD está diseñada para proporcionar alivio y bienestar de manera natural. Cada producto está infusionado con extractos de cáñamo de alta calidad, cultivado en condiciones sustentables.",
     benefits: [
@@ -52,7 +52,7 @@ const products: Product[] = [
   {
     id: '5',
     name: "Aceite de CBD Premium",
-    image: "/imgs/categoria-aceite-cbd.png",
+    image: "/imgs/categoria-aceite-cbd.webp",
     shortDescription: "Aceite de CBD elaborado con cáñamo cultivado en interior. Bienestar diario y equilibrio natural.",
     longDescription: "Nuestro Aceite de CBD Premium es elaborado a partir de flores de cáñamo cultivadas en interior bajo condiciones controladas y seleccionadas por su perfil equilibrado de cannabinoides y terpenos. Inspirado en fenotipos de calidad media-alta como Fedora 19, ofrece una experiencia consistente, un perfil aromático suave y una formulación diseñada para integrarse fácilmente a tu rutina diaria de bienestar.",
     benefits: [
@@ -83,7 +83,7 @@ const products: Product[] = [
       "El Mechero de Cáñamo CQCS es una alternativa práctica para quienes buscan un encendido más controlado. Consiste en un encendedor recargable envuelto con cuerda de cáñamo natural impregnada con cera de abeja. Una vez encendida la punta de la cuerda, permite transferir la llama de forma gradual sin exponer directamente la pieza a la llama del encendedor. Su diseño es compacto, reutilizable y fácil de transportar, ideal para el uso diario y para quienes valoran materiales de origen natural.",
 
     price: 59,
-    image: "/imgs/product-hemp-wick-lighter.png",
+    image: "/imgs/product-hemp-wick-lighter.webp",
     benefits: [
       "Encendido gradual y preciso.",
       "Cuerda de cáñamo de origen vegetal.",
@@ -116,7 +116,7 @@ const products: Product[] = [
   {
     id: '4',
     name: "Biofertilizante Orgánico",
-    image: "/imgs/categoria-biofertilizantes.png",
+    image: "/imgs/categoria-biofertilizantes.webp",
     shortDescription: "Nutre tus cultivos de manera natural con nuestro biofertilizante de cáñamo, la receta de J. Restrepo.",
     longDescription: "Nuestro biofertilizante orgánico está elaborado con procesos anaeróbicos que maximizan los nutrientes esenciales para la regeneración del suelo. Ideal para agricultores que buscan una alternativa sostenible y natural.",
     benefits: [
@@ -146,7 +146,7 @@ const products: Product[] = [
     longDescription:
       "La Miel de Cannabis CQCS combina miel multifloral mexicana con una infusión cuidadosamente elaborada de cannabis, manteniendo un contenido inferior al 5% de THC. Su formulación busca preservar las características naturales de la miel mientras incorpora los compuestos vegetales del cannabis en un producto artesanal de alta calidad. Ideal para acompañar bebidas, alimentos o como parte de una rutina de bienestar, siempre siguiendo las recomendaciones de consumo responsable y la legislación aplicable.",
     price: 129,
-    image: "/imgs/product-miel-cannabis.png",
+    image: "/imgs/product-miel-cannabis.webp",
     benefits: [
       "Elaboración artesanal.",
       "Menos del 5% de THC.",
@@ -180,7 +180,7 @@ const products: Product[] = [
     shortDescription: "Gomitas infusionadas con cannabinoides de origen vegetal para consumo responsable.",
     longDescription: "Las Gomitas de CBD CQCS son un alimento funcional elaborado con extracto de cannabis rico en cannabidiol (CBD), formulado para ofrecer una experiencia consistente mediante un proceso de dosificación estandarizado. Cada lote es elaborado bajo controles de calidad y trazabilidad, conservando el perfil natural de cannabinoides y terpenos presentes en el extracto. Debido a la naturaleza del extracto utilizado, el producto puede contener tetrahidrocannabinol (THC) en concentraciones suficientes para producir efectos psicoactivos en personas sensibles. Se recomienda un consumo responsable y conforme a la legislación aplicable.",
     price: 199,
-    image: "/imgs/product-gomitas-cbd.png",
+    image: "/imgs/product-gomitas-cbd.webp",
     benefits: [
       "Dosificación uniforme por pieza.",
       "Elaboración con extracto de cannabis de espectro amplio.",

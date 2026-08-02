@@ -20,8 +20,8 @@ export default async function Home() {
   if (!hasMembership && session.role !== 'admin') {
     return redirect('/no-access')
   }
-  const mobileImage = '/imgs/hero-dispensary-mobile.png'
-  const desktopImage = '/imgs/hero-dispensary.png'
+  const mobileImage = '/imgs/hero-dispensary-mobile.webp'
+  const desktopImage = '/imgs/hero-dispensary.webp'
   const imageAlt = 'Cultivos regenerativos de cáñamo'
 
   return (

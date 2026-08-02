@@ -11,7 +11,7 @@ export default function PlatformNotFound() {
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 py-3 text-center animate-in fade-in zoom-in duration-500">
       <div className="relative w-full max-w-sm md:max-w-md aspect-square text-emerald-900">
         <Image
-          src="/imgs/404.png"
+          src="/imgs/404.webp"
           alt="Error 404 - Página no encontrada"
           fill
           className="object-contain"
