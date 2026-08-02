@@ -28,7 +28,7 @@ const memberships: Membership[] = [
     id: "consumer",
     title: "Consumer",
     icon: "/imgs/icon-consumers.png",
-    price: "$8,500 MXN",
+    price: "$8,499 MXN",
     period: "anual",
     description: "Acceso al protocolo de investigación CQCS",
     gradient: "from-emerald-500 to-teal-600",

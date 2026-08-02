@@ -7,8 +7,7 @@ import {
   Pencil,
   User as UserIcon,
   Mail,
-  Phone,
-  ShieldCheck
+  Phone
 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -124,13 +123,6 @@ export default function UserDetail({ user }: UserDetailProps) {
                   <div>
                     <p className="text-xs font-medium text-muted-foreground uppercase">Teléfono</p>
                     <p className="text-sm">{user.phoneNumber}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <ShieldCheck className="h-4 w-4 text-muted-foreground mt-1" />
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Rol</p>
-                    <p className="text-sm capitalize">{user.role}</p>
                   </div>
                 </div>
               </div>

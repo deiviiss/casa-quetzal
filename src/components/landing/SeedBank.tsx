@@ -25,6 +25,19 @@ export default function SeedBank() {
           priority
         />
       </div>
+
+      {/* Logo Milpa - Posicionado con Tailwind relative y absolute */}
+      <div className="absolute -bottom-1 right-2 w-48 h-28 sm:w-48 sm:h-32 md:w-56 md:h-36 md:bottom-5 md:left-20 z-20 pointer-events-none opacity-90 drop-shadow-md">
+        <div className="relative w-full h-full">
+          <Image
+            src="/logo_milpa.webp"
+            alt="Logo Milpa"
+            fill
+            className="object-contain"
+          />
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.h2
           className="text-4xl md:text-5xl font-bold mb-16 text-center text-gray-900"
