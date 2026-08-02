@@ -15,7 +15,7 @@ export const Footer = async () => {
             <p className="text-sm text-gray-400">En Casa Quetzal Cannabis Seeds impulsamos el cáñamo en México con innovación genética, sustentabilidad y trazabilidad, apostando por un futuro sostenible y próspero.</p>
             <div className="flex space-x-4 mt-6">
               <a
-                href="https://www.instagram.com/quetzalseeds420"
+                href="https://www.instagram.com/casaquetzalcannabisseeds/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"

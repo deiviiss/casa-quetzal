@@ -44,7 +44,7 @@ export const TopMenu = ({ user }: TopMenuProps) => {
   const totalItems = getTotalItems()
 
   return (
-    <div className={`w-full fixed top-0 z-20 text-white ${isProductDetail ? 'bg-slate-800' : bgColor} transition-colors duration-300 py-1`}>
+    <div className={`w-full fixed top-0 z-40 text-white ${isProductDetail ? 'bg-slate-800' : bgColor} transition-colors duration-300 py-1`}>
       <header className="container mx-auto lg:px-20 px-4 py-1 flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <Link href={'/'}>
