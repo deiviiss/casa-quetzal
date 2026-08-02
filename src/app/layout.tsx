@@ -46,8 +46,12 @@ export default function RootLayout({
           />
         </Providers>
 
-        <SpeedInsights />
-        <Analytics />
+        {process.env.NODE_ENV === 'production' && process.env.VERCEL && (
+          <>
+            <SpeedInsights />
+            <Analytics />
+          </>
+        )}
         <GoogleAnalytics gaId="G-M5E9J1WMNP" />
       </body>
     </html>

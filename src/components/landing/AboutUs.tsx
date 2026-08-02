@@ -31,6 +31,7 @@ export default function AboutUs() {
                 alt="Productor local en la comunidad"
                 width={600}
                 height={400}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px"
                 className="relative rounded-xl shadow-xl h-80 w-full object-cover"
               />
             </div>
@@ -72,6 +73,7 @@ export default function AboutUs() {
                 alt="Productor local en la comunidad"
                 width={600}
                 height={400}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px"
                 className="relative rounded-xl shadow-xl h-80 w-full object-cover"
               />
             </div>
@@ -113,6 +115,7 @@ export default function AboutUs() {
                 alt="Junta Ejidal de Tinun"
                 width={600}
                 height={400}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px"
                 className="relative rounded-xl shadow-xl h-80 w-full object-cover"
               />
             </div>

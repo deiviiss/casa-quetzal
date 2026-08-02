@@ -10,6 +10,7 @@ export default function DispensaryLoading() {
           alt="Cargando..."
           width={500}
           height={500}
+          unoptimized
           className="w-[500px] h-[500px] object-contain relative z-10 rounded-sm block dark:hidden"
         />
 
@@ -19,6 +20,7 @@ export default function DispensaryLoading() {
           alt="Cargando..."
           width={500}
           height={500}
+          unoptimized
           className="w-[500px] h-[500px] object-contain relative z-10 rounded-sm hidden dark:block"
         />
 

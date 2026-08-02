@@ -492,7 +492,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
                     fill
                     className="object-contain"
                     sizes="100vw"
-                    quality={100}
+                    quality={80}
                     priority={index === 0}
                   />
                 </div>

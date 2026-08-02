@@ -1,33 +1,33 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import { getImageProps } from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Lock, ArrowLeft } from 'lucide-react'
 
 export default function NoAccessPage() {
+  const common = { alt: "Casa Quetzal", fill: true, priority: true, sizes: "100vw", quality: 75 }
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({
+    ...common,
+    src: "/imgs/desktop7.webp",
+  })
+  const {
+    props: { srcSet: mobileSrcSet, ...rest },
+  } = getImageProps({
+    ...common,
+    src: "/imgs/mobile7.webp",
+  })
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background images — mobile & desktop */}
       <div className="absolute inset-0 w-full h-full">
-        {/* mobile */}
-        <Image
-          src="/imgs/mobile7.webp"
-          alt="Casa Quetzal"
-          fill
-          className="object-cover sm:hidden"
-          quality={100}
-          priority
-        />
-
-        {/* desktop */}
-        <Image
-          src="/imgs/desktop7.webp"
-          alt="Casa Quetzal"
-          fill
-          className="object-cover hidden sm:block"
-          quality={100}
-          priority
-        />
+        <picture className="w-full h-full">
+          <source media="(min-width: 640px)" srcSet={desktopSrcSet} />
+          <source media="(max-width: 639px)" srcSet={mobileSrcSet} />
+          <img {...rest} alt="Casa Quetzal" className="object-cover w-full h-full" />
+        </picture>
 
         {/* Overlay de opacidad */}
         <div className="absolute inset-0 bg-black bg-opacity-60" />

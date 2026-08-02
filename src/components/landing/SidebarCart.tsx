@@ -364,6 +364,7 @@ export function SidebarCart() {
                                 <div className="flex items-center mt-1">
                                   <button
                                     onClick={() => { updateQuantity(item.cartItemId, Math.max(1, item.quantity - 1)) }}
+                                    aria-label="Disminuir cantidad"
                                     className="text-muted-foreground hover:text-primary w-5 h-5 flex items-center justify-center"
                                   >
                                     -
@@ -371,6 +372,7 @@ export function SidebarCart() {
                                   <span className="mx-2">{item.quantity}</span>
                                   <button
                                     onClick={() => { updateQuantity(item.cartItemId, item.quantity + 1) }}
+                                    aria-label="Aumentar cantidad"
                                     className="text-muted-foreground hover:text-primary w-5 h-5 flex items-center justify-center"
                                   >
                                     +
@@ -383,6 +385,7 @@ export function SidebarCart() {
                                 <div className="flex items-center mt-1">
                                   <button
                                     onClick={() => { updateQuantity(item.cartItemId, Math.max(1, item.quantity - 1)) }}
+                                    aria-label="Disminuir cantidad"
                                     className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
                                   >
                                     -
@@ -390,6 +393,7 @@ export function SidebarCart() {
                                   <span className="mx-2 w-6 text-center text-sm">{item.quantity}</span>
                                   <button
                                     onClick={() => { updateQuantity(item.cartItemId, item.quantity + 1) }}
+                                    aria-label="Aumentar cantidad"
                                     className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
                                   >
                                     +
@@ -402,6 +406,7 @@ export function SidebarCart() {
                                 <div className="flex items-center mt-1">
                                   <button
                                     onClick={() => { updateQuantity(item.cartItemId, Math.max(1, item.quantity - 1)) }}
+                                    aria-label="Disminuir cantidad"
                                     className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
                                   >
                                     -
@@ -409,6 +414,7 @@ export function SidebarCart() {
                                   <span className="mx-2 w-6 text-center text-sm">{item.quantity}</span>
                                   <button
                                     onClick={() => { updateQuantity(item.cartItemId, item.quantity + 1) }}
+                                    aria-label="Aumentar cantidad"
                                     className="text-muted-foreground hover:text-primary w-6 h-6 flex items-center justify-center"
                                   >
                                     +
@@ -430,6 +436,7 @@ export function SidebarCart() {
                           </span>
                           <button
                             onClick={() => { handleRemoveItem(item.cartItemId, item.name) }}
+                            aria-label={`Eliminar ${item.name} del carrito`}
                             className="text-destructive/70 hover:text-destructive mt-1"
                           >
                             <Trash2 className="h-4 w-4" />
