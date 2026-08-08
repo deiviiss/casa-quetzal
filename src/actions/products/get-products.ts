@@ -82,7 +82,7 @@ const products: Product[] = [
     longDescription:
       "El Mechero de Cáñamo CQCS es una alternativa práctica para quienes buscan un encendido más controlado. Consiste en un encendedor recargable envuelto con cuerda de cáñamo natural impregnada con cera de abeja. Una vez encendida la punta de la cuerda, permite transferir la llama de forma gradual sin exponer directamente la pieza a la llama del encendedor. Su diseño es compacto, reutilizable y fácil de transportar, ideal para el uso diario y para quienes valoran materiales de origen natural.",
 
-    price: 59,
+    price: 79,
     image: "/imgs/product-hemp-wick-lighter.webp",
     benefits: [
       "Encendido gradual y preciso.",
@@ -145,7 +145,7 @@ const products: Product[] = [
       "Miel multifloral infusionada con cannabis, menos del 5% de THC.",
     longDescription:
       "La Miel de Cannabis CQCS combina miel multifloral mexicana con una infusión cuidadosamente elaborada de cannabis, manteniendo un contenido inferior al 5% de THC. Su formulación busca preservar las características naturales de la miel mientras incorpora los compuestos vegetales del cannabis en un producto artesanal de alta calidad. Ideal para acompañar bebidas, alimentos o como parte de una rutina de bienestar, siempre siguiendo las recomendaciones de consumo responsable y la legislación aplicable.",
-    price: 129,
+    price: 149,
     image: "/imgs/product-miel-cannabis.webp",
     benefits: [
       "Elaboración artesanal.",
