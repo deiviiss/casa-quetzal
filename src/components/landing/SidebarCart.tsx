@@ -1,13 +1,11 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ShoppingBag, Trash2, MessageCircle, MapPin } from 'lucide-react'
+import { X, ShoppingBag, Trash2, MessageCircle, MapPin, Upload, FileText, AlertTriangle, Loader2, LogIn } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-// import { createUpdateOrder } from '@/actions/orders/create-order'
-// import { LocationPicker } from '@/components/maps/location-picker'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,17 +18,16 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-// import { logEvent } from '@/lib/event-logger'
 import { capitalizeWords, cn } from '@/lib/utils'
 import { useUiStore } from '@/store';
 import { useNewCartStore } from '@/store/new-cart-store';
+import { isMembershipCartItem, isDispensaryCartItem } from '@/lib/cart-adapters'
 import { LocationPicker } from '../maps/location-picker'
-// import CartItem from '@/components/cart/CartItem';
+import { checkUserIneStatus, type UserIneStatusResponse } from '@/actions/users/check-user-ine'
+import { uploadUserIne } from '@/actions/users/upload-user-ine'
 
 export function SidebarCart() {
-  // const searchParams = useSearchParams()
-  // const table = searchParams.get('table')
-  // const tableNumber = Number(table)
+  console.log('SidebarCart render', isDispensaryCartItem)
   const [showLocationPicker, setShowLocationPicker] = useState(false)
   const [showDeliveryModal, setShowDeliveryModal] = useState(false)
   const [deliveryType, setDeliveryType] = useState<'pickup' | 'delivery' | null>(null)
@@ -47,14 +44,35 @@ export function SidebarCart() {
     coordinates: { lat: 0, lng: 0 }
   })
 
+  // INE upload states
+  const [ineStatusData, setIneStatusData] = useState<UserIneStatusResponse | null>(null)
+  const [isCheckingIne, setIsCheckingIne] = useState(false)
+  const [selectedIneFile, setSelectedIneFile] = useState<File | null>(null)
+  const [inePreviewUrl, setInePreviewUrl] = useState<string | null>(null)
+  const [isUploadingIne, setIsUploadingIne] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   const hasLocation = deliveryForm.coordinates.lat !== 0 && deliveryForm.coordinates.lng !== 0
 
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+  const isSafari = typeof window !== 'undefined' && /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
   const [showSafariModal, setShowSafariModal] = useState(false)
   const [pendingMessage, setPendingMessage] = useState<string | null>(null)
   const { isSideCartOpen, closeSideCart } = useUiStore()
-  const { cart, removeFromCart, updateQuantity, clearCart, getSubtotal, getCartItemTotal } = useNewCartStore()
-  const isOnlyMembership = cart.length > 0 && cart.every((item) => item.type === 'membership')
+  const {
+    cart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    getSubtotal,
+    getCartItemTotal,
+    hasMixedCart,
+    keepMembershipOnly,
+    keepDispensaryOnly
+  } = useNewCartStore()
+
+  const isOnlyMembership = cart.length > 0 && cart.every(isMembershipCartItem)
+  const hasMembershipInCart = cart.some(isMembershipCartItem)
+  const isMixedCartActive = hasMixedCart()
 
   // Close sidebar with Escape key
   useEffect(() => {
@@ -70,10 +88,33 @@ export function SidebarCart() {
     return () => { window.removeEventListener('keydown', handleKeyDown) }
   }, [closeSideCart, showDeliveryModal, showSafariModal])
 
-  const generateAndSendWhatsApp = async (option?: 'pickup' | 'delivery') => {
+  const handleIneFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      toast.error('Formato no permitido. Solo se aceptan archivos PDF, JPG, PNG o WEBP.')
+      return
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('El archivo excede el tamaño máximo permitido de 5 MB.')
+      return
+    }
+
+    setSelectedIneFile(file)
+    if (file.type.startsWith('image/')) {
+      const url = URL.createObjectURL(file)
+      setInePreviewUrl(url)
+    } else {
+      setInePreviewUrl(null)
+    }
+  }
+
+  const generateAndSendWhatsApp = async (option?: 'pickup' | 'delivery', customName?: string, customPayment?: string) => {
     const items = cart.map((item) => ({
       itemId: item.productId,
-      // categoryId: item.product.categoryId,
       quantity: item.quantity,
       unitPrice: item.price
     }))
@@ -82,65 +123,49 @@ export function SidebarCart() {
     formData.append('status', 'PENDING')
     formData.append('totalPrice', getSubtotal().toString())
     formData.append('items', JSON.stringify(items))
-
     formData.append('address', isOnlyMembership ? '' : (option === 'delivery' ? 'Pendiente' : 'Pickup'))
-
-    // const { ok, order, message } = await createUpdateOrder(formData)
-
-    // if (!ok || !order) {
-    //   toast.error(message || 'No se pudo crear el pedido')
-    //   return
-    // }
-
-    // logEvent({
-    //   type: 'order_completed' // Event type for order completion
-    // })
 
     const phoneNumber = "9999688834"
     let messageOrder = '🛒 *Nuevo Pedido*\n\n'
 
-    // messageOrder += `*Código de verificación:* BD-${order.shortId}\n\n`
-
     cart.forEach((item) => {
       const productName = item.name
       const quantity = item.quantity
-      const unitTotal = item.price // already includes options
+      const unitTotal = item.price
       const lineTotal = unitTotal * quantity
-
       const hasVariant = item.variantType === 'quantity'
 
       messageOrder += `*${quantity}x* ${productName} - ${hasVariant ? '*Pendiente*' : `$${lineTotal.toFixed(2)}`}\n`
 
-      // Only show options if they exist
       if (item.variantName) {
         messageOrder += `   - ${item.variantName}\n`
       }
 
-      messageOrder += '\n' // Separator between products
+      messageOrder += '\n'
     })
 
-    messageOrder += `*Total:* $${getSubtotal().toFixed(2)}\n
-------\n`
+    messageOrder += `*Total:* $${getSubtotal().toFixed(2)}\n\n------\n`
+
+    const clientName = customName || pickupForm.name
+    const paymentMethod = customPayment || pickupForm.paymentMethod
 
     if (isOnlyMembership) {
       messageOrder += `*Tipo de pedido:* Membresía\n\n`
-      messageOrder += `👤 *Cliente:* ${capitalizeWords(pickupForm.name)}\n`
-      messageOrder += `💳 *Pago:* ${capitalizeWords(pickupForm.paymentMethod)}\n\n`
+      messageOrder += `👤 *Cliente:* ${capitalizeWords(clientName)}\n`
+      messageOrder += `💳 *Pago:* ${capitalizeWords(paymentMethod)}\n\n`
       messageOrder += '¡Gracias por tu pedido! Por favor, presiona el botón de enviar mensaje para continuar.\n\n'
     } else {
       messageOrder += `*Tipo de pedido:* ${option === 'pickup' ? 'Para pasar a recoger' : 'Domicilio'}\n\n`
 
       if (option === 'pickup') {
-        messageOrder += `👤 *Cliente:* ${capitalizeWords(pickupForm.name)}\n`
-        messageOrder += `💳 *Pago:* ${capitalizeWords(pickupForm.paymentMethod)}\n\n`
+        messageOrder += `👤 *Cliente:* ${capitalizeWords(clientName)}\n`
+        messageOrder += `💳 *Pago:* ${capitalizeWords(paymentMethod)}\n\n`
         messageOrder += '¡Gracias por tu pedido! Por favor, presiona el botón de enviar mensaje para continuar.\n\n'
       }
 
       if (option === 'delivery') {
         messageOrder += `📍 *Dirección:* ${capitalizeWords(deliveryForm.address)}\n`
-
         if (deliveryForm.reference) messageOrder += `🗺️ *Referencia:* ${deliveryForm.reference}\n`
-
         messageOrder += deliveryForm.coordinates.lat !== 0
           ? `📍 *Ubicación:* https://www.google.com/maps?q=${deliveryForm.coordinates.lat},${deliveryForm.coordinates.lng}\n\n`
           : ''
@@ -169,7 +194,7 @@ export function SidebarCart() {
         paymentMethod: '',
         coordinates: { lat: 0, lng: 0 }
       })
-
+      clearCart()
       closeSideCart()
     } else {
       setShowSafariModal(true)
@@ -177,63 +202,101 @@ export function SidebarCart() {
     }
   }
 
-  const handleSendOrder = () => {
+  const handleSendOrder = async () => {
     if (isOnlyMembership) {
       const { name, paymentMethod } = pickupForm
       if (!name || !paymentMethod) {
-        toast.error('Faltan datos para el envío')
+        toast.error('Faltan datos obligatorios (Nombre y Forma de Pago)')
         return
       }
 
+      // Check if INE upload is required before finalizing
+      const requiresIneUpload = ineStatusData?.isAuthenticated && (!ineStatusData.hasIne || ineStatusData.ineStatus === 'REJECTED')
+
+      if (requiresIneUpload) {
+        if (!selectedIneFile) {
+          toast.error('Debes seleccionar un archivo de identificación (INE) para continuar.')
+          return
+        }
+
+        setIsUploadingIne(true)
+        const uploadFormData = new FormData()
+        uploadFormData.append('ine', selectedIneFile)
+
+        const { ok, message } = await uploadUserIne(uploadFormData)
+        setIsUploadingIne(false)
+
+        if (!ok) {
+          toast.error(message || 'Error al subir la identificación.')
+          return
+        }
+
+        toast.success('Identificación subida con éxito. Revisa el estado de aprobación en tu perfil.')
+      }
+
+      setShowDeliveryModal(false)
       generateAndSendWhatsApp()
     } else {
       if (deliveryType === 'pickup') {
         const { name, paymentMethod } = pickupForm
         if (!name || !paymentMethod) {
-          toast.error('Faltan datos para el envío')
+          toast.error('Faltan datos obligatorios (Nombre y Forma de Pago)')
           return
         }
-
-        // logEvent({
-        //   type: 'form_pickup_completed',
-        //   metadata: {
-        //     method: 'pickup',
-        //     name,
-        //     payment: paymentMethod
-        //   }
-        // })
-
         generateAndSendWhatsApp('pickup')
       }
 
       if (deliveryType === 'delivery') {
         const { address, receiverName, receiverPhone, paymentMethod } = deliveryForm
-
         if (!address || !receiverName || !receiverPhone || !paymentMethod) {
-          toast.error('Faltan datos para el envío')
+          toast.error('Faltan datos obligatorios para el envío a domicilio')
           return
         }
-
-        // logEvent({
-        //   type: 'form_delivery_completed',
-        //   metadata: {
-        //     method: 'delivery',
-        //     address,
-        //     receiverName,
-        //     receiverPhone,
-        //     payment: paymentMethod
-        //   }
-        // })
-
         generateAndSendWhatsApp('delivery')
+      }
+
+      setShowDeliveryModal(false)
+      closeSideCart()
+    }
+  }
+
+  const handleWhatsAppCheckout = async () => {
+    if (isMixedCartActive) {
+      toast.error('Corrige el carrito antes de continuar.')
+      return
+    }
+
+    const hasDispensaryInCart = cart.some(isDispensaryCartItem)
+
+    if (hasDispensaryInCart) {
+      setIsCheckingIne(true)
+      const ineResult = await checkUserIneStatus()
+      setIsCheckingIne(false)
+
+      if (!ineResult.isAuthenticated) {
+        toast.error('Para realizar un pedido del dispensario debes iniciar sesión.')
+        return
+      }
+
+      if (ineResult.ineStatus !== 'VERIFIED') {
+        toast.error('Revisa en tu perfil el estado de aprobación de tu INE.', {
+          duration: 5000
+        })
+        return
       }
     }
 
-    setShowDeliveryModal(false)
-    closeSideCart()
-  }
+    if (hasMembershipInCart) {
+      setIsCheckingIne(true)
+      const ineResult = await checkUserIneStatus()
+      setIneStatusData(ineResult)
+      setIsCheckingIne(false)
 
-  const handleWhatsAppCheckout = () => {
+      if (ineResult.name && !pickupForm.name) {
+        setPickupForm(prev => ({ ...prev, name: ineResult.name || '' }))
+      }
+    }
+
     setShowDeliveryModal(true)
   }
 
@@ -452,6 +515,27 @@ export function SidebarCart() {
           {/* Summary and action buttons */}
           {cart.length > 0 && (
             <div className="border-t p-4">
+              {/* Mixed Cart Resolution Alert */}
+              {isMixedCartActive && (
+                <div className="mb-4 p-3 border border-amber-500/30 bg-amber-500/10 rounded-lg text-xs space-y-2">
+                  <div className="flex items-center gap-2 font-semibold text-amber-700 dark:text-amber-400">
+                    <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                    <span>Carrito no permitido</span>
+                  </div>
+                  <p className="text-muted-foreground text-[11px]">
+                    Tu carrito contiene una Membresía y productos del Dispensario al mismo tiempo. Elige cuál deseas conservar para continuar:
+                  </p>
+                  <div className="flex gap-2 pt-1">
+                    <Button size="sm" variant="outline" className="text-[11px] h-7 flex-1 px-1" onClick={keepMembershipOnly}>
+                      Conservar Membresía
+                    </Button>
+                    <Button size="sm" variant="outline" className="text-[11px] h-7 flex-1 px-1" onClick={keepDispensaryOnly}>
+                      Conservar Dispensario
+                    </Button>
+                  </div>
+                </div>
+              )}
+
               {/* Summary */}
               <div className="mb-4">
                 <div className="flex justify-between mb-2">
@@ -470,16 +554,20 @@ export function SidebarCart() {
                   ✓ Los precios publicados incluyen los impuestos aplicables al momento de la compra.
                 </p>
                 <p className="text-[10px] text-muted-foreground">
-                  ✓ El precio final y la disponibilidad serán confirmados por WhatsApp antes de procesar tu pedido.
-                </p>
-                <p className="text-[10px] text-muted-foreground  mb-2">
                   ✓ Al hacer clic en &quot;Hacer pedido&quot; aceptas nuestros <Link href={'/terms'} className='hover:underline' target='_blank'>T&C</Link>
+                </p>
+                <p className="text-[10px] text-muted-foreground ">
+                  ✓ La adquisición de membresía requiere acreditar mayoría de edad mediante identificación oficial.
                 </p>
               </div>
 
               {/* Action buttons */}
               <div className="space-y-2">
-                <Button onClick={handleWhatsAppCheckout} className="dark w-full dark:bg-primary/80 dark:hover:bg-primary/60 text-secondary-foreground dark:text-secondary">
+                <Button
+                  onClick={handleWhatsAppCheckout}
+                  disabled={isMixedCartActive}
+                  className="dark w-full dark:bg-primary/80 dark:hover:bg-primary/60 text-secondary-foreground dark:text-secondary"
+                >
                   <MessageCircle className="mr-2 h-4 w-4" />
                   Hacer pedido
                 </Button>
@@ -522,6 +610,7 @@ export function SidebarCart() {
                     paymentMethod: '',
                     coordinates: { lat: 0, lng: 0 }
                   })
+                  clearCart()
                   closeSideCart()
                 }}
               >
@@ -550,50 +639,133 @@ export function SidebarCart() {
           </DialogHeader>
 
           {isOnlyMembership ? (
-            <form autoComplete='off'>
-              <div className="space-y-4 mt-4">
-                <Input
-                  placeholder="Nombre completo"
-                  value={pickupForm.name}
-                  onChange={(e) => {
-                    setPickupForm({
-                      ...pickupForm,
-                      name: e.target.value
-                    })
-                  }}
-                  className="w-full p-2 rounded border text-muted-foreground text-sm"
-                  autoComplete='off'
-                />
-                <Select
-                  value={pickupForm.paymentMethod}
-                  onValueChange={(value) => { setPickupForm({ ...pickupForm, paymentMethod: value }) }}
-                >
-                  <SelectTrigger className='w-full p-2 rounded border text-muted-foreground text-sm'>
-                    <SelectValue placeholder="Forma de pago" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="efectivo">Efectivo</SelectItem>
-                    <SelectItem value="transferencia">Transferencia</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="space-y-4 mt-2">
+              {isCheckingIne ? (
+                <div className="flex flex-col items-center justify-center p-6 space-y-2">
+                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  <p className="text-xs text-muted-foreground">Verificando estado del usuario...</p>
+                </div>
+              ) : !ineStatusData?.isAuthenticated ? (
+                <div className="space-y-3 py-2 text-center">
+                  <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-700 dark:text-amber-400 text-xs flex items-center gap-2 text-left">
+                    <AlertTriangle className="h-5 w-5 flex-shrink-0" />
+                    <span>Para adquirir una membresía debes iniciar sesión en tu cuenta.</span>
+                  </div>
+                  <Link href="/auth/login" onClick={() => setShowDeliveryModal(false)}>
+                    <Button className="w-full gap-2 mt-2">
+                      <LogIn className="h-4 w-4" /> Iniciar Sesión / Registrarse
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <form autoComplete='off'>
+                  {/* Notice if INE was previously rejected */}
+                  {ineStatusData.ineStatus === 'REJECTED' && (
+                    <div className="mb-3 p-2.5 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-xs flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                      <span>Tu identificación anterior fue rechazada. Por favor sube una nueva INE para continuar.</span>
+                    </div>
+                  )}
 
-              <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end mt-4">
-                <Button
-                  variant="destructive"
-                  type='button'
-                  onClick={cancelOrder}
-                >
-                  Cancelar
-                </Button>
-                <Button
-                  type='button'
-                  onClick={handleSendOrder}
-                >
-                  Enviar pedido
-                </Button>
-              </DialogFooter>
-            </form>
+                  {/* INE file upload form section if user does not have INE or was rejected */}
+                  {(!ineStatusData.hasIne || ineStatusData.ineStatus === 'REJECTED') && (
+                    <div className="mb-4 space-y-2 p-3 border border-emerald-500/20 bg-emerald-500/5 rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-5 w-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                        <div className="text-xs">
+                          <p className="font-semibold text-emerald-800 dark:text-emerald-300">Identificación Oficial (INE)</p>
+                          <p className="text-muted-foreground text-[11px]">Formatos: PDF, JPG, PNG, WEBP (Max 5 MB)</p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col items-center justify-center border border-dashed border-muted-foreground/30 rounded-lg p-3 bg-background/50 hover:bg-background transition-colors">
+                        {inePreviewUrl ? (
+                          <div className="relative h-24 w-full rounded overflow-hidden mb-2">
+                            <Image src={inePreviewUrl} alt="Vista previa INE" fill className="object-contain" />
+                          </div>
+                        ) : selectedIneFile ? (
+                          <div className="flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 mb-2">
+                            <FileText className="h-5 w-5" />
+                            <span className="truncate max-w-[180px]">{selectedIneFile.name}</span>
+                          </div>
+                        ) : null}
+
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          disabled={isUploadingIne}
+                          onClick={() => fileInputRef.current?.click()}
+                          className="text-xs h-8"
+                        >
+                          <Upload className="h-3.5 w-3.5 mr-1.5" />
+                          {selectedIneFile ? 'Cambiar archivo' : 'Seleccionar INE'}
+                        </Button>
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={handleIneFileSelect}
+                          accept="application/pdf,image/jpeg,image/png,image/webp"
+                          className="hidden"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="space-y-3">
+                    <Input
+                      placeholder="Nombre completo"
+                      value={pickupForm.name}
+                      onChange={(e) => {
+                        setPickupForm({
+                          ...pickupForm,
+                          name: e.target.value
+                        })
+                      }}
+                      className="w-full p-2 rounded border text-muted-foreground text-sm"
+                      autoComplete='off'
+                    />
+                    <Select
+                      value={pickupForm.paymentMethod}
+                      onValueChange={(value) => { setPickupForm({ ...pickupForm, paymentMethod: value }) }}
+                    >
+                      <SelectTrigger className='w-full p-2 rounded border text-muted-foreground text-sm'>
+                        <SelectValue placeholder="Forma de pago" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="efectivo">Efectivo</SelectItem>
+                        <SelectItem value="transferencia">Transferencia</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end mt-4">
+                    <Button
+                      variant="destructive"
+                      type='button'
+                      disabled={isUploadingIne}
+                      onClick={cancelOrder}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      type='button'
+                      disabled={isUploadingIne}
+                      onClick={handleSendOrder}
+                    >
+                      {isUploadingIne ? (
+                        <>
+                          <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                          Subiendo INE...
+                        </>
+                      ) : (
+                        'Enviar pedido'
+                      )}
+                    </Button>
+                  </DialogFooter>
+                </form>
+              )}
+            </div>
           ) : (
             <>
               {!deliveryType && (

@@ -1,10 +1,18 @@
 import { Membership, MembershipStatus } from "@/interfaces/membership.interface"
+import type { User } from "@/interfaces/user.interface"
 
 export type MembershipTone = 'success' | 'warning' | 'danger' | 'neutral'
 
 export function isMembershipActive(membership: Membership | null | undefined): boolean {
   if (!membership) return false
   return membership.status === 'ACTIVE' && new Date(membership.expiresAt) > new Date()
+}
+
+export function canAccessDispensary(user: User | null | undefined): boolean {
+  if (!user) return false
+  const activeMembership = isMembershipActive(user.membership)
+  const isIneVerified = user.ineStatus === 'VERIFIED'
+  return Boolean(activeMembership && isIneVerified)
 }
 
 export function formatDateShort(date: Date | string | null | undefined): string {

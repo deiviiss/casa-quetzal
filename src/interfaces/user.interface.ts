@@ -16,6 +16,11 @@ export interface User {
   role: Role;
   isActive: boolean;
 
+  ineUrl?: string | null;
+  inePublicId?: string | null;
+  ineStatus?: IneStatus | null;
+  ineUploadedAt?: Date | string | null;
+
   address?: UserAddress | null;
 
   createdAt: Date;
@@ -24,6 +29,8 @@ export interface User {
   purchase: Purchase[];
   membership?: Membership | null;
 }
+
+export type IneStatus = 'PENDING' | 'VERIFIED' | 'REJECTED';
 
 export const ROLE_VALUES = ['admin', 'user'] as const
 

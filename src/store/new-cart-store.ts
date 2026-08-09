@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { CartItem } from '@/interfaces/cart.interface'
+import { isMembershipCartItem, isDispensaryCartItem } from '@/lib/cart-adapters'
+import { noticeFailure } from '@/components/toast-notifications/ToastNotifications'
 
 interface NewCartState {
   cart: CartItem[]
@@ -12,7 +14,11 @@ interface NewCartState {
   getTotalItems: () => number
   getSubtotal: () => number
   hasDispensaryItems: () => boolean
+  hasMembershipItem: () => boolean
+  hasMixedCart: () => boolean
   removeDispensaryItems: () => void
+  keepMembershipOnly: () => void
+  keepDispensaryOnly: () => void
 }
 
 export const useNewCartStore = create<NewCartState>()(
@@ -22,6 +28,18 @@ export const useNewCartStore = create<NewCartState>()(
 
       addToCart: (item: CartItem) => {
         const cart = get().cart
+
+        // Mutual exclusion rule: Membership and Dispensary items cannot coexist
+        if (isMembershipCartItem(item) && cart.some(isDispensaryCartItem)) {
+          noticeFailure("La membresía y productos del dispensario no pueden estar en el mismo carrito.")
+          return
+        }
+
+        if (isDispensaryCartItem(item) && cart.some(isMembershipCartItem)) {
+          noticeFailure("No puedes agregar productos del dispensario si tienes una membresía en el carrito.")
+          return
+        }
+
         const existingItemIndex = cart.findIndex((i) => i.cartItemId === item.cartItemId)
 
         if (existingItemIndex !== -1) {
@@ -80,11 +98,28 @@ export const useNewCartStore = create<NewCartState>()(
       },
 
       hasDispensaryItems: () => {
-        return get().cart.some((item) => item.variantType !== null)
+        return get().cart.some(isDispensaryCartItem)
+      },
+
+      hasMembershipItem: () => {
+        return get().cart.some(isMembershipCartItem)
+      },
+
+      hasMixedCart: () => {
+        const cart = get().cart
+        return cart.some(isMembershipCartItem) && cart.some(isDispensaryCartItem)
       },
 
       removeDispensaryItems: () => {
-        set({ cart: get().cart.filter((item) => item.variantType === null) })
+        set({ cart: get().cart.filter((item) => !isDispensaryCartItem(item)) })
+      },
+
+      keepMembershipOnly: () => {
+        set({ cart: get().cart.filter((item) => !isDispensaryCartItem(item)) })
+      },
+
+      keepDispensaryOnly: () => {
+        set({ cart: get().cart.filter((item) => !isMembershipCartItem(item)) })
       }
     }),
     {
@@ -92,3 +127,4 @@ export const useNewCartStore = create<NewCartState>()(
     }
   )
 )
+

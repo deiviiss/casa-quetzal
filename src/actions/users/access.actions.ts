@@ -31,11 +31,11 @@ export async function grantMembershipAccess(userId: string, expiresAt?: Date) {
       return { ok: false, message: 'El usuario ya tiene acceso de membresía activo' }
     }
 
-    // 3. Calculate expiration date if not provided (defaulting to 1 year)
+    // 3. Calculate expiration date if not provided (defaulting to 1 month)
     let calculatedExpiresAt = expiresAt
     if (!calculatedExpiresAt) {
       calculatedExpiresAt = new Date()
-      calculatedExpiresAt.setFullYear(calculatedExpiresAt.getFullYear() + 1)
+      calculatedExpiresAt.setMonth(calculatedExpiresAt.getMonth() + 1)
     }
 
     // 4. Upsert membership

@@ -14,6 +14,10 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
       phoneNumber: true,
       isActive: true,
       role: true,
+      ineUrl: true,
+      inePublicId: true,
+      ineStatus: true,
+      ineUploadedAt: true,
       purchase: {
         include: {
           product: true

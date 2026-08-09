@@ -7,22 +7,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum IneStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
 enum Role {
   admin
   user
 }
 
 model User {
-  id                  String  @id @default(uuid())
+  id                  String     @id @default(uuid())
   name                String
-  email               String  @unique
+  email               String     @unique
   password            String
-  emailVerified       Boolean @default(false)
+  emailVerified       Boolean    @default(false)
   phoneNumber         String
-  phoneNumberVerified Boolean @default(false)
+  phoneNumberVerified Boolean    @default(false)
   image               String?
-  role                Role    @default(user)
-  isActive            Boolean @default(true)
+  role                Role       @default(user)
+  isActive            Boolean    @default(true)
+  ineUrl              String?
+  inePublicId         String?
+  ineStatus           IneStatus?
+  ineUploadedAt       DateTime?
 
   address UserAddress?
 
