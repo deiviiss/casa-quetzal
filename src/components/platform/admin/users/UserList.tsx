@@ -12,6 +12,7 @@ import { noticeSuccess, noticeFailure } from '@/components/toast-notifications/T
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 import { Membership } from '@/interfaces/membership.interface'
+import { IneStatus } from '@/interfaces/user.interface'
 import { getMembershipSummary, isMembershipActive } from '@/lib/membership-helpers'
 
 interface User {
@@ -20,6 +21,7 @@ interface User {
   email: string
   phoneNumber: string
   isActive: boolean
+  ineStatus?: IneStatus | null
   membership?: Membership | null
 }
 
@@ -229,14 +231,24 @@ export default function UserList({ users }: UserListProps) {
                     {(() => {
                       const summary = getMembershipSummary(user.membership)
                       return (
-                        <div className="flex flex-col items-center justify-center">
+                        <div className="flex flex-col items-center justify-center gap-1">
                           <Badge className={`uppercase text-[10px] ${toneClasses[summary.tone]}`}>
                             {summary.label}
                           </Badge>
                           {summary.detail && (
-                            <span className="text-[10px] text-muted-foreground mt-1 font-medium">
+                            <span className="text-[10px] text-muted-foreground font-medium">
                               {summary.detail}
                             </span>
+                          )}
+                          {user.ineStatus === 'VERIFIED' && (
+                            <Badge className="bg-emerald-600/10 text-emerald-600 dark:text-emerald-400 text-[9px] border-emerald-500/20 px-1.5 py-0">
+                              INE Verificada
+                            </Badge>
+                          )}
+                          {user.ineStatus === 'PENDING' && (
+                            <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[9px] border-amber-500/20 px-1.5 py-0">
+                              INE Pendiente
+                            </Badge>
                           )}
                         </div>
                       )

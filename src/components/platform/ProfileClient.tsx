@@ -2,12 +2,14 @@
 
 import { useRef, useState } from "react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { ButtonLogout } from '@/components/auth/ButtonLogout'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Loader, Settings, Upload, User as UserIcon, X } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Loader, Settings, Upload, User as UserIcon, X, FileText, CheckCircle2, Clock, ShieldAlert, AlertTriangle, XCircle } from "lucide-react"
 import { MdCardMembership } from "react-icons/md"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -26,6 +28,7 @@ import { updateUserPassword } from "@/actions/users/update-user-password"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { updateUserImage } from "@/actions/users/update-user-image"
 import { deleteUserImage } from "@/actions/users/delete-user-image"
+import { uploadUserIne } from "@/actions/users/upload-user-ine"
 import { MembershipCard } from "@/components/platform/membership/MembershipCard"
 
 const userSchema = z.object({
@@ -86,6 +89,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
     }
   }
 
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState("personal")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -93,6 +97,57 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
   const [avatarModalOpen, setAvatarModalOpen] = useState(false)
   const [avatarPreview, setAvatarPreview] = useState<string>(user.image || 'imgs/avatar.png')
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // INE upload state in Profile
+  const [selectedIneFile, setSelectedIneFile] = useState<File | null>(null)
+  const [inePreviewUrl, setInePreviewUrl] = useState<string | null>(null)
+  const [isUploadingIne, setIsUploadingIne] = useState(false)
+  const ineFileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleProfileIneFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      noticeFailure('Formato no permitido. Solo se aceptan archivos PDF, JPG, PNG o WEBP.')
+      return
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      noticeFailure('El archivo excede el tamaño máximo permitido de 5 MB.')
+      return
+    }
+
+    setSelectedIneFile(file)
+    if (file.type.startsWith('image/')) {
+      const url = URL.createObjectURL(file)
+      setInePreviewUrl(url)
+    } else {
+      setInePreviewUrl(null)
+    }
+  }
+
+  const handleProfileIneUpload = async () => {
+    if (!selectedIneFile) return
+
+    setIsUploadingIne(true)
+    const uploadFormData = new FormData()
+    uploadFormData.append('ine', selectedIneFile)
+
+    const { ok, message } = await uploadUserIne(uploadFormData)
+    setIsUploadingIne(false)
+
+    if (!ok) {
+      noticeFailure(message || 'Error al subir la identificación.')
+      return
+    }
+
+    noticeSuccess('Identificación subida con éxito. Revisa el estado de aprobación en tu perfil.')
+    setSelectedIneFile(null)
+    setInePreviewUrl(null)
+    router.refresh()
+  }
 
   const defaultValuesUserInfo = {
     name: user.name || '',
@@ -430,6 +485,121 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
                       </Button>
                     </form>
                   </Form>
+                </CardContent>
+              </Card>
+
+              {/* INE Management Card */}
+              <Card className="relative z-10 mt-6">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <FileText className="h-5 w-5 text-emerald-500" />
+                    Identificación Oficial (INE)
+                  </CardTitle>
+                  <CardDescription>
+                    Acreditación de mayoría de edad para realizar compras de productos en el dispensario.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Status Indicator */}
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg border">
+                    <span className="text-xs font-medium text-muted-foreground">Estado de acreditación:</span>
+                    {user.ineStatus === 'VERIFIED' && (
+                      <Badge className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1">
+                        <CheckCircle2 className="h-3.5 w-3.5" /> Verificada
+                      </Badge>
+                    )}
+                    {user.ineStatus === 'PENDING' && (
+                      <Badge className="bg-amber-500 hover:bg-amber-600 text-white gap-1">
+                        <Clock className="h-3.5 w-3.5" /> En Revisión
+                      </Badge>
+                    )}
+                    {user.ineStatus === 'REJECTED' && (
+                      <Badge variant="destructive" className="gap-1">
+                        <XCircle className="h-3.5 w-3.5" /> Rechazada
+                      </Badge>
+                    )}
+                    {!user.ineStatus && (
+                      <Badge variant="outline" className="text-muted-foreground gap-1">
+                        <ShieldAlert className="h-3.5 w-3.5" /> Sin Registro
+                      </Badge>
+                    )}
+                  </div>
+
+                  {/* Info alert when VERIFIED */}
+                  {user.ineStatus === 'VERIFIED' && (
+                    <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
+                      <span>Tu identificación oficial ha sido verificada y aprobada por la administración.</span>
+                    </div>
+                  )}
+
+                  {/* Info alert when PENDING */}
+                  {user.ineStatus === 'PENDING' && (
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-700 dark:text-amber-400 text-xs flex items-center gap-2">
+                      <Clock className="h-4 w-4 flex-shrink-0" />
+                      <span>Tu identificación oficial se encuentra en proceso de revisión por parte de la administración.</span>
+                    </div>
+                  )}
+
+                  {/* Upload Form when REJECTED or null */}
+                  {(!user.ineStatus || user.ineStatus === 'REJECTED') && (
+                    <div className="space-y-3 pt-2">
+                      {user.ineStatus === 'REJECTED' && (
+                        <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-xs flex items-center gap-2">
+                          <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                          <span>Tu identificación anterior fue rechazada. Por favor sube una nueva identificación oficial válida.</span>
+                        </div>
+                      )}
+
+                      <div className="flex flex-col items-center justify-center border-2 border-dashed border-muted-foreground/30 rounded-lg p-4 bg-background/50 hover:bg-background transition-colors">
+                        {inePreviewUrl ? (
+                          <div className="relative h-28 w-full max-w-[200px] rounded overflow-hidden mb-2">
+                            <Image src={inePreviewUrl} alt="Vista previa INE" fill className="object-contain" />
+                          </div>
+                        ) : selectedIneFile ? (
+                          <div className="flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 mb-2">
+                            <FileText className="h-5 w-5" />
+                            <span className="truncate max-w-[200px]">{selectedIneFile.name}</span>
+                          </div>
+                        ) : null}
+
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          disabled={isUploadingIne}
+                          onClick={() => ineFileInputRef.current?.click()}
+                          className="text-xs"
+                        >
+                          <Upload className="h-3.5 w-3.5 mr-1.5" />
+                          {selectedIneFile ? 'Cambiar archivo' : 'Seleccionar INE (PDF, JPG, PNG, WEBP)'}
+                        </Button>
+                        <input
+                          type="file"
+                          ref={ineFileInputRef}
+                          onChange={handleProfileIneFileSelect}
+                          accept="application/pdf,image/jpeg,image/png,image/webp"
+                          className="hidden"
+                        />
+                      </div>
+
+                      <Button
+                        type="button"
+                        disabled={!selectedIneFile || isUploadingIne}
+                        onClick={handleProfileIneUpload}
+                        className="w-full text-xs"
+                      >
+                        {isUploadingIne ? (
+                          <>
+                            <Loader className="animate-spin h-4 w-4 mr-2" />
+                            Subiendo identificación...
+                          </>
+                        ) : (
+                          'Subir Identificación Oficial'
+                        )}
+                      </Button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>

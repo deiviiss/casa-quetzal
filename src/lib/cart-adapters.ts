@@ -68,3 +68,25 @@ export function mapDbProductToCartItem(product: DbProduct): CartItem {
     type: product.type,
   };
 }
+
+/**
+ * Identifica si un ítem en el carrito representa una Membresía.
+ */
+export function isMembershipCartItem(item: CartItem): boolean {
+  return item.type === 'membership';
+}
+
+/**
+ * Identifica si un ítem proviene del catálogo exclusivo del Dispensario.
+ */
+export function isDispensaryCartItem(item: CartItem): boolean {
+  return item.variantType !== null;
+}
+
+/**
+ * Identifica si un ítem es un producto normal del catálogo público (cremas, aceites, mecheros, etc.).
+ */
+export function isPublicCatalogCartItem(item: CartItem): boolean {
+  return item.type !== 'membership' && item.variantType === null;
+}
+

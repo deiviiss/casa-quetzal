@@ -50,6 +50,39 @@ export async function userHasMembership(userId: string): Promise<boolean> {
   }
 }
 
+export async function userCanAccessDispensary(userId: string): Promise<boolean> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        membership: {
+          include: {
+            product: true
+          }
+        }
+      }
+    })
+
+    if (!user) return false
+
+    // Preserve existing admin bypass rule
+    if (user.role === 'admin') return true
+
+    const hasActiveMembership =
+      user.membership &&
+      user.membership.status === 'ACTIVE' &&
+      user.membership.product.isActive &&
+      new Date(user.membership.expiresAt) > new Date()
+
+    const isIneVerified = user.ineStatus === 'VERIFIED'
+
+    return Boolean(hasActiveMembership && isIneVerified)
+  } catch (error) {
+    console.error('Error checking dispensary access:', error)
+    return false
+  }
+}
+
 /**
  * Obtiene todas las compras de un usuario
  * @param userId - ID del usuario

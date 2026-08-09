@@ -15,7 +15,7 @@ export default async function Home() {
   // Artificial delay for loading screen
   await new Promise(resolve => setTimeout(resolve, 2500))
 
-  // Verify membership
+  // Verify membership for viewing dispensary page
   const hasMembership = await userHasMembership(session.id)
   if (!hasMembership && session.role !== 'admin') {
     return redirect('/no-access')
