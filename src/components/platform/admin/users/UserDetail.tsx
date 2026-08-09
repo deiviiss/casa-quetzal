@@ -243,7 +243,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    disabled={isUpdatingIne || user.ineStatus === 'VERIFIED'}
+                    disabled={isUpdatingIne || !user.ineUrl || user.ineStatus === 'VERIFIED'}
                     onClick={() => handleUpdateIneStatus('VERIFIED')}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs gap-1"
                   >
@@ -258,7 +258,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                   <Button
                     size="sm"
                     variant="destructive"
-                    disabled={isUpdatingIne || user.ineStatus === 'REJECTED'}
+                    disabled={isUpdatingIne || !user.ineUrl || user.ineStatus === 'REJECTED'}
                     onClick={() => handleUpdateIneStatus('REJECTED')}
                     className="flex-1 text-xs gap-1"
                   >

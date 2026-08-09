@@ -16,6 +16,15 @@ export async function updateUserIneStatus(userId: string, status: IneStatus) {
       return { ok: false, message: 'Parámetros inválidos' }
     }
 
+    const targetUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { ineUrl: true }
+    })
+
+    if (!targetUser || !targetUser.ineUrl) {
+      return { ok: false, message: 'El usuario no cuenta con una identificación cargada para autorizar o rechazar.' }
+    }
+
     await prisma.user.update({
       where: { id: userId },
       data: { ineStatus: status }
