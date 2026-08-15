@@ -2,6 +2,7 @@
 
 import { type User } from '@/interfaces/user.interface'
 import prisma from '@/lib/prisma'
+import { getProtectedResourceUrl } from '@/lib/cloudinary.server'
 
 interface Response {
   ok: boolean
@@ -14,11 +15,6 @@ export const getUserById = async (id: string): Promise<Response> => {
     const user = await prisma.user.findFirst({
       where: { id },
       include: {
-        purchase: {
-          include: {
-            product: true
-          }
-        },
         membership: {
           include: {
             product: true
@@ -34,10 +30,25 @@ export const getUserById = async (id: string): Promise<Response> => {
       }
     }
 
+    const resolvedUser = { ...user }
+
+    // If user has an authenticated avatar publicId, generate a temporary signed URL
+    if (resolvedUser.imagePublicId) {
+      try {
+        resolvedUser.image = getProtectedResourceUrl(resolvedUser.imagePublicId, {
+          resourceType: 'image',
+          expiresInSeconds: 15 * 60,
+          attachment: false
+        })
+      } catch (err) {
+        console.error('[Get User By ID] Error generating protected avatar url:', err)
+      }
+    }
+
     return {
       ok: true,
       message: 'Usuario encontrado',
-      user: user as unknown as User
+      user: resolvedUser as unknown as User
     }
   } catch (error) {
     console.error('Error fetching user', error)

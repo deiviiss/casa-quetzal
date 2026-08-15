@@ -56,25 +56,6 @@ export async function grantMembershipAccess(userId: string, expiresAt?: Date) {
       }
     })
 
-    // 5. Create purchase (only for historical logs, check if it exists first to avoid @@unique constraint violations)
-    const existingPurchase = await prisma.purchase.findUnique({
-      where: {
-        userId_productId: {
-          userId,
-          productId: membershipProduct.id
-        }
-      }
-    })
-
-    if (!existingPurchase) {
-      await prisma.purchase.create({
-        data: {
-          userId,
-          productId: membershipProduct.id
-        }
-      })
-    }
-
     revalidatePath(`/platform/admin/users/${userId}`)
     return { ok: true, message: 'Acceso de membresía otorgado' }
   } catch (error) {

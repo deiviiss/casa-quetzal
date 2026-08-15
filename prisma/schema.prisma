@@ -27,6 +27,7 @@ model User {
   phoneNumber         String
   phoneNumberVerified Boolean    @default(false)
   image               String?
+  imagePublicId       String?
   role                Role       @default(user)
   isActive            Boolean    @default(true)
   ineUrl              String?
@@ -38,7 +39,6 @@ model User {
 
   createdAt  DateTime    @default(now())
   updatedAt  DateTime?   @updatedAt
-  purchase   Purchase[]
   membership Membership?
 
   @@map("users")
@@ -78,24 +78,9 @@ model Product {
   price    Int
   isActive Boolean @default(true)
 
-  purchases   Purchase[]
   memberships Membership[]
 
   @@map("products")
-}
-
-model Purchase {
-  id     String @id @default(uuid())
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
-
-  createdAt DateTime @default(now())
-
-  @@unique([userId, productId])
-  @@map("purchases")
 }
 
 enum MembershipStatus {

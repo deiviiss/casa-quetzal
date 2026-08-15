@@ -1,39 +1,53 @@
 'use server'
 
-import { z } from 'zod'
-import { v2 as cloudinary } from "cloudinary";
+import { deleteCloudinaryResource } from '@/lib/cloudinary.server'
 
-const imageSchema = z.string().url("Invalid image URL");
-
-cloudinary.config(process.env.CLOUDINARY_URL ?? "");
-
-export const deleteUserImage = async (imageUrl: string) => {
-  if (!imageUrl || imageUrl.trim() === "") {
+export const deleteUserImage = async (imageOrPublicId?: string | null) => {
+  if (!imageOrPublicId || imageOrPublicId.trim() === '') {
     return {
       ok: true,
-      message: "No hay imagen para eliminar"
-    };
-  }
-
-  const imageParsed = imageSchema.safeParse(imageUrl);
-
-  if (!imageParsed.success) {
-    return {
-      ok: false,
-      message: 'Error al validar la imagen'
+      message: 'No hay imagen para eliminar'
     }
   }
 
-  const image = imageParsed.data
+  let publicId = imageOrPublicId.trim()
 
-  const parts = image.split('/');
-  const publicIdWithExtension = parts.slice(-3).join('/');
-  const publicId = publicIdWithExtension.split('.').slice(0, -1).join('.')
+  // If a full URL is provided (legacy asset compatibility), extract publicId
+  if (publicId.startsWith('http://') || publicId.startsWith('https://')) {
+    try {
+      const urlObj = new URL(publicId)
+      const pathname = urlObj.pathname // e.g. /dhyds3mnm/image/upload/v123/cqcs/user-avatars/sample.jpg
+      const parts = pathname.split('/')
+      // Remove cloud_name, resource_type, delivery_type, and optional version
+      const uploadIndex = parts.findIndex(p => p === 'upload' || p === 'authenticated')
+      if (uploadIndex !== -1) {
+        let remaining = parts.slice(uploadIndex + 1)
+        if (remaining.length > 0 && remaining[0].startsWith('v') && !isNaN(Number(remaining[0].slice(1)))) {
+          remaining = remaining.slice(1)
+        }
+        publicId = remaining.join('/').replace(/\.[^/.]+$/, '')
+      } else {
+        const partsFallback = publicId.split('/')
+        const publicIdWithExt = partsFallback.slice(-2).join('/')
+        publicId = publicIdWithExt.replace(/\.[^/.]+$/, '')
+      }
+    } catch {
+      const parts = publicId.split('/')
+      const publicIdWithExt = parts.slice(-2).join('/')
+      publicId = publicIdWithExt.replace(/\.[^/.]+$/, '')
+    }
+  } else {
+    // Strip extension if passed as publicId with extension
+    publicId = publicId.replace(/\.[^/.]+$/, '')
+  }
 
   try {
-    const result = await cloudinary.uploader.destroy(publicId);
+    const result = await deleteCloudinaryResource(publicId, {
+      resourceType: 'image',
+      type: 'authenticated'
+    })
 
-    if (result.result !== 'ok') {
+    if (result && result.result !== 'ok' && result.result !== 'not found') {
       return {
         ok: false,
         message: 'Error al eliminar la imagen'
@@ -45,7 +59,7 @@ export const deleteUserImage = async (imageUrl: string) => {
       message: 'Eliminada exitosamente'
     }
   } catch (error) {
-    console.error('Error deleting user', error)
+    console.error('Error deleting user image:', error)
     return {
       ok: false,
       message: 'Error al eliminar la imagen del usuario, por favor contacta a soporte'

@@ -18,11 +18,6 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
       inePublicId: true,
       ineStatus: true,
       ineUploadedAt: true,
-      purchase: {
-        include: {
-          product: true
-        }
-      },
       membership: {
         include: {
           product: true

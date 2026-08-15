@@ -1,4 +1,3 @@
-import { Purchase } from "./purchase.interface";
 import { Membership } from "./membership.interface";
 
 export interface User {
@@ -12,6 +11,7 @@ export interface User {
   phoneNumberVerified: boolean;
 
   image?: string | null;
+  imagePublicId?: string | null;
 
   role: Role;
   isActive: boolean;
@@ -26,7 +26,6 @@ export interface User {
   createdAt: Date;
   updatedAt?: Date | null;
 
-  purchase: Purchase[];
   membership?: Membership | null;
 }
 
