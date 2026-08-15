@@ -249,14 +249,14 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
     formData.append("image", image);
 
     try {
-      const { ok: okDeleteImage } = await deleteUserImage(user.image || '')
+      const { ok: okDeleteImage } = await deleteUserImage(user.imagePublicId || user.image || '')
 
       if (!okDeleteImage) {
         noticeFailure("Error al eliminar la imagen anterior, por favor contacte a soporte")
         return
       }
 
-      // Upload the image to 
+      // Upload the image to Cloudinary (authenticated delivery)
       const res = await fetch("/api/upload-avatar", {
         method: "POST",
         body: formData,
@@ -269,7 +269,7 @@ export const ProfileClient = ({ user, membershipProduct }: profileProps) => {
         return;
       }
 
-      const { ok, message } = await updateUserImage(data.url)
+      const { ok, message } = await updateUserImage(data.url, data.publicId)
 
       if (!ok) {
         noticeFailure(message || "Error al actualizar la imagen")

@@ -32,6 +32,7 @@ import { noticeSuccess, noticeFailure } from '@/components/toast-notifications/T
 import { useRouter } from 'next/navigation'
 import { grantMembershipAccess, revokeMembershipAccess } from '@/actions/users/access.actions'
 import { updateUserIneStatus } from '@/actions/users/update-user-ine-status'
+import { getUserIneUrl } from '@/actions/users/get-user-ine-url'
 import UserMemberForm from './UserMemberForm'
 
 import { Membership } from '@/interfaces/membership.interface'
@@ -63,6 +64,20 @@ export default function UserDetail({ user }: UserDetailProps) {
   const [isIneViewerOpen, setIsIneViewerOpen] = useState(false)
   const [isSubmittingAccess, setIsSubmittingAccess] = useState(false)
   const [isUpdatingIne, setIsUpdatingIne] = useState(false)
+  const [ineDocumentUrl, setIneDocumentUrl] = useState<string | null>(null)
+  const [isLoadingIneUrl, setIsLoadingIneUrl] = useState(false)
+
+  const handleOpenIneViewer = async () => {
+    setIsIneViewerOpen(true)
+    setIsLoadingIneUrl(true)
+    const result = await getUserIneUrl(user.id)
+    if (result.ok && result.url) {
+      setIneDocumentUrl(result.url)
+    } else {
+      noticeFailure(result.message || 'Error al obtener la identificación')
+    }
+    setIsLoadingIneUrl(false)
+  }
 
   const handleGrantAccess = async () => {
     setIsSubmittingAccess(true)
@@ -214,7 +229,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                 </div>
 
                 {/* Upload Date & Document Link */}
-                {user.ineUrl ? (
+                {user.inePublicId || user.ineUrl ? (
                   <div className="p-3 bg-muted/40 rounded-lg border space-y-2 text-xs">
                     {user.ineUploadedAt && (
                       <p className="text-muted-foreground">
@@ -224,7 +239,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setIsIneViewerOpen(true)}
+                      onClick={handleOpenIneViewer}
                       className="w-full justify-center gap-2 text-xs"
                     >
                       <Eye className="h-3.5 w-3.5" /> Ver Documento INE
@@ -243,7 +258,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    disabled={isUpdatingIne || !user.ineUrl || user.ineStatus === 'VERIFIED'}
+                    disabled={isUpdatingIne || (!user.inePublicId && !user.ineUrl) || user.ineStatus === 'VERIFIED'}
                     onClick={() => handleUpdateIneStatus('VERIFIED')}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs gap-1"
                   >
@@ -258,7 +273,7 @@ export default function UserDetail({ user }: UserDetailProps) {
                   <Button
                     size="sm"
                     variant="destructive"
-                    disabled={isUpdatingIne || !user.ineUrl || user.ineStatus === 'REJECTED'}
+                    disabled={isUpdatingIne || (!user.inePublicId && !user.ineUrl) || user.ineStatus === 'REJECTED'}
                     onClick={() => handleUpdateIneStatus('REJECTED')}
                     className="flex-1 text-xs gap-1"
                   >
@@ -291,7 +306,7 @@ export default function UserDetail({ user }: UserDetailProps) {
       />
 
       {/* INE Document Viewer Modal */}
-      {user.ineUrl && (
+      {(user.inePublicId || user.ineUrl) && (
         <Dialog open={isIneViewerOpen} onOpenChange={setIsIneViewerOpen}>
           <DialogContent className="max-w-3xl bg-card rounded-lg p-6 max-h-[90vh] overflow-y-auto">
             <DialogHeader>
@@ -300,23 +315,35 @@ export default function UserDetail({ user }: UserDetailProps) {
                 Identificación Oficial (INE) - {user.name}
               </DialogTitle>
               <DialogDescription className="text-xs text-muted-foreground">
-                Revisión e inspección de la identificación cargada por el usuario.
+                Revisión e inspección de la identificación cargada por el usuario (acceso seguro temporal).
               </DialogDescription>
             </DialogHeader>
 
             <div className="my-4 flex items-center justify-center bg-muted/20 border rounded-lg p-2 min-h-[300px]">
-              {user.ineUrl.toLowerCase().includes('.pdf') || user.ineUrl.toLowerCase().includes('pdf') ? (
-                <iframe
-                  src={user.ineUrl}
-                  className="w-full h-[65vh] rounded-md border"
-                  title="Visor INE PDF"
-                />
+              {isLoadingIneUrl ? (
+                <div className="flex flex-col items-center justify-center py-12 gap-3 text-muted-foreground">
+                  <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
+                  <p className="text-xs">Generando acceso seguro al documento...</p>
+                </div>
+              ) : ineDocumentUrl ? (
+                ineDocumentUrl.toLowerCase().includes('.pdf') ||
+                ineDocumentUrl.toLowerCase().includes('format=pdf') ||
+                (user.inePublicId && user.inePublicId.toLowerCase().includes('pdf')) ||
+                (user.ineUrl && user.ineUrl.toLowerCase().includes('.pdf')) ? (
+                  <iframe
+                    src={ineDocumentUrl}
+                    className="w-full h-[65vh] rounded-md border"
+                    title="Visor INE PDF"
+                  />
+                ) : (
+                  <img
+                    src={ineDocumentUrl}
+                    alt={`INE de ${user.name}`}
+                    className="max-h-[65vh] w-auto max-w-full object-contain rounded-md shadow-sm"
+                  />
+                )
               ) : (
-                <img
-                  src={user.ineUrl}
-                  alt={`INE de ${user.name}`}
-                  className="max-h-[65vh] w-auto max-w-full object-contain rounded-md shadow-sm"
-                />
+                <p className="text-xs text-muted-foreground">No fue posible cargar el documento.</p>
               )}
             </div>
 

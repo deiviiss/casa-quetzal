@@ -1,28 +1,14 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { getUserSessionServer } from '../auth/getUserSessionServer'
 import { getUserById } from './get-user-by-id'
 
-const imageSchema = z.string().url("Invalid image URL");
-
-export const updateUserImage = async (imageUrl: string) => {
-  const imageParsed = imageSchema.safeParse(imageUrl);
-
-  if (!imageParsed.success) {
-    return { ok: false, message: "URL de imagen inválida" };
+export const updateUserImage = async (imageUrl: string, publicId?: string) => {
+  if (!imageUrl || imageUrl.trim() === '') {
+    return { ok: false, message: 'URL o identificador de imagen no proporcionado' }
   }
-
-  if (!imageParsed.success) {
-    return {
-      ok: false,
-      message: 'Error al validar la imagen'
-    }
-  }
-
-  const image = imageParsed.data
 
   try {
     const userSession = await getUserSessionServer()
@@ -46,7 +32,8 @@ export const updateUserImage = async (imageUrl: string) => {
     const userImageUpdated = await prisma.user.update({
       where: { id: user.id },
       data: {
-        image
+        image: imageUrl,
+        ...(publicId ? { imagePublicId: publicId } : {})
       }
     })
 
@@ -64,7 +51,7 @@ export const updateUserImage = async (imageUrl: string) => {
       message: 'Actualizado exitosamente'
     }
   } catch (error) {
-    console.error('Error updating user', error)
+    console.error('Error updating user image:', error)
     return {
       ok: false,
       message: 'Error al actualizar el usuario, por favor contacta a soporte'
