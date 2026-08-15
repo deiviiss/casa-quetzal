@@ -2,9 +2,7 @@
 
 import { auth } from '@/auth'
 import prisma from '@/lib/prisma'
-import { v2 as cloudinary } from 'cloudinary'
-
-cloudinary.config(process.env.CLOUDINARY_URL ?? '')
+import { uploadProtectedResource, deleteCloudinaryResource } from '@/lib/cloudinary.server'
 
 const ALLOWED_MIME_TYPES = [
   'application/pdf',
@@ -60,27 +58,41 @@ export async function uploadUserIne(formData: FormData): Promise<UploadIneRespon
       }
     }
 
-    // 4. Retrieve current user to obtain previous public_id
+    // 4. Retrieve current user to obtain name and previous public_id
     const currentUser = await prisma.user.findUnique({
       where: { id: userId },
-      select: { inePublicId: true }
+      select: { name: true, inePublicId: true }
     })
 
     const oldPublicId = currentUser?.inePublicId
 
-    // 5. Convert file to Base64 buffer for Cloudinary upload
+    // 5. Build sanitized custom publicId based on user name
+    const rawName = currentUser?.name || session.user.name || 'usuario'
+    const sanitizedName = rawName
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]/g, '_')
+      .replace(/_+/g, '_')
+      .replace(/^_|_$/g, '')
+      .slice(0, 30)
+
+    const customPublicId = `ine_${sanitizedName}_${userId.slice(0, 8)}`
+
+    // 6. Convert file to Base64 buffer for Cloudinary upload
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
     const base64Data = buffer.toString('base64')
     const dataUri = `data:${file.type};base64,${base64Data}`
 
-    // 6. Upload new INE document to Cloudinary
-    const uploadResult = await cloudinary.uploader.upload(dataUri, {
+    // 7. Upload new INE document to Cloudinary as authenticated resource
+    const uploadResult = await uploadProtectedResource(dataUri, {
       folder: 'cqcs/user-ine',
-      resource_type: 'auto'
+      publicId: customPublicId,
+      resourceType: 'auto'
     })
 
-    if (!uploadResult || !uploadResult.secure_url) {
+    if (!uploadResult || !uploadResult.public_id) {
       return {
         ok: false,
         message: 'Error al subir el archivo a Cloudinary. Por favor reintente.'
@@ -101,7 +113,7 @@ export async function uploadUserIne(formData: FormData): Promise<UploadIneRespon
     // 8. Safely remove previous Cloudinary resource non-blockingly
     if (oldPublicId) {
       try {
-        await cloudinary.uploader.destroy(oldPublicId, { resource_type: 'auto' })
+        await deleteCloudinaryResource(oldPublicId, { resourceType: 'image', type: 'authenticated' })
       } catch (destroyError) {
         console.error('[Upload INE] Could not delete previous Cloudinary asset:', destroyError)
       }
