@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { uploadProtectedResource, getProtectedResourceUrl } from "@/lib/cloudinary.server";
+import { uploadProtectedResource, getProtectedSignedUrl } from "@/lib/cloudinary.server";
 
 export async function POST(req: NextRequest) {
   // 1. Verify authenticated session
@@ -59,16 +59,17 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    // 3. Generate a temporary signed URL (15 minutes) for immediate client display
-    const temporaryUrl = getProtectedResourceUrl(uploadResult.public_id, {
-      resourceType: "image",
-      expiresInSeconds: 15 * 60,
-      attachment: false,
+    // 3. Generate a stable signed delivery URL for client display and CDN caching
+    const signedDeliveryUrl = getProtectedSignedUrl(uploadResult.public_id, {
+      transformation: [
+        { width: 500, height: 500, crop: "limit" },
+        { quality: "auto", fetch_format: "auto" },
+      ],
     });
 
     return NextResponse.json({
       ok: true,
-      url: temporaryUrl,
+      url: signedDeliveryUrl,
       publicId: uploadResult.public_id
     });
   } catch (error) {

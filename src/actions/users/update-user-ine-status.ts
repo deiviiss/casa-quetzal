@@ -18,10 +18,10 @@ export async function updateUserIneStatus(userId: string, status: IneStatus) {
 
     const targetUser = await prisma.user.findUnique({
       where: { id: userId },
-      select: { ineUrl: true }
+      select: { inePublicId: true }
     })
 
-    if (!targetUser || !targetUser.ineUrl) {
+    if (!targetUser || !targetUser.inePublicId) {
       return { ok: false, message: 'El usuario no cuenta con una identificación cargada para autorizar o rechazar.' }
     }
 
