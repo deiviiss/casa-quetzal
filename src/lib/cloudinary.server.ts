@@ -34,8 +34,9 @@ export async function uploadProtectedResource(
 
 /**
  * Generate a time-limited signed URL using private_download_url (default: 15 min, inline display)
+ * Used for sensitive documents such as INE.
  */
-export function getProtectedResourceUrl(
+export function getProtectedDownloadUrl(
   publicId: string,
   options: GetProtectedUrlOptions = {}
 ): string {
@@ -66,6 +67,30 @@ export function getProtectedResourceUrl(
     resource_type: resourceType,
     expires_at: expiresAt,
     attachment: attachment
+  })
+}
+
+/**
+ * Backward compatibility alias for getProtectedDownloadUrl
+ */
+export const getProtectedResourceUrl = getProtectedDownloadUrl
+
+/**
+ * Generate a stable signed delivery URL using cloudinary.url (CDN-cacheable, no expiration)
+ * Used for protected frequent resources such as User Avatars.
+ */
+export function getProtectedSignedUrl(
+  publicId: string,
+  options: { transformation?: object[] } = {}
+): string {
+  const cleanPublicId = publicId.replace(/\.[^/.]+$/, '')
+
+  return cloudinary.url(cleanPublicId, {
+    resource_type: 'image',
+    type: 'authenticated',
+    sign_url: true,
+    secure: true,
+    ...(options.transformation ? { transformation: options.transformation } : {})
   })
 }
 

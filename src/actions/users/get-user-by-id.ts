@@ -2,7 +2,7 @@
 
 import { type User } from '@/interfaces/user.interface'
 import prisma from '@/lib/prisma'
-import { getProtectedResourceUrl } from '@/lib/cloudinary.server'
+import { getProtectedSignedUrl } from '@/lib/cloudinary.server'
 
 interface Response {
   ok: boolean
@@ -32,14 +32,10 @@ export const getUserById = async (id: string): Promise<Response> => {
 
     const resolvedUser = { ...user }
 
-    // If user has an authenticated avatar publicId, generate a temporary signed URL
+    // If user has an authenticated avatar publicId, generate a stable signed delivery URL (cacheable)
     if (resolvedUser.imagePublicId) {
       try {
-        resolvedUser.image = getProtectedResourceUrl(resolvedUser.imagePublicId, {
-          resourceType: 'image',
-          expiresInSeconds: 15 * 60,
-          attachment: false
-        })
+        resolvedUser.image = getProtectedSignedUrl(resolvedUser.imagePublicId)
       } catch (err) {
         console.error('[Get User By ID] Error generating protected avatar url:', err)
       }

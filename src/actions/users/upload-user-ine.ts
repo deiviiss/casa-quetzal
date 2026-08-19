@@ -99,11 +99,10 @@ export async function uploadUserIne(formData: FormData): Promise<UploadIneRespon
       }
     }
 
-    // 7. Update User in Prisma (set status to PENDING)
+    // 7. Update User in Prisma (set status to PENDING and save inePublicId)
     await prisma.user.update({
       where: { id: userId },
       data: {
-        ineUrl: uploadResult.secure_url,
         inePublicId: uploadResult.public_id,
         ineStatus: 'PENDING',
         ineUploadedAt: new Date()
@@ -122,7 +121,6 @@ export async function uploadUserIne(formData: FormData): Promise<UploadIneRespon
     return {
       ok: true,
       message: 'Identificación oficial (INE) cargada exitosamente',
-      ineUrl: uploadResult.secure_url,
       inePublicId: uploadResult.public_id
     }
   } catch (error) {

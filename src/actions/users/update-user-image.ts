@@ -32,7 +32,6 @@ export const updateUserImage = async (imageUrl: string, publicId?: string) => {
     const userImageUpdated = await prisma.user.update({
       where: { id: user.id },
       data: {
-        image: imageUrl,
         ...(publicId ? { imagePublicId: publicId } : {})
       }
     })

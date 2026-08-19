@@ -2,7 +2,7 @@
 
 import { auth } from '@/auth'
 import prisma from '@/lib/prisma'
-import { getProtectedResourceUrl } from '@/lib/cloudinary.server'
+import { getProtectedDownloadUrl } from '@/lib/cloudinary.server'
 
 export interface GetUserIneUrlResponse {
   ok: boolean
@@ -41,38 +41,28 @@ export async function getUserIneUrl(targetUserId: string): Promise<GetUserIneUrl
     const targetUser = await prisma.user.findUnique({
       where: { id: targetUserId },
       select: {
-        inePublicId: true,
-        ineUrl: true
+        inePublicId: true
       }
     })
 
-    if (!targetUser || (!targetUser.inePublicId && !targetUser.ineUrl)) {
+    if (!targetUser || !targetUser.inePublicId) {
       return {
         ok: false,
         message: 'El usuario no tiene una identificación oficial registrada.'
       }
     }
 
-    // 4. Generate signed time-limited URL for authenticated asset
-    if (targetUser.inePublicId) {
-      const signedUrl = getProtectedResourceUrl(targetUser.inePublicId, {
-        resourceType: 'image',
-        expiresInSeconds: 15 * 60, // 15 minutes
-        attachment: false
-      })
+    // 4. Generate signed time-limited URL for authenticated asset (15 min)
+    const signedUrl = getProtectedDownloadUrl(targetUser.inePublicId, {
+      resourceType: 'image',
+      expiresInSeconds: 15 * 60, // 15 minutes
+      attachment: false
+    })
 
-      return {
-        ok: true,
-        message: 'URL generada exitosamente.',
-        url: signedUrl
-      }
-    }
-
-    // 5. Fallback for legacy assets that only have ineUrl
     return {
       ok: true,
-      message: 'URL obtenida (legado).',
-      url: targetUser.ineUrl || undefined
+      message: 'URL generada exitosamente.',
+      url: signedUrl
     }
   } catch (error) {
     console.error('[Get User INE URL Error]:', error)
