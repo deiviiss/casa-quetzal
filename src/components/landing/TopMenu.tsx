@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { FaShopLock } from 'react-icons/fa6'
 import { GiBurningForest } from 'react-icons/gi'
 import { SiHomeassistantcommunitystore } from 'react-icons/si'
-import { ShoppingBag } from 'lucide-react'
+import { ShoppingBag, Newspaper } from 'lucide-react'
 import { getUserSessionServer } from '@/actions/auth/getUserSessionServer'
 import { useNewCartStore } from '@/store/new-cart-store'
 import { useUiStore } from '@/store'
@@ -66,6 +66,14 @@ export const TopMenu = ({ user }: TopMenuProps) => {
                 <GiBurningForest size={20} title="Membresías" aria-label="Membresías" />
                 <span className='hidden sm:inline'>
                   Membresías
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog" aria-label="Blog" className="hover:text-slate-200 transition-transform flex items-center space-x-2">
+                <Newspaper size={20} />
+                <span className='hidden sm:inline'>
+                  Blog
                 </span>
               </Link>
             </li>

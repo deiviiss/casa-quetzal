@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Leaf, Users, Package, ArrowRight } from "lucide-react"
+import { Leaf, Users, Package, ArrowRight, Newspaper } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const quickStats = [
@@ -19,6 +19,13 @@ const quickStats = [
     icon: Users,
     href: "/platform/admin/users",
     color: "bg-orange-500",
+  },
+  {
+    title: "Blog",
+    description: "Creación y edición de artículos",
+    icon: Newspaper,
+    href: "/platform/admin/blog",
+    color: "bg-emerald-600",
   },
   {
     title: "Productos",
