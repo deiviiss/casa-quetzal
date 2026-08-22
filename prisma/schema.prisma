@@ -40,6 +40,7 @@ model User {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime?   @updatedAt
   membership Membership?
+  blogPosts  BlogPost[]
 
   @@map("users")
 }
@@ -110,4 +111,30 @@ model Membership {
   @@index([status])
   @@index([expiresAt])
   @@map("memberships")
+}
+
+model BlogPost {
+  id          String @id @default(uuid())
+  title       String
+  slug        String @unique
+  description String @db.Text
+  content     String @db.Text
+
+  imageUrl String?
+  imageAlt String?
+
+  metaTitle       String?
+  metaDescription String? @db.VarChar(160)
+
+  publishedAt DateTime @default(now())
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([publishedAt])
+  @@index([authorId])
+  @@map("blog_posts")
 }

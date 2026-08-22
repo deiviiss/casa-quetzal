@@ -9,7 +9,8 @@ import {
   Users,
   Package,
   ChevronRight,
-  Leaf
+  Leaf,
+  Newspaper
 } from "lucide-react"
 
 const sidebarItems = [
@@ -28,12 +29,16 @@ const sidebarItems = [
     href: "/platform/admin/users",
     icon: Users,
   },
-
   {
     title: "Productos",
     href: "/platform/admin/products", // Placeholder
     icon: Package,
     isPlaceholder: true,
+  },
+  {
+    title: "Blog",
+    href: "/platform/admin/blog", // Placeholder
+    icon: Newspaper,
   },
 ]
 
